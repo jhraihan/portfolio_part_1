@@ -1,0 +1,260 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ---------------------------------------------------------------------------
+   Theme tokens
+
+   Dark is the default. The .light class on <html> swaps the palette; every
+   component reads these tokens through Tailwind, so nothing hardcodes a
+   colour. Dark uses a slightly blue-shifted near-black rather than pure grey,
+   which reads as a screen rather than as paper.
+--------------------------------------------------------------------------- */
+
+:root {
+  --canvas: 8 8 10;
+  --surface: 15 16 19;
+  --elevated: 23 24 28;
+  --line: 38 39 45;
+  --line-strong: 56 57 65;
+
+  --ink: 250 250 251;
+  --ink-muted: 158 160 170;
+  --ink-faint: 108 110 121;
+
+  --accent: 226 58 50;
+  --accent-hover: 240 76 68;
+
+  /* Secondary hues, used only for syntax-style category tinting. */
+  --cyan: 56 189 248;
+  --amber: 245 158 11;
+  --violet: 167 139 250;
+  --green: 52 211 153;
+
+  color-scheme: dark;
+}
+
+:root.light {
+  --canvas: 251 251 252;
+  --surface: 255 255 255;
+  --elevated: 244 245 247;
+  --line: 226 227 232;
+  --line-strong: 203 205 213;
+
+  --ink: 13 14 18;
+  --ink-muted: 82 84 94;
+  --ink-faint: 124 127 138;
+
+  /* Deeper in light mode so text on white keeps AA contrast. */
+  --accent: 194 40 33;
+  --accent-hover: 170 32 26;
+
+  --cyan: 2 132 199;
+  --amber: 180 83 9;
+  --violet: 124 58 237;
+  --green: 5 150 105;
+
+  color-scheme: light;
+}
+
+@layer base {
+  * {
+    @apply border-line;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-canvas text-ink font-sans antialiased;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+    overflow-x: hidden;
+  }
+
+  /* Visible, consistent focus for keyboard users only. */
+  :focus-visible {
+    @apply outline-none ring-2 ring-accent ring-offset-2 ring-offset-canvas rounded-sm;
+  }
+
+  ::selection {
+    @apply bg-accent/25 text-ink;
+  }
+
+  h1, h2, h3, h4 {
+    @apply text-balance;
+  }
+
+  /* Slim, unobtrusive scrollbar that matches the palette. */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: rgb(var(--canvas));
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgb(var(--line-strong));
+    border-radius: 6px;
+    border: 2px solid rgb(var(--canvas));
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgb(var(--ink-faint));
+  }
+
+  /* Respect the operating system's reduced-motion setting. */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer components {
+  .container-content {
+    @apply mx-auto w-full max-w-content px-5 sm:px-8 lg:px-10;
+  }
+
+  .section {
+    @apply py-section;
+  }
+
+  /* Small uppercase monospace label used above section headings. */
+  .eyebrow {
+    @apply inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.18em] text-accent;
+  }
+
+  .card {
+    @apply rounded-card border border-line bg-surface transition-colors duration-300;
+  }
+
+  .card-interactive {
+    @apply card;
+  }
+  .card-interactive:hover {
+    border-color: rgb(var(--line-strong));
+  }
+
+  .btn {
+    @apply relative inline-flex items-center justify-center gap-2 rounded-lg px-5 py-2.5
+           text-sm font-medium transition-all duration-200 ease-out
+           disabled:cursor-not-allowed disabled:opacity-50;
+  }
+
+  .btn-primary {
+    @apply btn bg-accent text-white hover:bg-accent-hover
+           shadow-[0_1px_0_0_rgb(255_255_255/0.12)_inset,0_6px_20px_-8px_rgb(var(--accent)/0.7)]
+           hover:shadow-[0_1px_0_0_rgb(255_255_255/0.18)_inset,0_10px_28px_-8px_rgb(var(--accent)/0.85)];
+  }
+
+  .btn-secondary {
+    @apply btn border border-line bg-surface/60 text-ink backdrop-blur-sm
+           hover:bg-elevated;
+  }
+  .btn-secondary:hover {
+    border-color: rgb(var(--line-strong));
+  }
+
+  .btn-ghost {
+    @apply btn text-ink-muted hover:text-ink;
+  }
+
+  .tag {
+    @apply inline-flex items-center rounded-md border border-line bg-elevated
+           px-2.5 py-1 font-mono text-xs text-ink-muted;
+  }
+
+  .prose-body {
+    @apply text-body text-ink-muted;
+  }
+
+  .link-underline {
+    @apply text-ink underline decoration-line underline-offset-4
+           transition-colors hover:decoration-accent;
+  }
+
+  /* Terminal-window chrome: three dots and a title bar. */
+  .window-bar {
+    @apply flex items-center gap-2 border-b border-line bg-elevated/70 px-4 py-2.5;
+  }
+
+  .window-dot {
+    @apply h-2.5 w-2.5 rounded-full;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .text-pretty {
+    text-wrap: pretty;
+  }
+
+  /* Hairline grid backdrop. */
+  .bg-grid {
+    background-image:
+      linear-gradient(to right, rgb(var(--line) / 0.55) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(var(--line) / 0.55) 1px, transparent 1px);
+    background-size: 64px 64px;
+  }
+
+  .bg-grid-sm {
+    background-image:
+      linear-gradient(to right, rgb(var(--line) / 0.4) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(var(--line) / 0.4) 1px, transparent 1px);
+    background-size: 28px 28px;
+  }
+
+  /* Faint dot field, used behind cards and empty media slots. */
+  .bg-dots {
+    background-image: radial-gradient(
+      circle at 1px 1px,
+      rgb(var(--line-strong) / 0.7) 1px,
+      transparent 0
+    );
+    background-size: 20px 20px;
+  }
+
+  .mask-fade-b {
+    mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+  }
+
+  .mask-fade-radial {
+    mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, black 40%, transparent 100%);
+  }
+
+  /* Hairline that fades out at both ends. */
+  .rule-fade {
+    background: linear-gradient(
+      to right,
+      transparent,
+      rgb(var(--line-strong)) 20%,
+      rgb(var(--line-strong)) 80%,
+      transparent
+    );
+  }
+
+  .text-gradient {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(
+      180deg,
+      rgb(var(--ink)) 30%,
+      rgb(var(--ink) / 0.65) 100%
+    );
+  }
+
+  /* Numeric text that will not reflow as digits change. */
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+}

@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Md. Jahid Hasan Raihan — Software Engineer</title>
+    <meta
+      name="description"
+      content="Md. Jahid Hasan Raihan - software engineer in Dhaka, Bangladesh. Five full-stack applications built with Django, Django REST Framework, React, and MySQL, each with an architecture case study."
+    />
+    <meta name="author" content="Md. Jahid Hasan Raihan" />
+    <link rel="canonical" href="https://example.com/" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Md. Jahid Hasan Raihan — Software Engineer" />
+    <meta
+      property="og:description"
+      content="Md. Jahid Hasan Raihan - software engineer in Dhaka, Bangladesh. Five full-stack applications built with Django, Django REST Framework, React, and MySQL, each with an architecture case study."
+    />
+    <meta property="og:url" content="https://example.com/" />
+    <meta property="og:image" content="/og-image.png" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Md. Jahid Hasan Raihan — Software Engineer" />
+    <meta
+      name="twitter:description"
+      content="Md. Jahid Hasan Raihan - software engineer in Dhaka, Bangladesh. Five full-stack applications built with Django, Django REST Framework, React, and MySQL, each with an architecture case study."
+    />
+    <meta name="twitter:image" content="/og-image.png" />
+
+    <meta name="theme-color" content="#08080a" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Md. Jahid Hasan Raihan",
+        "jobTitle": "Software Engineer",
+        "email": "mailto:jahidhr05@gmail.com",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Dhaka",
+          "addressCountry": "BD"
+        },
+        "alumniOf": {
+          "@type": "CollegeOrUniversity",
+          "name": "Independent University, Bangladesh"
+        },
+        "knowsAbout": [
+          "Django",
+          "Django REST Framework",
+          "React",
+          "MySQL",
+          "PostgreSQL",
+          "Python",
+          "REST API design"
+        ],
+        "sameAs": [
+          "https://github.com/jhraihan",
+          "https://www.linkedin.com/in/md-jahid-hasan-raihan-745023393",
+          "https://leetcode.com/u/Jahid_Hasan_Raihan/"
+        ]
+      }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!--
+      Applies the saved theme before first paint. Without this the page
+      renders dark for a frame before switching to light, which reads as a
+      flicker on every load.
+    -->
+    <script>
+      (function () {
+        try {
+          var stored = localStorage.getItem('portfolio-theme')
+          var prefersLight =
+            window.matchMedia &&
+            window.matchMedia('(prefers-color-scheme: light)').matches
+          if (stored === 'light' || (!stored && prefersLight)) {
+            document.documentElement.classList.add('light')
+          }
+        } catch (e) {}
+      })()
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
