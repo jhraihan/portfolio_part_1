@@ -243,6 +243,7 @@ export function ProjectDetail() {
             alt={`${title} interface`}
             label="Screenshot"
             aspect="aspect-[16/9]"
+            fit="contain"
             loading="eager"
           />
         </Reveal>
@@ -321,10 +322,13 @@ export function ProjectDetail() {
                 <div className="grid gap-5 sm:grid-cols-2">
                   {images.map((image) => (
                     <figure key={image.id}>
+                      {/* Screenshots are wide desktop captures, so the frame
+                          matches their shape rather than cropping the sides. */}
                       <ImageFrame
                         src={image.image}
                         alt={image.alt_text}
-                        aspect="aspect-[16/10]"
+                        aspect="aspect-[16/9]"
+                        fit="contain"
                       />
                       {image.caption && (
                         <figcaption className="mt-2 font-mono text-xs text-ink-faint">

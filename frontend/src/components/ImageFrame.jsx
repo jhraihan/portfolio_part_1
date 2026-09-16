@@ -16,6 +16,9 @@ export function ImageFrame({
   aspect = 'aspect-[16/10]',
   className = '',
   loading = 'lazy',
+  // 'cover' fills the frame and crops; 'contain' fits the whole image inside
+  // it, which suits wide desktop screenshots that must not lose their edges.
+  fit = 'cover',
 }) {
   const [failed, setFailed] = useState(false)
   const showPlaceholder = !src || failed
@@ -54,7 +57,9 @@ export function ImageFrame({
           loading={loading}
           decoding="async"
           onError={() => setFailed(true)}
-          className="h-full w-full object-cover"
+          className={`h-full w-full ${
+            fit === 'contain' ? 'object-contain' : 'object-cover'
+          }`}
         />
       )}
     </div>

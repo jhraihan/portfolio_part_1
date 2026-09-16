@@ -7,6 +7,7 @@ committed. See .env.example for the required keys.
 
 from pathlib import Path
 
+import dj_database_url
 from decouple import Csv, config
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -86,8 +87,14 @@ WSGI_APPLICATION = "config.wsgi.application"
 # ---------------------------------------------------------------------------
 # Database
 # ---------------------------------------------------------------------------
-# MySQL in every environment. SQLite is used only when USE_SQLITE=True, which
-# keeps local setup possible before MySQL credentials exist.
+# PostgreSQL in every real environment, resolved in this order:
+#
+#   1. DATABASE_URL  — a single connection string. Managed hosts (Railway,
+#      Neon, Supabase, Render, Fly) all hand you one of these, so production
+#      needs no other database configuration.
+#   2. DB_* variables — discrete settings, for a local Postgres instance.
+#   3. SQLite         — only when USE_SQLITE=True, which keeps the project
+#      runnable before any Postgres credentials exist.
 
 if config("USE_SQLITE", default=False, cast=bool):
     DATABASES = {
@@ -96,19 +103,25 @@ if config("USE_SQLITE", default=False, cast=bool):
             "NAME": BASE_DIR / "db.sqlite3",
         }
     }
+elif config("DATABASE_URL", default=""):
+    DATABASES = {
+        "default": dj_database_url.parse(
+            config("DATABASE_URL"),
+            conn_max_age=600,
+            # Managed Postgres requires TLS; a local instance usually has none.
+            ssl_require=not DEBUG,
+        )
+    }
 else:
     DATABASES = {
         "default": {
-            "ENGINE": "django.db.backends.mysql",
+            "ENGINE": "django.db.backends.postgresql",
             "NAME": config("DB_NAME"),
             "USER": config("DB_USER"),
             "PASSWORD": config("DB_PASSWORD"),
             "HOST": config("DB_HOST", default="127.0.0.1"),
-            "PORT": config("DB_PORT", default="3306"),
-            "OPTIONS": {
-                "charset": "utf8mb4",
-                "init_command": "SET sql_mode='STRICT_TRANS_TABLES'",
-            },
+            "PORT": config("DB_PORT", default="5432"),
+            "CONN_MAX_AGE": 600,
         }
     }
 
@@ -154,6 +167,16 @@ STORAGES = {
         else "django.contrib.staticfiles.storage.StaticFilesStorage"
     },
 }
+
+# Django refuses to serve MEDIA_ROOT when DEBUG is False, so in production
+# WhiteNoise serves uploaded files alongside static ones. It is pointed at the
+# directory *containing* media/ so that stored URLs keep their /media/ prefix.
+#
+# Appropriate at this scale — a few megabytes of screenshots and one PDF.
+# Move to S3 or R2 if uploads grow substantially.
+if not DEBUG:
+    WHITENOISE_ROOT = BASE_DIR
+    WHITENOISE_INDEX_FILE = False
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 

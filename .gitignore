@@ -21,7 +21,8 @@ htmlcov/
 db.sqlite3
 db.sqlite3-journal
 /backend/staticfiles/
-/backend/media/
+# /backend/media/ is intentionally COMMITTED — Render wipes uploaded
+# files on redeploy, so screenshots must travel with the repository.
 
 # Node
 node_modules/
@@ -47,3 +48,9 @@ coverage/
 
 # Original source images (optimized versions live in backend/media/)
 /images/
+
+# Transient PRD split artifacts written by external tooling
+docs/_part*.html
+
+# CV — imported into Django media; keeps personal details out of the repo
+/cv/

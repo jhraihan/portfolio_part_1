@@ -95,22 +95,39 @@ cd frontend && npm test                  # 20 tests
 
 ---
 
-## Switching to MySQL
+## Switching to PostgreSQL
 
-Development starts on SQLite so the project runs before MySQL is configured.
-To switch:
+Development starts on SQLite so the project runs before Postgres is set up.
+The database is resolved in this order:
 
-1. Create the database:
-   ```sql
-   CREATE DATABASE portfolio_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-   ```
-2. In `backend/.env`, set `USE_SQLITE=False` and fill in `DB_NAME`, `DB_USER`,
-   `DB_PASSWORD`, `DB_HOST`, `DB_PORT`.
-3. Re-run:
-   ```bash
-   python manage.py migrate
-   python manage.py seed_portfolio
-   ```
+1. `USE_SQLITE=True` — SQLite, the local default
+2. `DATABASE_URL` — a single connection string, which is what managed hosts give you
+3. `DB_NAME` / `DB_USER` / `DB_PASSWORD` / `DB_HOST` / `DB_PORT` — discrete settings
+
+### Local PostgreSQL
+
+```sql
+CREATE DATABASE portfolio_db;
+```
+
+In `backend/.env`, set `USE_SQLITE=False` and fill in the `DB_*` values. Then:
+
+```bash
+python manage.py migrate
+python manage.py seed_portfolio
+```
+
+### A hosted database (Railway, Neon, Supabase, Render, Fly)
+
+Set two variables and ignore the `DB_*` values entirely:
+
+```
+USE_SQLITE=False
+DATABASE_URL=postgresql://user:password@host:5432/dbname
+```
+
+TLS is required automatically whenever `DEBUG=False`, which is what managed
+Postgres providers expect.
 
 ---
 

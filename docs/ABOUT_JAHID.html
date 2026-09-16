@@ -1,0 +1,718 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Md. Jahid Hasan Raihan — Personal &amp; Professional Brief</title>
+<style>
+  @page { size: A4; margin: 0; }
+  body { padding: 0 16mm; }
+
+  :root {
+    --ink: #14161a;
+    --ink-soft: #3d434d;
+    --ink-faint: #6b7280;
+    --accent: #c2281f;
+    --line: #d9dce2;
+    --line-soft: #eceef2;
+    --surface: #f7f8fa;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    font-family: "Segoe UI", -apple-system, "Helvetica Neue", Arial, sans-serif;
+    font-size: 9.6pt;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    margin: 0;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  h1, h2, h3, h4 { color: var(--ink); margin: 0; font-weight: 600; }
+
+  /* ---------- Cover ---------- */
+  .cover {
+    height: 247mm;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    page-break-after: always;
+  }
+  .cover .rule { width: 54px; height: 3px; background: var(--accent); margin-bottom: 26px; }
+  .cover .kicker {
+    font-family: "Consolas", "Courier New", monospace;
+    font-size: 8.5pt; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 14px;
+  }
+  .cover h1 { font-size: 30pt; line-height: 1.1; letter-spacing: -0.02em; }
+  .cover .sub { font-size: 13pt; color: var(--ink-faint); margin-top: 10px; font-weight: 400; }
+  .cover .meta {
+    margin-top: 46px; padding-top: 18px; border-top: 1px solid var(--line);
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px 32px;
+    font-size: 9pt;
+  }
+  .cover .meta dt {
+    font-family: "Consolas", "Courier New", monospace;
+    font-size: 7.6pt; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--ink-faint); margin-bottom: 3px;
+  }
+  .cover .meta dd { margin: 0; color: var(--ink); font-weight: 500; }
+  .cover .note {
+    margin-top: 38px; padding: 14px 16px; background: var(--surface);
+    border-left: 3px solid var(--accent); font-size: 9pt;
+  }
+
+  /* ---------- Sections ---------- */
+  section { page-break-inside: auto; }
+  h2 {
+    font-size: 15pt; letter-spacing: -0.01em;
+    margin: 26px 0 12px; padding-bottom: 7px;
+    border-bottom: 1.5px solid var(--ink);
+    page-break-after: avoid;
+  }
+  h2 .num {
+    font-family: "Consolas", "Courier New", monospace;
+    font-size: 10pt; color: var(--accent); margin-right: 9px; font-weight: 600;
+  }
+  h3 {
+    font-size: 10.8pt; margin: 18px 0 7px;
+    page-break-after: avoid;
+  }
+  h4 {
+    font-size: 9.6pt; margin: 13px 0 5px;
+    color: var(--ink);
+    page-break-after: avoid;
+  }
+  p { margin: 0 0 8px; }
+  ul, ol { margin: 0 0 9px; padding-left: 17px; }
+  li { margin-bottom: 3.5px; }
+  strong { color: var(--ink); font-weight: 600; }
+  code, .mono {
+    font-family: "Consolas", "Courier New", monospace;
+    font-size: 8.6pt;
+    background: var(--surface);
+    padding: 1px 4px;
+    border-radius: 3px;
+    color: var(--ink);
+  }
+
+  /* ---------- Tables ---------- */
+  table {
+    width: 100%; border-collapse: collapse; margin: 9px 0 14px;
+    font-size: 8.9pt; page-break-inside: avoid;
+  }
+  th {
+    text-align: left; padding: 6px 9px;
+    background: var(--ink); color: #fff; font-weight: 600;
+    font-size: 8.2pt; letter-spacing: 0.04em; text-transform: uppercase;
+  }
+  td { padding: 5.5px 9px; border-bottom: 1px solid var(--line-soft); vertical-align: top; }
+  tr:nth-child(even) td { background: #fbfcfd; }
+  td.mono-cell {
+    font-family: "Consolas", "Courier New", monospace;
+    font-size: 8.3pt; color: var(--ink);
+  }
+
+  /* ---------- Callouts ---------- */
+  .callout {
+    background: var(--surface); border-left: 3px solid var(--accent);
+    padding: 11px 14px; margin: 11px 0 14px; font-size: 9.2pt;
+    page-break-inside: avoid;
+  }
+  .callout.rule-box { border-left-color: var(--ink); }
+  .callout p:last-child { margin-bottom: 0; }
+  .callout .label {
+    font-family: "Consolas", "Courier New", monospace;
+    font-size: 7.6pt; letter-spacing: 0.13em; text-transform: uppercase;
+    color: var(--accent); display: block; margin-bottom: 5px; font-weight: 600;
+  }
+  .callout.rule-box .label { color: var(--ink); }
+
+  /* ---------- Code block ---------- */
+  pre {
+    background: #16181d; color: #e6e8ec;
+    padding: 11px 13px; border-radius: 5px;
+    font-family: "Consolas", "Courier New", monospace;
+    font-size: 8.1pt; line-height: 1.5;
+    overflow: visible; white-space: pre-wrap; word-break: break-word;
+    margin: 8px 0 13px;
+    page-break-inside: avoid;
+  }
+  pre .c { color: #8b929e; }
+
+  /* ---------- Project block ---------- */
+  .project {
+    border: 1px solid var(--line); border-radius: 6px;
+    padding: 14px 16px; margin: 13px 0;
+    page-break-inside: avoid;
+  }
+  .project-head {
+    display: flex; justify-content: space-between; align-items: baseline;
+    gap: 12px; border-bottom: 1px solid var(--line-soft);
+    padding-bottom: 7px; margin-bottom: 9px;
+  }
+  .project-head h3 { margin: 0; font-size: 11.5pt; }
+  .badge {
+    font-family: "Consolas", "Courier New", monospace;
+    font-size: 7.4pt; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--accent); border: 1px solid var(--accent);
+    padding: 2px 6px; border-radius: 3px; white-space: nowrap;
+  }
+  .flow {
+    font-family: "Consolas", "Courier New", monospace;
+    font-size: 8.4pt; background: var(--surface);
+    padding: 7px 10px; border-radius: 4px; margin: 8px 0;
+    color: var(--ink);
+  }
+  .kv { margin: 7px 0; font-size: 9pt; }
+  .kv dt {
+    font-family: "Consolas", "Courier New", monospace;
+    font-size: 7.6pt; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--ink-faint); margin-top: 7px;
+  }
+  .kv dd { margin: 2px 0 0; }
+
+  .two-col { column-count: 2; column-gap: 22px; }
+  .two-col ul { margin-top: 0; }
+
+  .page-break { page-break-before: always; }
+  .avoid-break { page-break-inside: avoid; }
+
+  .toc { font-size: 9.4pt; }
+  .toc li { margin-bottom: 5px; }
+  .toc .sub-item { color: var(--ink-faint); font-size: 8.8pt; }
+
+  footer.doc-end {
+    margin-top: 30px; padding-top: 12px; border-top: 1px solid var(--line);
+    font-size: 8.4pt; color: var(--ink-faint);
+  }
+</style>
+<style>
+.chip { display:inline-block; font-family:"Consolas","Courier New",monospace; font-size:8pt; border:1px solid var(--line); border-radius:3px; padding:2px 7px; margin:0 5px 5px 0; color:var(--ink); background:var(--surface); }
+.tight li { margin-bottom:2px; }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="rule"></div>
+  <p class="kicker">Personal &amp; Professional Brief</p>
+  <h1>Md. Jahid Hasan Raihan</h1>
+  <p class="sub">Software Engineer — Dhaka, Bangladesh</p>
+
+  <dl class="meta">
+    <div><dt>Document version</dt><dd>1.0</dd></div>
+    <div><dt>Date</dt><dd>12 September 2026</dd></div>
+    <div><dt>Status</dt><dd>Final year · Graduating December 2026</dd></div>
+    <div><dt>Seeking</dt><dd>Junior / backend / full-stack roles &amp; internships</dd></div>
+    <div><dt>Core stack</dt><dd>Python · Django · DRF · React · SQL</dd></div>
+    <div><dt>Companion document</dt><dd>PORTFOLIO_PRD.pdf</dd></div>
+  </dl>
+
+  <div class="note">
+    <strong>Purpose of this document.</strong> Everything on record about who
+    Jahid is, where he came from technically, what he can actually do, and what
+    he is working toward. It is the background half of the portfolio project —
+    the PRD covers the <em>site</em>, this covers the <em>person</em>.
+  </div>
+
+  <div class="note" style="border-left-color:var(--ink);margin-top:14px;">
+    <strong>Sourcing.</strong> Every statement here came directly from Jahid
+    during a structured discovery interview, or from work verified in his
+    repositories. Nothing is inferred or embellished. Where something is
+    unknown, it says so.
+  </div>
+</div>
+
+<!-- ============ 01 ============ -->
+<h2><span class="num">01</span>At a Glance</h2>
+
+<table>
+  <tr><th style="width:26%">Field</th><th>Value</th></tr>
+  <tr><td><strong>Full name</strong></td><td>Md. Jahid Hasan Raihan</td></tr>
+  <tr><td><strong>Professional title</strong></td><td>Software Engineer</td></tr>
+  <tr><td><strong>Location</strong></td><td>Dhaka, Bangladesh</td></tr>
+  <tr><td><strong>Email</strong></td><td class="mono-cell">jahidhr05@gmail.com</td></tr>
+  <tr><td><strong>GitHub</strong></td><td class="mono-cell">github.com/jhraihan</td></tr>
+  <tr><td><strong>LinkedIn</strong></td><td class="mono-cell">linkedin.com/in/md-jahid-hasan-raihan-745023393</td></tr>
+  <tr><td><strong>LeetCode</strong></td><td class="mono-cell">leetcode.com/u/Jahid_Hasan_Raihan/ — ~150 problems solved</td></tr>
+  <tr><td><strong>Degree</strong></td><td>BSc in Computer Science and Engineering</td></tr>
+  <tr><td><strong>Institution</strong></td><td>Independent University, Bangladesh</td></tr>
+  <tr><td><strong>Graduating</strong></td><td>December 2026 — currently final year</td></tr>
+  <tr><td><strong>Availability</strong></td><td>Open to remote, hybrid and onsite roles</td></tr>
+  <tr><td><strong>Geography</strong></td><td>Bangladesh and international</td></tr>
+</table>
+
+<div class="callout">
+  <span class="label">The one-line version</span>
+  <p>
+    A final-year CSE student in Dhaka who has built <strong>five complete,
+    production-shaped web applications</strong> — each with authentication,
+    role-based access control, a relational schema, and a decoupled React
+    frontend talking to a Django REST API. Backend-leaning, self-taught beyond
+    coursework, and deliberately honest about what he does and does not yet
+    know.
+  </p>
+</div>
+
+<h3>1.1 What makes the profile unusual</h3>
+<p>
+  The five projects are not five tutorials. They are five instances of the same
+  hard thing: a multi-actor system where different users see different views of
+  the same data with different rights over it. E-commerce (three roles),
+  learning management (three roles), hospital management (four roles), plus two
+  applications built around external model APIs with the latency and
+  credential-handling problems that brings.
+</p>
+<p>
+  <strong>The repetition is the point.</strong> One such project could be luck
+  or a followed guide; five is a demonstrated competency. That is the single
+  strongest claim available from this background, and it is entirely supportable
+  in an interview.
+</p>
+
+<!-- ============ 02 ============ -->
+<h2 class="page-break"><span class="num">02</span>Background &amp; Journey</h2>
+
+<h3>2.1 How programming started</h3>
+<p>
+  Jahid did not code before university. Programming began with the CSE degree in
+  2022. He chose Computer Science because the field genuinely interested him,
+  and coding turned out to be the part that held his attention — not a career
+  calculation made in advance.
+</p>
+<p>
+  Most of what he knows beyond coursework is <strong>self-taught</strong>,
+  primarily through online courses and by building things repeatedly until they
+  worked. This matters for interpreting the skill levels in §04: they describe
+  capability built by shipping, not by completing a syllabus.
+</p>
+
+<h3>2.2 The learning path, in order</h3>
+<div class="flow">Python → DSA &amp; Algorithms → Django → Django REST Framework → Databases (MySQL, SQLite, PostgreSQL) → React</div>
+
+<table>
+  <tr><th style="width:22%">Stage</th><th>What happened and why</th></tr>
+  <tr><td><strong>Python</strong></td><td>The first language, and the one that still feels most natural. Everything downstream was chosen partly to stay in it.</td></tr>
+  <tr><td><strong>DSA &amp; Algorithms</strong></td><td>Taken seriously rather than treated as a course to pass. Still the practice ground he returns to for problem-solving — ~150 LeetCode problems to date.</td></tr>
+  <tr><td><strong>Django</strong></td><td>Chosen for two reasons he states plainly: Python already felt natural, and Django let him build <em>entire applications</em> rather than fragments. This is the pivot point of the whole profile.</td></tr>
+  <tr><td><strong>Django REST Framework</strong></td><td>Followed directly from wanting a real frontend. Now his strongest single skill alongside Django itself.</td></tr>
+  <tr><td><strong>Databases</strong></td><td>Studied in earnest, not picked up incidentally — MySQL, SQLite and PostgreSQL, plus schema design and normalisation.</td></tr>
+  <tr><td><strong>React</strong></td><td>The last piece. Learned to complete the decoupled architecture the DRF work implied.</td></tr>
+</table>
+
+<h3>2.3 Education</h3>
+<table>
+  <tr><th style="width:26%">Field</th><th>Value</th></tr>
+  <tr><td>Degree</td><td>BSc in Computer Science and Engineering</td></tr>
+  <tr><td>Institution</td><td>Independent University, Bangladesh</td></tr>
+  <tr><td>Location</td><td>Dhaka, Bangladesh</td></tr>
+  <tr><td>Duration</td><td>2022 → December 2026 (expected)</td></tr>
+  <tr><td>Standing</td><td>Final year</td></tr>
+  <tr><td>CGPA</td><td>3.30 — recorded here, deliberately <strong>not published</strong> on the site</td></tr>
+  <tr><td>Thesis</td><td>None</td></tr>
+  <tr><td>Prior education</td><td>HSC/SSC deliberately omitted from all materials</td></tr>
+</table>
+
+<p><strong>Relevant coursework</strong> (the seven surfaced publicly):</p>
+<p>
+  <span class="chip">Data Structures</span>
+  <span class="chip">Algorithms</span>
+  <span class="chip">Database Management Systems</span>
+  <span class="chip">Operating Systems</span>
+  <span class="chip">Computer Networks</span>
+  <span class="chip">Object-Oriented Programming</span>
+  <span class="chip">Software Engineering</span>
+</p>
+<p>
+  These are listed as <em>subjects studied</em>, with no proficiency claim
+  attached. The distinction is intentional — a course attended is not a skill
+  demonstrated, and conflating the two is exactly the kind of overclaim the
+  whole project avoids.
+</p>
+
+<h3>2.4 What he has not done</h3>
+<div class="callout rule-box">
+  <span class="label">Stated plainly, because it will be asked</span>
+  <p>
+    <strong>No professional experience.</strong> No jobs, no internships, no
+    freelance or client work. <strong>No certifications, competitions or
+    awards.</strong> Both confirmed explicitly.
+  </p>
+  <p>
+    This is normal for a final-year student and is presented without apology.
+    The portfolio carries its weight through five complete systems instead. No
+    Experience or Achievements section exists on the site, because an empty
+    section reads worse than an absent one and a padded one is disqualifying.
+  </p>
+</div>
+
+<!-- ============ 03 ============ -->
+<h2 class="page-break"><span class="num">03</span>The Five Projects</h2>
+
+<p>
+  All five are solo builds, all complete, all with public repositories. They are
+  the substance of the profile. Full case studies — problem, approach,
+  architecture, hardest problem, lessons — are in §05 of the PRD; this is the
+  condensed view.
+</p>
+
+<table>
+  <tr><th style="width:5%">#</th><th style="width:18%">Project</th><th style="width:20%">Domain</th><th style="width:9%">Roles</th><th>Defining technical challenge</th></tr>
+  <tr><td class="mono-cell">1</td><td><strong>MicroMart</strong></td><td>E-commerce</td><td class="mono-cell">3</td><td>Order/payment/inventory state consistency across gateway callbacks</td></tr>
+  <tr><td class="mono-cell">2</td><td><strong>EduFlow</strong></td><td>Learning management</td><td class="mono-cell">3</td><td>One authoritative permission layer — object-level, not just action-level</td></tr>
+  <tr><td class="mono-cell">3</td><td><strong>IntelliChat</strong></td><td>Streaming AI chat</td><td class="mono-cell">—</td><td>Server-Sent Events with an explicit stream-termination protocol</td></tr>
+  <tr><td class="mono-cell">4</td><td><strong>MediDesk</strong></td><td>Hospital management</td><td class="mono-cell">4</td><td>Modelling prescriptions as real relations; per-module access rules</td></tr>
+  <tr><td class="mono-cell">5</td><td><strong>PromptCanvas</strong></td><td>Text-to-image</td><td class="mono-cell">—</td><td>Long-latency requests with the model credential kept server-side</td></tr>
+</table>
+
+<h3>3.1 The four strongest interview answers</h3>
+<p>
+  Each of these is a genuine engineering problem Jahid solved and can explain
+  unscripted. They are the highest-value material in the entire profile.
+</p>
+
+<div class="project">
+  <div class="project-head"><h3>Order state machines under an unreliable gateway</h3><span class="badge">MicroMart</span></div>
+  <p>
+    Taking a payment is simple in isolation. Keeping order, inventory and
+    payment state consistent is not: users abandon payments mid-flow, gateway
+    callbacks arrive late or twice, and inventory must never be decremented for
+    an unpaid order.
+  </p>
+  <dl class="kv">
+    <dt>What he concluded</dt>
+    <dd>The interesting part of a feature is usually its failure cases. Once the order states and their legal transitions were made explicit, most of the conditional logic scattered through the views simply disappeared.</dd>
+  </dl>
+</div>
+
+<div class="project">
+  <div class="project-head"><h3>Authorisation is two questions, not one</h3><span class="badge">EduFlow</span></div>
+  <p>
+    Every endpoint must answer both <em>may this user perform this action</em>
+    and <em>on which records</em>. Answering only the first leaves a teacher able
+    to reach another teacher's course by changing an id in the URL.
+  </p>
+  <dl class="kv">
+    <dt>What he concluded</dt>
+    <dd>The interface never decides access. The API scopes every queryset by role; the frontend hides controls purely as a convenience. Roles designed in from the start stay in one place — roles added afterwards become scattered conditionals.</dd>
+  </dl>
+</div>
+
+<div class="project">
+  <div class="project-head"><h3>Streaming breaks the request/response shape</h3><span class="badge">IntelliChat</span></div>
+  <p>
+    The connection stays open while text arrives in fragments, and a stream can
+    end in more than one way: complete, fail midway, or the client disconnects
+    during generation. He defined an explicit event protocol —
+    <span class="mono">meta</span>, repeated <span class="mono">delta</span>,
+    then <span class="mono">done</span> or <span class="mono">error</span> — so
+    the frontend always knows which occurred rather than inferring it from a
+    stream that simply stopped.
+  </p>
+  <dl class="kv">
+    <dt>What he concluded</dt>
+    <dd>Designing the client/server protocol first made both sides straightforward. And persistence changes what an interface can promise: once conversations were stored rather than held in memory, a reload stopped being a data-loss event.</dd>
+  </dl>
+</div>
+
+<div class="project">
+  <div class="project-head"><h3>The schema decides what is possible later</h3><span class="badge">MediDesk</span></div>
+  <p>
+    Storing a prescription as text would have been quick, but a prescription is
+    genuinely structured: one consultation links to several medicines, each with
+    its own dosage and duration.
+  </p>
+  <dl class="kv">
+    <dt>What he concluded</dt>
+    <dd>Because prescriptions were modelled as real relations, catalogue search and dosage linking came almost for free; a text field would have required a migration and a rewrite. An appointment is likewise a lifecycle, not a row.</dd>
+  </dl>
+</div>
+
+<!-- ============ 04 ============ -->
+<h2 class="page-break"><span class="num">04</span>Technical Skills</h2>
+
+<p>
+  Levels are <strong>named, never numeric</strong>. A percentage bar implies a
+  precision that does not exist and invites a comparison that cannot be won.
+  Ordering: <span class="mono">Core</span> → <span class="mono">Strong</span> →
+  <span class="mono">Working Knowledge</span> → <span class="mono">Familiar</span>.
+</p>
+
+<table>
+  <tr><th style="width:16%">Category</th><th style="width:21%">Core</th><th style="width:23%">Strong</th><th style="width:21%">Working</th><th>Familiar</th></tr>
+  <tr><td><strong>Languages</strong></td><td>Python</td><td>SQL, HTML, CSS</td><td>JavaScript</td><td>Java</td></tr>
+  <tr><td><strong>Backend</strong></td><td>Django, Django REST Framework, Django ORM</td><td>REST API design, Authentication (JWT / session / OAuth)</td><td>—</td><td>FastAPI, Node.js</td></tr>
+  <tr><td><strong>Frontend</strong></td><td>—</td><td>React, React Router, Fetch API</td><td>Tailwind CSS, Context API, Vite, Bootstrap</td><td>Next.js</td></tr>
+  <tr><td><strong>Databases</strong></td><td>—</td><td>MySQL, PostgreSQL, SQLite, Design &amp; normalisation</td><td>Query optimisation</td><td>—</td></tr>
+  <tr><td><strong>DevOps</strong></td><td>—</td><td>Git, GitHub, Environment management</td><td>Linux, Vercel / Netlify, Railway / Render / PythonAnywhere</td><td>Nginx, GitHub Actions, AWS</td></tr>
+  <tr><td><strong>Tools</strong></td><td>—</td><td>VS Code, Postman, Git CLI, AI coding tools</td><td>pgAdmin / MySQL Workbench</td><td>Figma</td></tr>
+</table>
+
+<p>
+  <strong>The featured five</strong>, surfaced most prominently:
+  <span class="chip">Django</span>
+  <span class="chip">Django REST Framework</span>
+  <span class="chip">React</span>
+  <span class="chip">MySQL</span>
+  <span class="chip">Python</span>
+</p>
+
+<h3>4.1 How to read these levels</h3>
+<table>
+  <tr><th style="width:20%">Level</th><th>What it is claiming</th></tr>
+  <tr><td><strong>Core</strong></td><td>Used across multiple complete projects; can build unaided and explain the internals. Django, DRF and Python only.</td></tr>
+  <tr><td><strong>Strong</strong></td><td>Comfortable and productive in real projects, with a working grasp of the trade-offs.</td></tr>
+  <tr><td><strong>Working knowledge</strong></td><td>Has used it for real work and can be productive, but would not claim depth.</td></tr>
+  <tr><td><strong>Familiar</strong></td><td>Has touched it and understands the shape of it. Explicitly <em>not</em> a claim of proficiency.</td></tr>
+</table>
+<div class="callout">
+  <span class="label">Why this matters</span>
+  <p>
+    The levels are set to survive questioning. Nothing sits a level higher than
+    it can be defended at, which means every claim on the site is one he can be
+    pushed on comfortably — an advantage that inflated self-assessment gives up.
+  </p>
+</div>
+
+<h3>4.2 Where AI fits — stated precisely</h3>
+<div class="callout rule-box">
+  <span class="label">An important distinction</span>
+  <p>
+    Two projects (IntelliChat, PromptCanvas) integrate external model APIs —
+    Google Gemini and Hugging Face. That is <strong>software engineering work
+    against an HTTP API</strong>: streaming, latency, credential handling,
+    persistence.
+  </p>
+  <p>
+    It is <strong>not</strong> a claim of AI/ML expertise, and Jahid asked
+    explicitly that it never be presented as one. There is no AI/ML skills
+    section anywhere — no RAG, embeddings, vector databases, LangChain, agents
+    or fine-tuning. He is at the learning stage and said so; even a "currently
+    learning AI engineering" line was drafted and then removed at his request.
+  </p>
+</div>
+<p>
+  His stated long-term ambition is to become an <strong>AI-native software
+  engineer</strong> — building systems where modern AI is a first-class part of
+  the architecture rather than an afterthought. That is recorded here as a goal
+  and, on his instruction, appears nowhere on the public site.
+</p>
+
+<!-- ============ 05 ============ -->
+<h2 class="page-break"><span class="num">05</span>How He Works</h2>
+
+<h3>5.1 Stated engineering priorities</h3>
+<p>In his own ordering:</p>
+<table>
+  <tr><th style="width:22%">Priority</th><th>Visible in the work as</th></tr>
+  <tr><td><strong>1. Clean code</strong></td><td>Explicit state machines replacing scattered conditionals; permission logic held in one place rather than repeated per view.</td></tr>
+  <tr><td><strong>2. Performance</strong></td><td>Querysets scoped at the API layer; interest in query optimisation; streaming rather than blocking responses.</td></tr>
+  <tr><td><strong>3. Correct architecture</strong></td><td>The decoupled React/DRF pattern applied consistently across all five projects, with the schema treated as the decision that constrains everything after it.</td></tr>
+</table>
+
+<h3>5.2 A consistent instinct</h3>
+<p>
+  Across four independent projects and four independent write-ups, the same
+  conclusion appears in different words each time: <strong>get the structure
+  right early, because structure decided late becomes mess everywhere.</strong>
+</p>
+<ul>
+  <li><em>MicroMart</em> — "once the transitions were explicit, most of the conditional logic disappeared"</li>
+  <li><em>EduFlow</em> — "roles designed in from the start stay in one place; roles added afterwards become scattered conditionals"</li>
+  <li><em>MediDesk</em> — "the schema decides what the application can do later"</li>
+  <li><em>IntelliChat</em> — "designing the client/server protocol first made both sides straightforward"</li>
+</ul>
+<p>
+  Four projects converging on one principle, arrived at independently, is a
+  stronger signal than any single claim on a CV. It is worth raising in an
+  interview.
+</p>
+
+<h3>5.3 A second recurring theme</h3>
+<p>
+  He is consistently drawn to the <strong>failure cases</strong> rather than the
+  happy path — abandoned payments, duplicate callbacks, streams that die
+  mid-generation, ids changed in the URL, reloads that lose state. That is
+  unusual at this level and is the most senior-reading instinct in the profile.
+</p>
+
+<h3>5.4 Self-assessment</h3>
+<p>
+  He chose <strong>authenticity over looking impressive</strong> at every point
+  where the two conflicted, and asked that the site read confident without
+  claiming to know everything. Every exclusion in the portfolio — no fake
+  experience, no certifications, no AI expertise claim, no skill percentages,
+  no displayed CGPA — was his decision, not a limitation imposed on him.
+</p>
+
+<!-- ============ 06 ============ -->
+<h2 class="page-break"><span class="num">06</span>What He Is Looking For</h2>
+
+<table>
+  <tr><th style="width:24%">Dimension</th><th>Target</th></tr>
+  <tr><td><strong>Roles</strong></td><td>Junior Software Engineer · Backend Developer · Full-Stack Developer · Django Developer · Internship</td></tr>
+  <tr><td><strong>Geography</strong></td><td>Bangladesh and international</td></tr>
+  <tr><td><strong>Work mode</strong></td><td>No preference — remote, hybrid or onsite</td></tr>
+  <tr><td><strong>Company type</strong></td><td>No preference — startup, established company or agency</td></tr>
+  <tr><td><strong>Industry</strong></td><td>No preference</td></tr>
+  <tr><td><strong>Available from</strong></td><td>Graduating December 2026</td></tr>
+</table>
+
+<h3>6.1 Where he fits best</h3>
+<p>
+  The evidence points at <strong>backend or full-stack work in a Python/Django
+  shop</strong>. He is strongest where there is a real data model, multiple
+  kinds of user, and permissions that actually matter — which is most internal
+  tooling, most B2B software, and most platform work.
+</p>
+<p>
+  He is weakest, by his own accounting, on production operations: deployment,
+  CI/CD and cloud infrastructure sit at working or familiar, and nothing of his
+  is deployed yet. A team with existing infrastructure and code review is a
+  better first environment than one where he would own the platform alone.
+</p>
+
+<h3>6.2 How he wants to come across</h3>
+<div class="callout">
+  <span class="label">In his own words — first impression</span>
+  <p>
+    "This is a serious developer who can build real-world full-stack
+    applications and is constantly pushing himself to learn and improve."
+  </p>
+</div>
+<div class="callout">
+  <span class="label">In his own words — what should be remembered</span>
+  <p>
+    "A hands-on full-stack developer who builds practical projects with Django
+    and React, understands how the pieces fit together, and has the curiosity
+    and persistence to keep getting better."
+  </p>
+</div>
+<p><strong>Tone he asked for:</strong> technical · professional · confident · friendly.</p>
+
+<h3>6.3 Five things he explicitly did not want</h3>
+<table>
+  <tr><th style="width:26%">Avoid</th><th>Why it matters to him</th></tr>
+  <tr><td><strong>Arrogance</strong></td><td>No "expert", no "master", no superlatives anywhere.</td></tr>
+  <tr><td><strong>"Just a student"</strong></td><td>His highest-priority guard. The degree is a credential, not a qualifier — no "aspiring", no apologetic framing. The title is <em>Software Engineer</em>.</td></tr>
+  <tr><td><strong>Generic template</strong></td><td>No purple gradients, no skill bars, no waving-hand greeting.</td></tr>
+  <tr><td><strong>Over-designed</strong></td><td>No particles, cursor trails or entry animations.</td></tr>
+  <tr><td><strong>Unfinished</strong></td><td>No broken links, no "coming soon", no placeholder text.</td></tr>
+</table>
+
+<!-- ============ 07 ============ -->
+<h2 class="page-break"><span class="num">07</span>Honest Assessment</h2>
+
+<p>
+  Written for whoever picks this up later — including Jahid himself. This is the
+  section that makes the document useful rather than flattering.
+</p>
+
+<h3>7.1 Genuine strengths</h3>
+<table>
+  <tr><th style="width:30%">Strength</th><th>Evidence</th></tr>
+  <tr><td><strong>Complete systems, repeatedly</strong></td><td>Five full applications, not five features. The consistency is the argument.</td></tr>
+  <tr><td><strong>Authorisation modelling</strong></td><td>Three-, three- and four-role systems with object-level scoping enforced at the API. Better understood than is typical pre-graduation.</td></tr>
+  <tr><td><strong>Relational schema design</strong></td><td>The MediDesk prescription decision is a real design judgement, correctly made and correctly explained.</td></tr>
+  <tr><td><strong>Failure-case thinking</strong></td><td>Gateway callbacks, stream termination, abandoned payments. The most senior-reading instinct he has.</td></tr>
+  <tr><td><strong>Calibrated self-assessment</strong></td><td>Rare and undervalued. Everything claimed survives questioning.</td></tr>
+</table>
+
+<h3>7.2 Real gaps — stated, not hidden</h3>
+<table>
+  <tr><th style="width:30%">Gap</th><th>Current position</th></tr>
+  <tr><td><strong>No production deployment</strong></td><td>Nothing of his is live. The highest-value gap to close, and the cheapest — deploying one project would materially strengthen the profile.</td></tr>
+  <tr><td><strong>No professional experience</strong></td><td>No jobs or internships. Only time and a first role fix this; the projects are the substitute.</td></tr>
+  <tr><td><strong>No team collaboration</strong></td><td>All five projects are solo. No pull request review, no shared codebase, no merge conflicts. Worth naming honestly if asked.</td></tr>
+  <tr><td><strong>Ops and CI/CD</strong></td><td>Working-to-familiar. Nginx, GitHub Actions and AWS are familiar-level, and untested in production.</td></tr>
+  <tr><td><strong>Frontend depth</strong></td><td>React is Strong, not Core. Deliberate — he is a backend engineer who can build a competent frontend, and presents himself that way.</td></tr>
+  <tr><td><strong>Testing on the five projects</strong></td><td>The portfolio site itself has 55 tests. Whether the five showcased projects have comparable coverage was never established — likely to be asked.</td></tr>
+</table>
+
+<h3>7.3 The highest-leverage next steps</h3>
+<ol>
+  <li><strong>Deploy one project — ideally MicroMart.</strong> A live URL alongside the case study converts the strongest narrative into something a reviewer can click. Single biggest return available.</li>
+  <li><strong>Record the walkthrough videos.</strong> Already the chosen plan. A recruiter who watches two minutes of a real system is past the credential question entirely.</li>
+  <li><strong>Finish the repository cleanup.</strong> The five repos are being reorganised and one URL is a known mismatch. Repos are checked more than portfolios are read.</li>
+  <li><strong>Add screenshots.</strong> Placeholders are designed rather than broken, but five real interfaces would do a great deal of work.</li>
+  <li><strong>Consider one collaborative contribution.</strong> Even a modest merged open-source PR would answer the only structural gap the projects cannot address alone.</li>
+</ol>
+
+<h3>7.4 Questions he should expect</h3>
+<ul class="tight">
+  <li><em>"Walk me through what happens when a payment callback arrives twice."</em> — He can answer this well. It is his best question.</li>
+  <li><em>"How do you stop one teacher reading another teacher's course?"</em> — Also strong; he has the object-level answer ready.</li>
+  <li><em>"Is any of this deployed?"</em> — Currently no. Worth answering directly, with the walkthrough videos offered.</li>
+  <li><em>"Have you worked in a team?"</em> — No. Best answered plainly rather than stretched.</li>
+  <li><em>"How much AI/ML do you actually know?"</em> — He should give the §4.2 answer verbatim: integration work, not model expertise. It is a credibility win, not a weakness.</li>
+  <li><em>"Do these projects have tests?"</em> — Unestablished. Worth checking before interviewing.</li>
+</ul>
+
+<!-- ============ 08 ============ -->
+<h2 class="page-break"><span class="num">08</span>Notes for Future Contributors</h2>
+
+<p>
+  If you are picking this project up — including Jahid returning after a gap —
+  these are the constraints that are <strong>binding</strong>, not stylistic
+  preferences.
+</p>
+
+<div class="callout">
+  <span class="label">Rule one</span>
+  <p>
+    <strong>Never invent anything.</strong> No jobs, companies, internships,
+    clients, awards, certifications, user counts, revenue, statistics, years of
+    experience, project features, technologies, achievements or testimonials.
+    Where information is missing, mark it <span class="mono">[CONTENT NEEDED]</span>
+    and ask. <strong>Authenticity outranks impressiveness</strong> — that was
+    Jahid's explicit instruction, chosen knowing the cost.
+  </p>
+</div>
+
+<table>
+  <tr><th style="width:32%">Standing exclusion</th><th>Reason</th></tr>
+  <tr><td>No AI/ML skills section</td><td>Learning stage. No RAG, embeddings, vector DBs, LangChain, agents or fine-tuning anywhere.</td></tr>
+  <tr><td>No "currently learning AI" line</td><td>Drafted once, then removed at his request. Do not reintroduce it.</td></tr>
+  <tr><td>No Experience section</td><td>Nothing genuine to put in it.</td></tr>
+  <tr><td>No Achievements section</td><td>Nothing significant to display.</td></tr>
+  <tr><td>CGPA not displayed</td><td>Stored with <span class="mono">show_result=False</span>. Recorded privately by design.</td></tr>
+  <tr><td>LeetCode count not displayed</td><td>Footer link only. The number invites comparison.</td></tr>
+  <tr><td>No skill percentages</td><td>Named levels only. Enforced by an automated test.</td></tr>
+  <tr><td>Title stays "Software Engineer"</td><td>Never "student", never "aspiring".</td></tr>
+</table>
+
+<h3>8.1 Two facts that look like errors but are not</h3>
+<table>
+  <tr><th style="width:32%">Looks wrong</th><th>Actually correct</th></tr>
+  <tr><td>MySQL is a featured skill, but the portfolio site runs PostgreSQL</td><td>Both are true. MySQL is his strongest database and MicroMart's; PostgreSQL is the portfolio <em>site's</em> own database, switched for hosting economics. Do not "fix" either into the other.</td></tr>
+  <tr><td>PromptCanvas's repo URL reads <span class="mono">tech-store-platform-django-react</span></td><td>A genuine known issue — a renamed repo or transcription error. Flagged as outstanding, awaiting his verification. Do not guess a replacement URL.</td></tr>
+</table>
+
+<h3>8.2 Still outstanding from him</h3>
+<ol class="tight">
+  <li>Screenshots for all five projects</li>
+  <li>YouTube walkthrough links</li>
+  <li>Résumé PDF</li>
+  <li>Verified repository URLs (PromptCanvas especially)</li>
+  <li>Deployment</li>
+  <li>Confirmation of which email address is the public one</li>
+</ol>
+<p>
+  Every one of these is wired to <strong>hide rather than break</strong> while
+  absent, and all are content changes through the Django admin — none require
+  code. The site is shippable now and improves as each arrives.
+</p>
+
+<footer class="doc-end">
+  <p>
+    <strong>Personal &amp; Professional Brief v1.0</strong> — Md. Jahid Hasan
+    Raihan · 12 September 2026. Every statement originates from Jahid's own
+    account during discovery, or from project state verified in the repository.
+    Assessments in §07 are interpretations of that evidence and are labelled as
+    such. Companion document: <span class="mono">docs/PORTFOLIO_PRD.pdf</span>.
+  </p>
+</footer>
+</body>
+</html>

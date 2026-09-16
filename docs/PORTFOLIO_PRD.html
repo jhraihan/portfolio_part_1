@@ -1,0 +1,1341 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Portfolio PRD — Md. Jahid Hasan Raihan</title>
+<style>
+  @page { size: A4; margin: 0; }
+  body { padding: 0 16mm; }
+
+  :root {
+    --ink: #14161a;
+    --ink-soft: #3d434d;
+    --ink-faint: #6b7280;
+    --accent: #c2281f;
+    --line: #d9dce2;
+    --line-soft: #eceef2;
+    --surface: #f7f8fa;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    font-family: "Segoe UI", -apple-system, "Helvetica Neue", Arial, sans-serif;
+    font-size: 9.6pt;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    margin: 0;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  h1, h2, h3, h4 { color: var(--ink); margin: 0; font-weight: 600; }
+
+  /* ---------- Cover ---------- */
+  .cover {
+    height: 247mm;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    page-break-after: always;
+  }
+  .cover .rule { width: 54px; height: 3px; background: var(--accent); margin-bottom: 26px; }
+  .cover .kicker {
+    font-family: "Consolas", "Courier New", monospace;
+    font-size: 8.5pt; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 14px;
+  }
+  .cover h1 { font-size: 30pt; line-height: 1.1; letter-spacing: -0.02em; }
+  .cover .sub { font-size: 13pt; color: var(--ink-faint); margin-top: 10px; font-weight: 400; }
+  .cover .meta {
+    margin-top: 46px; padding-top: 18px; border-top: 1px solid var(--line);
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px 32px;
+    font-size: 9pt;
+  }
+  .cover .meta dt {
+    font-family: "Consolas", "Courier New", monospace;
+    font-size: 7.6pt; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--ink-faint); margin-bottom: 3px;
+  }
+  .cover .meta dd { margin: 0; color: var(--ink); font-weight: 500; }
+  .cover .note {
+    margin-top: 38px; padding: 14px 16px; background: var(--surface);
+    border-left: 3px solid var(--accent); font-size: 9pt;
+  }
+
+  /* ---------- Sections ---------- */
+  section { page-break-inside: auto; }
+  h2 {
+    font-size: 15pt; letter-spacing: -0.01em;
+    margin: 26px 0 12px; padding-bottom: 7px;
+    border-bottom: 1.5px solid var(--ink);
+    page-break-after: avoid;
+  }
+  h2 .num {
+    font-family: "Consolas", "Courier New", monospace;
+    font-size: 10pt; color: var(--accent); margin-right: 9px; font-weight: 600;
+  }
+  h3 {
+    font-size: 10.8pt; margin: 18px 0 7px;
+    page-break-after: avoid;
+  }
+  h4 {
+    font-size: 9.6pt; margin: 13px 0 5px;
+    color: var(--ink);
+    page-break-after: avoid;
+  }
+  p { margin: 0 0 8px; }
+  ul, ol { margin: 0 0 9px; padding-left: 17px; }
+  li { margin-bottom: 3.5px; }
+  strong { color: var(--ink); font-weight: 600; }
+  code, .mono {
+    font-family: "Consolas", "Courier New", monospace;
+    font-size: 8.6pt;
+    background: var(--surface);
+    padding: 1px 4px;
+    border-radius: 3px;
+    color: var(--ink);
+  }
+
+  /* ---------- Tables ---------- */
+  table {
+    width: 100%; border-collapse: collapse; margin: 9px 0 14px;
+    font-size: 8.9pt; page-break-inside: avoid;
+  }
+  th {
+    text-align: left; padding: 6px 9px;
+    background: var(--ink); color: #fff; font-weight: 600;
+    font-size: 8.2pt; letter-spacing: 0.04em; text-transform: uppercase;
+  }
+  td { padding: 5.5px 9px; border-bottom: 1px solid var(--line-soft); vertical-align: top; }
+  tr:nth-child(even) td { background: #fbfcfd; }
+  td.mono-cell {
+    font-family: "Consolas", "Courier New", monospace;
+    font-size: 8.3pt; color: var(--ink);
+  }
+
+  /* ---------- Callouts ---------- */
+  .callout {
+    background: var(--surface); border-left: 3px solid var(--accent);
+    padding: 11px 14px; margin: 11px 0 14px; font-size: 9.2pt;
+    page-break-inside: avoid;
+  }
+  .callout.rule-box { border-left-color: var(--ink); }
+  .callout p:last-child { margin-bottom: 0; }
+  .callout .label {
+    font-family: "Consolas", "Courier New", monospace;
+    font-size: 7.6pt; letter-spacing: 0.13em; text-transform: uppercase;
+    color: var(--accent); display: block; margin-bottom: 5px; font-weight: 600;
+  }
+  .callout.rule-box .label { color: var(--ink); }
+
+  /* ---------- Code block ---------- */
+  pre {
+    background: #16181d; color: #e6e8ec;
+    padding: 11px 13px; border-radius: 5px;
+    font-family: "Consolas", "Courier New", monospace;
+    font-size: 8.1pt; line-height: 1.5;
+    overflow: visible; white-space: pre-wrap; word-break: break-word;
+    margin: 8px 0 13px;
+    page-break-inside: avoid;
+  }
+  pre .c { color: #8b929e; }
+
+  /* ---------- Project block ---------- */
+  .project {
+    border: 1px solid var(--line); border-radius: 6px;
+    padding: 14px 16px; margin: 13px 0;
+    page-break-inside: avoid;
+  }
+  .project-head {
+    display: flex; justify-content: space-between; align-items: baseline;
+    gap: 12px; border-bottom: 1px solid var(--line-soft);
+    padding-bottom: 7px; margin-bottom: 9px;
+  }
+  .project-head h3 { margin: 0; font-size: 11.5pt; }
+  .badge {
+    font-family: "Consolas", "Courier New", monospace;
+    font-size: 7.4pt; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--accent); border: 1px solid var(--accent);
+    padding: 2px 6px; border-radius: 3px; white-space: nowrap;
+  }
+  .flow {
+    font-family: "Consolas", "Courier New", monospace;
+    font-size: 8.4pt; background: var(--surface);
+    padding: 7px 10px; border-radius: 4px; margin: 8px 0;
+    color: var(--ink);
+  }
+  .kv { margin: 7px 0; font-size: 9pt; }
+  .kv dt {
+    font-family: "Consolas", "Courier New", monospace;
+    font-size: 7.6pt; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--ink-faint); margin-top: 7px;
+  }
+  .kv dd { margin: 2px 0 0; }
+
+  .two-col { column-count: 2; column-gap: 22px; }
+  .two-col ul { margin-top: 0; }
+
+  .page-break { page-break-before: always; }
+  .avoid-break { page-break-inside: avoid; }
+
+  .toc { font-size: 9.4pt; }
+  .toc li { margin-bottom: 5px; }
+  .toc .sub-item { color: var(--ink-faint); font-size: 8.8pt; }
+
+  footer.doc-end {
+    margin-top: 30px; padding-top: 12px; border-top: 1px solid var(--line);
+    font-size: 8.4pt; color: var(--ink-faint);
+  }
+</style>
+</head>
+<body>
+
+<!-- ============================ COVER ============================ -->
+<div class="cover">
+  <div class="rule"></div>
+  <p class="kicker">Product Requirements Document</p>
+  <h1>Developer Portfolio</h1>
+  <p class="sub">Md. Jahid Hasan Raihan — Software Engineer</p>
+
+  <dl class="meta">
+    <div><dt>Document version</dt><dd>1.2</dd></div>
+    <div><dt>Date</dt><dd>12 September 2026</dd></div>
+    <div><dt>Status</dt><dd>Built &amp; verified · Not yet deployed</dd></div>
+    <div><dt>Owner</dt><dd>Md. Jahid Hasan Raihan</dd></div>
+    <div><dt>Stack</dt><dd>Django 5 · DRF · React 18 · Vite · PostgreSQL</dd></div>
+    <div><dt>Repository</dt><dd>github.com/jhraihan</dd></div>
+  </dl>
+
+  <div class="note">
+    <strong>Purpose of this document.</strong> A complete reference for the
+    portfolio project — who it represents, why each decision was made, how the
+    system is built, and what remains outstanding. It is written so that a
+    contributor with no prior context (including the author returning after a
+    long gap) can pick the work up without re-deriving anything.
+  </div>
+</div>
+
+<!-- ============================ TOC ============================ -->
+<h2><span class="num">00</span>Contents</h2>
+<ol class="toc">
+  <li><strong>Product Overview</strong> — problem, goals, success criteria, non-goals</li>
+  <li><strong>Subject Profile</strong> — identity, education, journey, skills, career direction</li>
+  <li><strong>Content Authenticity Rules</strong> — the binding constraints on all content</li>
+  <li><strong>Information Architecture</strong> — sitemap, page specifications</li>
+  <li><strong>Project Portfolio</strong> — all five case studies in detail</li>
+  <li><strong>Design System</strong> — palette, typography, spacing, motion</li>
+  <li><strong>Technical Architecture</strong> — stack, data model, API, frontend structure</li>
+  <li><strong>Feature Specifications</strong> — behaviour of each implemented feature</li>
+  <li><strong>Content Management</strong> — how the owner edits the site</li>
+  <li><strong>Quality Requirements</strong> — accessibility, performance, SEO, security</li>
+  <li><strong>Testing</strong> — coverage and what is asserted</li>
+  <li><strong>Deployment</strong> — target platforms and procedure</li>
+  <li><strong>Outstanding Work</strong> — what is missing and who owns it</li>
+  <li><strong>Decision Log</strong> — significant choices and their rationale</li>
+  <li><strong>Appendix</strong> — file map, commands, credentials policy</li>
+  <li><strong>Revision Notes</strong> — what each revision corrected, and why</li>
+</ol>
+
+<!-- ============================ 01 ============================ -->
+<h2 class="page-break"><span class="num">01</span>Product Overview</h2>
+
+<h3>1.1 Problem statement</h3>
+<p>
+  A final-year Computer Science student with five substantial, self-built
+  applications and no professional employment history needs a way to be
+  evaluated on engineering ability rather than on résumé length. A conventional
+  CV compresses five complete systems into five bullet points and discards
+  everything that makes them evidence: the architecture, the trade-offs, and the
+  problems that were genuinely hard to solve.
+</p>
+<p>
+  The portfolio exists to close that gap. It is the artefact a recruiter or
+  engineering manager reads instead of, or alongside, the CV.
+</p>
+
+<h3>1.2 Target audience</h3>
+<table>
+  <tr><th style="width:26%">Audience</th><th style="width:34%">What they need</th><th>How the site serves it</th></tr>
+  <tr>
+    <td><strong>Technical recruiters</strong></td>
+    <td>Fast confirmation of stack, level, and location fit</td>
+    <td>Hero states name, title, stack and availability above the fold; project cards are scannable</td>
+  </tr>
+  <tr>
+    <td><strong>Engineering managers</strong></td>
+    <td>Evidence of real capability and judgement</td>
+    <td>Six-section case studies with architecture diagrams and an explicit "hardest problem" per project</td>
+  </tr>
+  <tr>
+    <td><strong>Senior engineers (interview panel)</strong></td>
+    <td>Something concrete to ask about</td>
+    <td>Request-flow diagrams, stated trade-offs, honest skill levels that hold up under questioning</td>
+  </tr>
+</table>
+
+<h3>1.3 Goals</h3>
+<table>
+  <tr><th style="width:8%">#</th><th style="width:46%">Goal</th><th>Success criterion</th></tr>
+  <tr><td class="mono-cell">G1</td><td>A reader understands who the subject is within ten seconds</td><td>Name, title, core stack and availability all visible without scrolling</td></tr>
+  <tr><td class="mono-cell">G2</td><td>Projects read as engineering, not as a gallery</td><td>Every project has problem, approach, architecture, hardest problem and lessons</td></tr>
+  <tr><td class="mono-cell">G3</td><td>Nothing on the site can be contradicted in an interview</td><td>Every claim traces to something the subject stated or built</td></tr>
+  <tr><td class="mono-cell">G4</td><td>Content is editable without touching code</td><td>All copy, links, media and skills are managed through Django admin</td></tr>
+  <tr><td class="mono-cell">G5</td><td>The site itself demonstrates competence</td><td>Built in the stack it advertises; fast, accessible, tested</td></tr>
+  <tr><td class="mono-cell">G6</td><td>Missing assets never look like defects</td><td>Empty fields hide their sections entirely; no "coming soon" states</td></tr>
+</table>
+
+<h3>1.4 Explicit non-goals</h3>
+<ul>
+  <li><strong>Not a blog.</strong> Rejected — the owner is not committed to writing regularly, and a stale blog is worse than none.</li>
+  <li><strong>Not an AI showcase.</strong> No AI/ML skills section, no chatbot assistant. The owner is at the learning stage and declined to claim otherwise.</li>
+  <li><strong>Not a design showpiece.</strong> Motion supports hierarchy and never precedes content. No particle fields, cursor trails, or entry animations.</li>
+  <li><strong>Not a CV replacement.</strong> A résumé PDF is offered as a download; the site does not attempt to replicate it.</li>
+</ul>
+
+<h3>1.5 Positioning statement</h3>
+<div class="callout">
+  <span class="label">One-line positioning</span>
+  <p><strong>A software engineer who builds complete, production-shaped web
+  applications — not features in isolation.</strong></p>
+  <p style="margin-top:7px">
+    Supported by five systems that each carry authentication, role-based access
+    control, a relational schema, and a decoupled React client talking to a REST
+    API. The repetition is the argument: this is a consistent competency, not a
+    single lucky project.
+  </p>
+</div>
+
+<!-- ============================ 02 ============================ -->
+<h2 class="page-break"><span class="num">02</span>Subject Profile</h2>
+
+<p>
+  Everything in this section was supplied directly by the subject during a
+  structured discovery interview. It is the only permitted source for content
+  on the site.
+</p>
+
+<h3>2.1 Identity</h3>
+<table>
+  <tr><th style="width:28%">Field</th><th>Value</th></tr>
+  <tr><td>Full name</td><td>Md. Jahid Hasan Raihan</td></tr>
+  <tr><td>Display name</td><td>Md. Jahid Hasan Raihan (full form, in hero and browser tab)</td></tr>
+  <tr><td>Professional title</td><td>Software Engineer</td></tr>
+  <tr><td>Location</td><td>Dhaka, Bangladesh — displayed publicly</td></tr>
+  <tr><td>Public email</td><td class="mono-cell">jahidhr05@gmail.com <span style="color:var(--accent)">— see O9</span></td></tr>
+  <tr><td>Availability</td><td>Open to remote, hybrid and onsite roles</td></tr>
+  <tr><td>Geography</td><td>Bangladesh and international</td></tr>
+  <tr><td>GitHub</td><td class="mono-cell">github.com/jhraihan</td></tr>
+  <tr><td>LinkedIn</td><td class="mono-cell">linkedin.com/in/md-jahid-hasan-raihan-745023393</td></tr>
+  <tr><td>LeetCode</td><td class="mono-cell">leetcode.com/u/Jahid_Hasan_Raihan/ — ~150 problems, count not displayed</td></tr>
+</table>
+
+<h3>2.2 Education</h3>
+<table>
+  <tr><th style="width:28%">Field</th><th>Value</th></tr>
+  <tr><td>Degree</td><td>BSc in Computer Science and Engineering</td></tr>
+  <tr><td>Institution</td><td>Independent University, Bangladesh</td></tr>
+  <tr><td>Duration</td><td>2022 → December 2026 (expected)</td></tr>
+  <tr><td>Standing</td><td>Final year</td></tr>
+  <tr><td>CGPA</td><td>3.30 — <strong>stored privately, not displayed</strong> (<code>show_result = False</code>)</td></tr>
+  <tr><td>Coursework shown</td><td>Data Structures · Algorithms · DBMS · Operating Systems · Computer Networks · OOP · Software Engineering</td></tr>
+  <tr><td>Thesis</td><td>None</td></tr>
+  <tr><td>Prior education</td><td>HSC/SSC deliberately omitted</td></tr>
+</table>
+
+<h3>2.3 Development journey</h3>
+<p>
+  Programming began with the CSE degree in 2022 — not before it. The subject
+  chose Computer Science out of genuine interest in the field, and coding became
+  the part that held. Most knowledge beyond coursework is self-taught, primarily
+  through online courses and iterative building.
+</p>
+<div class="flow">
+  Python → DSA &amp; Algorithms → Django → Django REST Framework → Databases (MySQL, SQLite, PostgreSQL) → React
+</div>
+<p>
+  Django was chosen because Python already felt natural, and because it enabled
+  building complete applications rather than fragments. Data structures and
+  algorithms remain the practice ground for problem-solving; ~150 LeetCode
+  problems solved to date.
+</p>
+
+<h3>2.4 Technical skills</h3>
+<p>
+  Skills are classified by named level, never by percentage. A numeric bar
+  implies a precision that does not exist and invites a comparison that cannot
+  be won. Levels are ordered: <code>Core</code> → <code>Strong</code> →
+  <code>Working Knowledge</code> → <code>Familiar</code> →
+  <code>Currently Learning</code> → <code>Exploring</code>.
+</p>
+
+<table>
+  <tr><th style="width:20%">Category</th><th style="width:14%">Core</th><th style="width:22%">Strong</th><th style="width:22%">Working</th><th>Familiar</th></tr>
+  <tr>
+    <td><strong>Languages</strong></td>
+    <td>Python</td>
+    <td>SQL, HTML, CSS</td>
+    <td>JavaScript</td>
+    <td>Java</td>
+  </tr>
+  <tr>
+    <td><strong>Backend</strong></td>
+    <td>Django, Django REST Framework, Django ORM</td>
+    <td>REST API design, Authentication (JWT / session / OAuth)</td>
+    <td>—</td>
+    <td>FastAPI, Node.js</td>
+  </tr>
+  <tr>
+    <td><strong>Frontend</strong></td>
+    <td>—</td>
+    <td>React, React Router, Fetch API</td>
+    <td>Tailwind CSS, Context API, Vite, Bootstrap</td>
+    <td>Next.js</td>
+  </tr>
+  <tr>
+    <td><strong>Databases</strong></td>
+    <td>—</td>
+    <td>MySQL, PostgreSQL, SQLite, Database design &amp; normalisation</td>
+    <td>Query optimisation</td>
+    <td>—</td>
+  </tr>
+  <tr>
+    <td><strong>DevOps</strong></td>
+    <td>—</td>
+    <td>Git, GitHub, Environment management</td>
+    <td>Linux, Vercel / Netlify, Railway / Render / PythonAnywhere</td>
+    <td>Nginx, GitHub Actions, AWS</td>
+  </tr>
+  <tr>
+    <td><strong>Tools</strong></td>
+    <td>—</td>
+    <td>VS Code, Postman, Git CLI, AI coding tools</td>
+    <td>pgAdmin / MySQL Workbench</td>
+    <td>Figma</td>
+  </tr>
+</table>
+
+<p><strong>Featured five</strong> (surfaced most prominently):
+Django · Django REST Framework · React · MySQL · Python.</p>
+
+<h3>2.5 Experience and achievements</h3>
+<div class="callout rule-box">
+  <span class="label">Deliberate absence</span>
+  <p>
+    The subject has <strong>no professional experience</strong> — no jobs,
+    internships, freelance or client work — and <strong>no certifications,
+    competitions or awards</strong> to display. Both facts were confirmed
+    explicitly.
+  </p>
+  <p style="margin-top:6px">
+    The site therefore has <strong>no Experience section and no Achievements
+    section</strong>. Empty sections were rejected as worse than absent ones,
+    and fabricated content was ruled out entirely. The portfolio carries its
+    weight through projects and demonstrated technical depth instead — which is
+    both honest and normal for a final-year student.
+  </p>
+</div>
+
+<h3>2.6 Engineering philosophy</h3>
+<p>Stated priorities, in the subject's own ordering:
+<strong>clean code · performance · correct architecture</strong>.</p>
+<p>
+  Long-term direction: to become an <strong>AI-native software engineer</strong>
+  — building software where modern AI is a first-class part of the system rather
+  than an afterthought. This is recorded as a goal and, at the subject's
+  instruction, is <strong>not stated on the site</strong>.
+</p>
+
+<h3>2.7 Career target</h3>
+<table>
+  <tr><th style="width:28%">Dimension</th><th>Target</th></tr>
+  <tr><td>Roles</td><td>Junior Software Engineer · Backend Developer · Full-Stack Developer · Django Developer · Internship</td></tr>
+  <tr><td>Geography</td><td>Bangladesh and international</td></tr>
+  <tr><td>Company type</td><td>No preference — startup, established, or agency</td></tr>
+  <tr><td>Work mode</td><td>No preference — remote, hybrid or onsite</td></tr>
+  <tr><td>Industry</td><td>No preference</td></tr>
+  <tr><td>Availability</td><td>Graduating December 2026</td></tr>
+</table>
+
+<h3>2.8 Brand requirements</h3>
+<p><strong>Intended ten-second impression:</strong> "This is a serious developer
+who can build real-world full-stack applications and is constantly pushing
+himself to learn and improve."</p>
+<p><strong>Intended lasting memory:</strong> "A hands-on full-stack developer who
+builds practical projects with Django and React, understands how the pieces fit
+together, and has the curiosity and persistence to keep getting better."</p>
+<p><strong>Tone:</strong> technical · professional · confident · friendly.</p>
+
+<!-- ============================ 03 ============================ -->
+<h2 class="page-break"><span class="num">03</span>Content Authenticity Rules</h2>
+
+<p>
+  These constraints override every other consideration, including making the
+  subject look more impressive. They were agreed explicitly and are binding on
+  all future contributors.
+</p>
+
+<h3>3.1 Prohibited content</h3>
+<div class="callout">
+  <span class="label">Never invent</span>
+  <p>
+    Jobs · companies · internships · clients · awards · certifications · user
+    counts · revenue · statistics · years of experience · project features ·
+    technologies · achievements · testimonials.
+  </p>
+  <p style="margin-top:6px">
+    Where information is missing, mark it <code>[CONTENT NEEDED]</code> and ask
+    the owner. <strong>Authenticity outranks impressiveness.</strong>
+  </p>
+</div>
+
+<h3>3.2 Standing exclusions</h3>
+<table>
+  <tr><th style="width:32%">Excluded</th><th>Reason</th></tr>
+  <tr><td><strong>AI / ML skills section</strong></td><td>Owner is at the learning stage. No RAG, embeddings, vector databases, LangChain, agents or fine-tuning may appear as skills.</td></tr>
+  <tr><td><strong>"Currently learning AI" line</strong></td><td>Explicitly removed at the owner's request, after being drafted.</td></tr>
+  <tr><td><strong>AI portfolio assistant</strong></td><td>Proposed and declined.</td></tr>
+  <tr><td><strong>Experience section</strong></td><td>No professional history exists.</td></tr>
+  <tr><td><strong>Achievements section</strong></td><td>Nothing significant to display.</td></tr>
+  <tr><td><strong>CGPA</strong></td><td>Stored but withheld from the API unless <code>show_result</code> is enabled.</td></tr>
+  <tr><td><strong>LeetCode count</strong></td><td>Footer link only; the number invites comparison.</td></tr>
+  <tr><td><strong>Skill percentages</strong></td><td>Named levels only — see §2.4.</td></tr>
+</table>
+
+<h3>3.3 Permitted AI framing</h3>
+<p>
+  Two projects (IntelliChat, PromptCanvas) integrate external model APIs. They
+  are described <strong>factually, as projects</strong> — what they do and how
+  they work. This is a description of shipped software, not a claim of AI
+  expertise, and the distinction must be preserved.
+</p>
+
+<h3>3.4 Design failure modes to avoid</h3>
+<p>The owner explicitly asked the site to guard against all five:</p>
+<table>
+  <tr><th style="width:22%">Failure mode</th><th style="width:38%">How it manifests</th><th>Countermeasure applied</th></tr>
+  <tr><td><strong>Arrogance</strong></td><td>"Expert", "master", superlatives</td><td>Factual copy only; no superlatives anywhere</td></tr>
+  <tr><td><strong>"Just a student"</strong></td><td>Apologetic language, "aspiring", timid type</td><td>Presented as a software engineer; degree is a credential, not a qualifier. <em>Highest-priority guard.</em></td></tr>
+  <tr><td><strong>Generic template</strong></td><td>Purple gradients, skill bars, "Hi, I'm 👋"</td><td>Custom design system; architecture diagrams; named skill levels</td></tr>
+  <tr><td><strong>Over-designed</strong></td><td>Particles, cursor trails, entry animations</td><td>Motion limited to fades, reveals and hover states</td></tr>
+  <tr><td><strong>Unfinished</strong></td><td>Broken links, "coming soon", placeholder text</td><td>Empty fields hide their section entirely; no dead buttons</td></tr>
+</table>
+
+<!-- ============================ 04 ============================ -->
+<h2 class="page-break"><span class="num">04</span>Information Architecture</h2>
+
+<h3>4.1 Sitemap</h3>
+<p>Six routes are defined in <code>frontend/src/App.jsx</code> — five real pages
+plus the catch-all 404. With five project slugs, that resolves to
+<strong>10 reachable pages</strong> and <strong>9 indexable URLs</strong>.</p>
+<pre>/                       Home
+/projects               Project index, filterable by technology
+/projects/&lt;slug&gt;        Case study            × 5
+/about                  About, education, full skills
+/contact                Contact form and direct links
+*                       404</pre>
+
+<h3>4.2 Home page composition</h3>
+<table>
+  <tr><th style="width:6%">#</th><th style="width:24%">Section</th><th>Purpose and content</th></tr>
+  <tr><td class="mono-cell">1</td><td><strong>Hero</strong></td><td>Availability pill, name at display scale, title, rotating typewriter line, intro paragraph, primary actions, photo with three factual stat cards</td></tr>
+  <tr><td class="mono-cell">2</td><td><strong>Featured projects</strong></td><td>All five project cards in a responsive grid</td></tr>
+  <tr><td class="mono-cell">3</td><td><strong>Systems, not screens</strong></td><td>Four engineering principles, each traceable to shipped code</td></tr>
+  <tr><td class="mono-cell">4</td><td><strong>What I work with</strong></td><td>Six skill categories with level legend, plus university coursework</td></tr>
+  <tr><td class="mono-cell">5</td><td><strong>About preview</strong></td><td>Condensed bio and education card</td></tr>
+  <tr><td class="mono-cell">6</td><td><strong>Contact CTA</strong></td><td>Closing call to action with direct email</td></tr>
+</table>
+
+<h4>Hero typewriter content</h4>
+<p>Cycles five phrases, each factually true of the projects below:</p>
+<pre>REST APIs with Django &amp; DRF
+role-based access control
+relational database schemas
+JWT authentication flows
+decoupled React frontends</pre>
+
+<h4>Hero statistics</h4>
+<p>Three counters, all verifiable and none invented:</p>
+<table>
+  <tr><th style="width:16%">Value</th><th style="width:34%">Label</th><th>Basis</th></tr>
+  <tr><td class="mono-cell">5</td><td>full applications</td><td>Count of completed projects</td></tr>
+  <tr><td class="mono-cell">4</td><td>databases used</td><td>MySQL, PostgreSQL, SQLite, Redis</td></tr>
+  <tr><td class="mono-cell">150+</td><td>LeetCode problems</td><td>Owner-reported</td></tr>
+</table>
+
+<h3>4.3 Case study structure</h3>
+<p>Each of the five case studies renders up to six numbered sections. Numbering
+counts only sections that actually render, so a missing section never leaves a
+gap in the sequence.</p>
+<table>
+  <tr><th style="width:8%">#</th><th style="width:24%">Section</th><th>Content</th></tr>
+  <tr><td class="mono-cell">01</td><td>The problem</td><td>What the system solves and why it was built</td></tr>
+  <tr><td class="mono-cell">02</td><td>The approach</td><td>Architecture chosen and why</td></tr>
+  <tr><td class="mono-cell">03</td><td>Features</td><td>Complete feature list, two columns</td></tr>
+  <tr><td class="mono-cell">04</td><td>Architecture</td><td>Request-flow diagram plus prose</td></tr>
+  <tr><td class="mono-cell">05</td><td>Hardest problem</td><td>The genuinely difficult problem and its resolution</td></tr>
+  <tr><td class="mono-cell">06</td><td>What I learned</td><td>Transferable lesson</td></tr>
+</table>
+<p>Followed conditionally by: video walkthrough (if a URL exists) and
+screenshot gallery (if images exist). A persistent sidebar shows the stack.</p>
+
+<!-- ============================ 05 ============================ -->
+<h2 class="page-break"><span class="num">05</span>Project Portfolio</h2>
+
+<p>Five projects, all solo, all complete, all with public repositories. Display
+order is fixed and set by the owner.</p>
+
+<table>
+  <tr><th style="width:6%">#</th><th style="width:18%">Project</th><th style="width:26%">Type</th><th style="width:10%">Features</th><th>Core stack</th></tr>
+  <tr><td class="mono-cell">1</td><td><strong>MicroMart</strong></td><td>E-commerce platform</td><td class="mono-cell">15</td><td>React · Django · DRF · MySQL · JWT · SSLCommerz</td></tr>
+  <tr><td class="mono-cell">2</td><td><strong>EduFlow</strong></td><td>Learning management system</td><td class="mono-cell">8</td><td>React · Vite · Tailwind · DRF · JWT</td></tr>
+  <tr><td class="mono-cell">3</td><td><strong>IntelliChat</strong></td><td>Streaming AI chat</td><td class="mono-cell">5</td><td>React · Django · PostgreSQL · Redis · SSE · Gemini</td></tr>
+  <tr><td class="mono-cell">4</td><td><strong>MediDesk</strong></td><td>Hospital management</td><td class="mono-cell">7</td><td>React · Django · DRF · JWT</td></tr>
+  <tr><td class="mono-cell">5</td><td><strong>PromptCanvas</strong></td><td>Text-to-image generation</td><td class="mono-cell">3</td><td>React · Django · PostgreSQL · Hugging Face</td></tr>
+</table>
+
+<div class="callout">
+  <span class="label">The pattern</span>
+  <p>
+    Every project is a role-based, multi-actor system with authentication, a
+    relational database, and a decoupled React/DRF architecture. That
+    repetition — not any single project — is the portfolio's central claim.
+  </p>
+</div>
+
+<!-- ---- Project 1 ---- -->
+<div class="project">
+  <div class="project-head">
+    <h3>1. MicroMart</h3>
+    <span class="badge">E-commerce</span>
+  </div>
+  <p><em>Multi-role e-commerce platform with integrated payments.</em></p>
+
+  <div class="flow">React SPA → Django + DRF (JWT verified) → MySQL &nbsp;·&nbsp; branch: SSLCommerz</div>
+
+  <dl class="kv">
+    <dt>Problem</dt>
+    <dd>A working e-commerce system is several overlapping applications. Customer, seller and administrator each need a different view of the same data with different permissions over it.</dd>
+
+    <dt>Approach</dt>
+    <dd>Fully decoupled: React SPA holding no server state, Django + DRF API owning all of it, MySQL underneath. JWT identifies which of three user types is making each request. Payments via SSLCommerz.</dd>
+
+    <dt>Hardest problem</dt>
+    <dd>The complete order and payment workflow. Taking a payment is simple in isolation; keeping order, inventory and payment state consistent is not. Users abandon payments mid-flow, gateway callbacks arrive late or twice, and inventory must not be decremented for an unpaid order. Defining the states and their legal transitions was the bulk of the work.</dd>
+
+    <dt>Lesson</dt>
+    <dd>The interesting part of a feature is usually its failure cases. Once order states were explicit, most conditional logic scattered through the views disappeared.</dd>
+
+    <dt>Features (15)</dt>
+    <dd>Registration &amp; authentication · product search · voice search · shopping cart · payment processing · product reviews · order tracking · store management · product &amp; inventory management · sales analytics · pricing management · user management · complaint management · fraud monitoring · seller verification</dd>
+
+    <dt>Repository</dt>
+    <dd class="mono-cell">github.com/jhraihan/MicroMart</dd>
+  </dl>
+</div>
+
+<!-- ---- Project 2 ---- -->
+<div class="project">
+  <div class="project-head">
+    <h3>2. EduFlow</h3>
+    <span class="badge">EdTech</span>
+  </div>
+  <p><em>Role-based learning management system.</em></p>
+
+  <div class="flow">React + Vite (role-aware UI) → DRF (permission layer) → Database</div>
+
+  <dl class="kv">
+    <dt>Problem</dt>
+    <dd>A learning platform is defined by who may do what. Teacher, student and administrator act on the same records with very different rights.</dd>
+
+    <dt>Approach</dt>
+    <dd>Role-based access control across three roles, enforced at the API and reflected in the interface. JWT authentication with lookup by phone number. Client state deliberately handled by native React hooks with no external state library.</dd>
+
+    <dt>Hardest problem</dt>
+    <dd>Keeping one set of permission rules authoritative. Every endpoint must answer two questions, not one: may this user perform this action, and on which records. Answering only the first leaves a teacher able to reach another teacher's course by changing an id in the URL. The resolution: the interface never decides access — the API scopes every queryset by role, and the frontend hides controls purely as a convenience.</dd>
+
+    <dt>Lesson</dt>
+    <dd>Roles designed in from the start stay in one place; roles added afterwards become scattered conditionals. Building the frontend with only useState, useEffect and Context established firsthand where that stops being sufficient — for this size of application, it never did.</dd>
+
+    <dt>Features (8)</dt>
+    <dd>Role-based access control · phone-based JWT authentication · course &amp; lesson management · assignments &amp; submissions · enrolment management · results · server-driven notifications · confirmation dialogs</dd>
+
+    <dt>Repository</dt>
+    <dd class="mono-cell">github.com/jhraihan/Learning-Management-System-django-react</dd>
+  </dl>
+</div>
+
+<!-- ---- Project 3 ---- -->
+<div class="project">
+  <div class="project-head">
+    <h3>3. IntelliChat</h3>
+    <span class="badge">AI Application</span>
+  </div>
+  <p><em>Streaming AI chat application with persistent conversations.</em></p>
+
+  <div class="flow">React (SSE listener) → Django (stream relay) → PostgreSQL &nbsp;·&nbsp; branch: Gemini API</div>
+
+  <dl class="kv">
+    <dt>Problem</dt>
+    <dd>A chat interface that waits for a complete model response before showing anything feels broken even when working. The response must arrive progressively and survive a page reload — both requirements change how the backend is built.</dd>
+
+    <dt>Approach</dt>
+    <dd>Django streams the model response over Server-Sent Events rather than returning a completed reply. Conversations and messages persist in PostgreSQL. Responses render as Markdown with syntax highlighting and a copy-code control.</dd>
+
+    <dt>Architecture detail</dt>
+    <dd>React posts to <code>/api/chat/</code>. Django calls Gemini and streams back a sequence: a <code>meta</code> event, repeated <code>delta</code> events carrying generated text, then a terminating <code>done</code> or <code>error</code> event.</dd>
+
+    <dt>Hardest problem</dt>
+    <dd>Streaming abandons the familiar request/response shape — the connection stays open while text arrives in fragments. A stream can also end in more than one way: complete, fail midway, or the client disconnects during generation. The explicit event protocol exists so the frontend always knows which occurred, rather than inferring it from a stream that simply stopped.</dd>
+
+    <dt>Lesson</dt>
+    <dd>A persistence layer changes what an interface can promise: once conversations were stored rather than held in memory, a reload stopped being a data-loss event. Designing the client/server protocol first made both sides straightforward.</dd>
+
+    <dt>Features (5)</dt>
+    <dd>Token-by-token streaming over SSE · persistent conversations · Markdown rendering · syntax highlighting with copy-code · authentication surviving reload</dd>
+
+    <dt>Repository</dt>
+    <dd class="mono-cell">github.com/jhraihan/llm_powered_ai_chatbot</dd>
+  </dl>
+</div>
+
+<!-- ---- Project 4 ---- -->
+<div class="project">
+  <div class="project-head">
+    <h3>4. MediDesk</h3>
+    <span class="badge">Healthcare</span>
+  </div>
+  <p><em>Hospital management system with four-role access control.</em></p>
+
+  <div class="flow">React (4 role views) → Django + DRF (JWT + RBAC) → Database</div>
+
+  <dl class="kv">
+    <dt>Problem</dt>
+    <dd>Hospital workflows are a permissions problem before they are a software problem. A receptionist books appointments but must not read clinical notes; a doctor issues prescriptions but does not manage billing; a patient sees only their own records.</dd>
+
+    <dt>Approach</dt>
+    <dd>JWT authentication with module access restricted by role across four roles. Appointments, prescriptions, records, billing and a medicine catalogue each expose only permitted operations.</dd>
+
+    <dt>Hardest problem</dt>
+    <dd>Modelling a prescription properly. Storing it as text would have been quick, but a prescription is genuinely structured: one consultation links to several medicines, each with its own dosage and duration. Four roles also made access control harder than the three-role projects — each module had to be reasoned about separately rather than governed by one blanket rule.</dd>
+
+    <dt>Lesson</dt>
+    <dd>The schema decides what the application can do later. Because prescriptions were modelled as real relations, catalogue search and dosage linking came almost for free; a text field would have required a migration and a rewrite. An appointment is also a lifecycle, not a row — booked, approved, completed and cancelled are states with rules about legal transitions.</dd>
+
+    <dt>Features (7)</dt>
+    <dd>Four-role JWT authentication · appointment management with filtering · structured prescriptions · doctor &amp; patient portals · real-time availability toggle · billing &amp; invoicing · searchable medicine inventory</dd>
+
+    <dt>Repository</dt>
+    <dd class="mono-cell">github.com/jhraihan/hospital-management-system-django-react</dd>
+  </dl>
+</div>
+
+<!-- ---- Project 5 ---- -->
+<div class="project">
+  <div class="project-head">
+    <h3>5. PromptCanvas</h3>
+    <span class="badge">AI Application</span>
+  </div>
+  <p><em>Text-to-image generation with stored results.</em></p>
+
+  <div class="flow">React (prompt input) → Django (server-side call) → PostgreSQL &nbsp;·&nbsp; branch: Hugging Face</div>
+
+  <dl class="kv">
+    <dt>Problem</dt>
+    <dd>Built to work through what it takes to put a generative model behind a real interface: handling a request that takes seconds rather than milliseconds, keeping the model call server-side, and storing what comes back.</dd>
+
+    <dt>Hardest problem</dt>
+    <dd>Latency breaks the usual assumptions — the interface must communicate that work is happening, and the backend holds a request open far longer than a typical API call. Keeping the model call server-side was the other constraint: the browser never contacts the inference API directly, so the credential stays on the server.</dd>
+
+    <dt>Lesson</dt>
+    <dd>What it takes to put an external model behind an interface rather than call it from a script. Storing generated images rather than discarding them turned a one-shot tool into something with history.</dd>
+
+    <dt>Features (3)</dt>
+    <dd>Text-to-image generation via Hugging Face · image storage and retrieval · authentication required</dd>
+
+    <dt>Repository</dt>
+    <dd class="mono-cell">github.com/jhraihan/tech-store-platform-django-react</dd>
+  </dl>
+
+  <div class="callout" style="margin-top:10px">
+    <span class="label">Known issue</span>
+    <p>
+      The repository URL reads <code>tech-store-platform-django-react</code>,
+      which does not match an image-generation project. Likely a renamed
+      repository or a transcription error. <strong>Must be verified before
+      launch.</strong>
+    </p>
+  </div>
+</div>
+
+<!-- ============================ 06 ============================ -->
+<h2 class="page-break"><span class="num">06</span>Design System</h2>
+
+<h3>6.1 Direction</h3>
+<p>
+  Modern SaaS with minimal technical accents. The reference supplied by the
+  owner was a dark agency site with a red accent; its visual language was
+  adopted, its content architecture deliberately was not — that site leads with
+  client counts and testimonials, none of which exist here.
+</p>
+
+<h3>6.2 Colour</h3>
+<p>
+  Defined once as CSS custom properties in <code>src/styles/index.css</code> and
+  consumed everywhere as semantic Tailwind tokens. Nothing hardcodes a colour,
+  so theme switching never requires touching a component.
+</p>
+<table>
+  <tr><th style="width:22%">Token</th><th style="width:20%">Dark (default)</th><th style="width:20%">Light</th><th>Role</th></tr>
+  <tr><td class="mono-cell">--canvas</td><td class="mono-cell">8 8 10</td><td class="mono-cell">251 251 252</td><td>Page background</td></tr>
+  <tr><td class="mono-cell">--surface</td><td class="mono-cell">15 16 19</td><td class="mono-cell">255 255 255</td><td>Cards, raised areas</td></tr>
+  <tr><td class="mono-cell">--elevated</td><td class="mono-cell">23 24 28</td><td class="mono-cell">244 245 247</td><td>Inputs, tags, nested surfaces</td></tr>
+  <tr><td class="mono-cell">--line</td><td class="mono-cell">38 39 45</td><td class="mono-cell">226 227 232</td><td>Default border</td></tr>
+  <tr><td class="mono-cell">--line-strong</td><td class="mono-cell">56 57 65</td><td class="mono-cell">203 205 213</td><td>Hover / emphasis border</td></tr>
+  <tr><td class="mono-cell">--ink</td><td class="mono-cell">250 250 251</td><td class="mono-cell">13 14 18</td><td>Primary text</td></tr>
+  <tr><td class="mono-cell">--ink-muted</td><td class="mono-cell">158 160 170</td><td class="mono-cell">82 84 94</td><td>Body text</td></tr>
+  <tr><td class="mono-cell">--ink-faint</td><td class="mono-cell">108 110 121</td><td class="mono-cell">124 127 138</td><td>Metadata, labels</td></tr>
+  <tr><td class="mono-cell">--accent</td><td class="mono-cell">226 58 50</td><td class="mono-cell">194 40 33</td><td>Single accent, used sparingly</td></tr>
+</table>
+<p>
+  The accent is deliberately deeper than the reference's brighter red: it keeps
+  the energy while reading as more controlled, and passes AA contrast on dark
+  backgrounds where the brighter tone struggles at small sizes. Light mode
+  deepens it further for contrast on white.
+</p>
+<p>
+  Four secondary hues — cyan, amber, violet, green — exist solely for
+  syntax-style category tinting in skill groups and architecture diagram nodes.
+  They are never used for interface state.
+</p>
+
+<h3>6.3 Typography</h3>
+<table>
+  <tr><th style="width:20%">Role</th><th style="width:24%">Family</th><th>Usage</th></tr>
+  <tr><td>Sans</td><td>Inter</td><td>All reading text, headings, interface labels</td></tr>
+  <tr><td>Mono</td><td>JetBrains Mono</td><td>Metadata, eyebrows, tags, stack lists, diagram nodes, keyboard hints</td></tr>
+</table>
+<p>The scale clamps so headings never overflow small screens or grow absurd on wide ones:</p>
+<table>
+  <tr><th style="width:20%">Token</th><th style="width:44%">Size</th><th>Usage</th></tr>
+  <tr><td class="mono-cell">text-hero</td><td class="mono-cell">clamp(3rem, 7.5vw, 6.5rem)</td><td>Hero name only</td></tr>
+  <tr><td class="mono-cell">text-display</td><td class="mono-cell">clamp(2.25rem, 4.5vw, 3.5rem)</td><td>Page titles</td></tr>
+  <tr><td class="mono-cell">text-heading-lg</td><td class="mono-cell">clamp(1.75rem, 3vw, 2.5rem)</td><td>Section headings</td></tr>
+  <tr><td class="mono-cell">text-heading</td><td class="mono-cell">clamp(1.375rem, 2vw, 1.75rem)</td><td>Subsection headings</td></tr>
+  <tr><td class="mono-cell">text-body</td><td class="mono-cell">1.0625rem / 1.7</td><td>Prose</td></tr>
+</table>
+
+<div class="callout">
+  <span class="label">Naming trap — do not repeat</span>
+  <p>
+    The hero size was originally named <code>display-xl</code>. Tailwind failed
+    to generate it because it collides with the existing <code>display</code>
+    key, silently falling back to 16px. It was renamed to <code>hero</code>.
+    <strong>Avoid font-size keys that prefix-collide with existing ones.</strong>
+    Note also that Tailwind config changes require a Vite restart — they are not
+    hot-reloaded.
+  </p>
+</div>
+
+<h3>6.4 Motion</h3>
+<table>
+  <tr><th style="width:26%">Effect</th><th>Behaviour</th></tr>
+  <tr><td><strong>Scroll reveal</strong></td><td>Fade and 16px rise as elements enter the viewport</td></tr>
+  <tr><td><strong>Typewriter</strong></td><td>Hero line cycles five phrases with a blinking caret</td></tr>
+  <tr><td><strong>Magnetic buttons</strong></td><td>Primary actions drift toward the cursor; transform applied directly to the node, costing no re-renders</td></tr>
+  <tr><td><strong>Spotlight cards</strong></td><td>Radial glow follows the cursor; position written to CSS custom properties, not React state</td></tr>
+  <tr><td><strong>Ambient glows</strong></td><td>Two slow drifting blurs behind the hero</td></tr>
+  <tr><td><strong>Scroll progress</strong></td><td>Hairline accent bar under the header, appearing once scrolled</td></tr>
+  <tr><td><strong>Skeletons</strong></td><td>Shimmer placeholders matching real content shape, preventing layout shift</td></tr>
+</table>
+
+<div class="callout rule-box">
+  <span class="label">Non-negotiable motion rule</span>
+  <p>
+    <strong>Content must never depend on an animation to become visible.</strong>
+    The <code>Reveal</code> component enforces this two ways: reduced-motion
+    renders a plain element with no animation, and a 900ms timer reveals the
+    element regardless — so a missed intersection (a collapsed grid child, an
+    offscreen container, a browser without IntersectionObserver) can never leave
+    real content stuck at zero opacity.
+  </p>
+  <p style="margin-top:6px">
+    This rule exists because it was violated once: case study sections rendered
+    into the DOM but stayed permanently invisible, because
+    <code>whileInView</code> never fired inside a collapsed grid. Every section
+    of every case study was affected.
+  </p>
+</div>
+
+<!-- ============================ 07 ============================ -->
+<h2 class="page-break"><span class="num">07</span>Technical Architecture</h2>
+
+<h3>7.1 Stack</h3>
+<table>
+  <tr><th style="width:22%">Layer</th><th style="width:30%">Technology</th><th>Rationale</th></tr>
+  <tr><td>Frontend</td><td>React 18 · Vite · Tailwind CSS · Framer Motion · React Router · Lucide</td><td>The stack the site advertises; Vite for fast builds</td></tr>
+  <tr><td>Backend</td><td>Django 5 · Django REST Framework</td><td>Owner's core competency</td></tr>
+  <tr><td>Database</td><td>PostgreSQL (production) · SQLite (local default)</td><td>Postgres is the best-supported and cheapest-to-host option on managed platforms; SQLite lets the project run before credentials exist</td></tr>
+  <tr><td>Testing</td><td>Django test runner · Vitest · Testing Library</td><td>Native to each side</td></tr>
+  <tr><td>Config</td><td>python-decouple · <code>.env</code></td><td>No secrets in source</td></tr>
+</table>
+
+<h3>7.2 Repository layout</h3>
+<pre>portfolio_part4/
+├── backend/
+│   ├── apps/
+│   │   ├── profiles/      <span class="c"># singleton owner profile</span>
+│   │   ├── projects/      <span class="c"># projects, technologies, features, images</span>
+│   │   ├── skills/        <span class="c"># skill categories, skills, coursework</span>
+│   │   ├── education/     <span class="c"># degrees</span>
+│   │   └── contact/       <span class="c"># inbound messages</span>
+│   ├── config/            <span class="c"># settings, urls, api_urls</span>
+│   ├── requirements/      <span class="c"># base / dev / prod</span>
+│   └── manage.py
+├── frontend/
+│   └── src/
+│       ├── components/    <span class="c"># reusable UI</span>
+│       ├── sections/      <span class="c"># home page sections</span>
+│       ├── pages/         <span class="c"># routed pages</span>
+│       ├── layouts/       <span class="c"># header, footer</span>
+│       ├── hooks/         <span class="c"># useApi, useTheme, useTypewriter, …</span>
+│       ├── services/      <span class="c"># api client</span>
+│       └── styles/        <span class="c"># theme tokens</span>
+├── images/                <span class="c"># original source images (git-ignored)</span>
+├── README.md
+└── DEPLOYMENT.md</pre>
+
+<h3>7.3 Data model</h3>
+<table>
+  <tr><th style="width:22%">Model</th><th style="width:14%">App</th><th>Notes</th></tr>
+  <tr><td><strong>Profile</strong></td><td>profiles</td><td><strong>Singleton</strong> — enforced in <code>save()</code> and in the admin. Holds identity, hero copy, about text, photo, résumé, social links, SEO description.</td></tr>
+  <tr><td><strong>Project</strong></td><td>projects</td><td>Identity, classification, five optional case study fields, three optional URLs, cover image, ordering, featured flag.</td></tr>
+  <tr><td><strong>ProjectFeature</strong></td><td>projects</td><td>Ordered feature list, FK to Project.</td></tr>
+  <tr><td><strong>ProjectImage</strong></td><td>projects</td><td>Screenshot gallery with caption and alt text; alt falls back to caption, then to a generated description.</td></tr>
+  <tr><td><strong>Technology</strong></td><td>projects</td><td>Shared M2M tag with a category. Drives the project filter.</td></tr>
+  <tr><td><strong>SkillCategory / Skill</strong></td><td>skills</td><td>Named levels with an ordering weight, so the strongest surface first.</td></tr>
+  <tr><td><strong>CourseworkSubject</strong></td><td>skills</td><td>Studied subjects, listed without any proficiency claim.</td></tr>
+  <tr><td><strong>Education</strong></td><td>education</td><td>Result stored separately from <code>show_result</code>, so a CGPA can be recorded privately.</td></tr>
+  <tr><td><strong>ContactMessage</strong></td><td>contact</td><td>Stored rather than emailed, so nothing is lost if SMTP is unconfigured. IP and user agent captured for abuse triage only.</td></tr>
+</table>
+
+<h3>7.4 API surface</h3>
+<p>The public API is <strong>read-only</strong>. The single write endpoint is the
+contact form, which opts into <code>AllowAny</code> and its own throttle scope.</p>
+<table>
+  <tr><th style="width:12%">Method</th><th style="width:34%">Endpoint</th><th>Returns</th></tr>
+  <tr><td class="mono-cell">GET</td><td class="mono-cell">/api/profile/</td><td>The singleton profile; empty object if none exists</td></tr>
+  <tr><td class="mono-cell">GET</td><td class="mono-cell">/api/projects/</td><td>Project list; accepts <code>?tech=&lt;slug&gt;</code> and <code>?featured=true</code></td></tr>
+  <tr><td class="mono-cell">GET</td><td class="mono-cell">/api/projects/&lt;slug&gt;/</td><td>Full case study with features and images</td></tr>
+  <tr><td class="mono-cell">GET</td><td class="mono-cell">/api/technologies/</td><td>Technologies attached to at least one project</td></tr>
+  <tr><td class="mono-cell">GET</td><td class="mono-cell">/api/skills/</td><td>Categories with nested skills, strongest first</td></tr>
+  <tr><td class="mono-cell">GET</td><td class="mono-cell">/api/coursework/</td><td>Studied subjects</td></tr>
+  <tr><td class="mono-cell">GET</td><td class="mono-cell">/api/education/</td><td>Degrees; <code>result</code> is <code>null</code> unless published</td></tr>
+  <tr><td class="mono-cell">POST</td><td class="mono-cell">/api/contact/</td><td>Accepts a message; throttled 5/hour per IP</td></tr>
+</table>
+
+<h3>7.5 Notable frontend patterns</h3>
+<table>
+  <tr><th style="width:26%">Pattern</th><th>Detail</th></tr>
+  <tr><td><code>useApi</code></td><td>Tracks loading, data and error. An incrementing request id means a response arriving after unmount, or after a newer request, never sets state.</td></tr>
+  <tr><td><strong>Shared fetches</strong></td><td>Profile and project list are fetched once in <code>App</code> and passed down — both are needed by several pages and the command palette, and neither changes during a session.</td></tr>
+  <tr><td><strong>Stretched link</strong></td><td>Project cards use one focusable link with an <code>::after</code> overlay, keeping a single tab stop. Icon links sit above it with <code>z-10</code>.</td></tr>
+  <tr><td><strong>Conditional rendering</strong></td><td>Every optional URL, image and case study section renders only when populated. This is the mechanism behind the "no unfinished states" rule.</td></tr>
+  <tr><td><strong>Theme</strong></td><td>Applied before first paint by an inline script in <code>index.html</code>, preventing a flash of the wrong theme. All storage access is wrapped in try/catch.</td></tr>
+</table>
+
+<!-- ============================ 08 ============================ -->
+<h2 class="page-break"><span class="num">08</span>Feature Specifications</h2>
+
+<h3>8.1 Architecture diagrams</h3>
+<p>
+  The highest-value feature. Each case study renders a request-flow diagram as
+  inline SVG — no image request, crisp at any zoom, inheriting theme tokens.
+  Flow definitions live in
+  <code>frontend/src/components/ArchitectureDiagram.jsx</code>; a project with no
+  defined flow renders nothing rather than an empty frame.
+</p>
+<p>
+  Each diagram is framed in terminal-window chrome with a caption, uses
+  colour-coded nodes, and optionally hangs an external service off the API node
+  as a dashed branch. IntelliChat's connectors animate to signify streaming.
+  On narrow screens the flow stacks vertically with downward connectors, so no
+  node is ever clipped.
+</p>
+<p><strong>Rationale:</strong> this shows systems thinking rather than claiming
+it, and gives an interviewer something concrete to ask about.</p>
+
+<h3>8.2 Command palette</h3>
+<p>
+  Opened with <code>Cmd/Ctrl + K</code> from anywhere. Groups results into
+  Navigation, Case studies, Actions and Links. Actions are derived from live
+  data, so a newly added project appears without code changes. Full keyboard
+  control: arrows navigate, Enter selects, Escape closes — Escape is bound at
+  the document so it works regardless of focus.
+</p>
+
+<h3>8.3 Contact form</h3>
+<table>
+  <tr><th style="width:26%">Concern</th><th>Handling</th></tr>
+  <tr><td>Fields</td><td>Name, email, subject, message — all required, all validated server-side</td></tr>
+  <tr><td>Validation feedback</td><td>Per-field errors with <code>aria-invalid</code> and <code>aria-describedby</code>; an error clears as soon as its field is edited</td></tr>
+  <tr><td>Honeypot</td><td>A hidden <code>website</code> field. Anything that fills it is rejected with a generic message that reveals nothing.</td></tr>
+  <tr><td>Spam patterns</td><td>Regex checks for common spam markers and three-or-more links</td></tr>
+  <tr><td>Rate limiting</td><td>5 submissions per hour per IP, via a DRF scoped throttle</td></tr>
+  <tr><td>Storage</td><td>Written to the database and read in the Django admin — never exposed through the API</td></tr>
+  <tr><td>Email</td><td>Optional. If SMTP is configured a notification is sent, but delivery failure never fails the request, since the message is already stored.</td></tr>
+</table>
+
+<h3>8.4 Media placeholders</h3>
+<p>
+  <code>ImageFrame</code> renders a designed placeholder when no image exists: a
+  dotted field with corner ticks, holding the correct aspect ratio. It reads as
+  part of the design rather than as an error, which is what allows the site to
+  ship before screenshots exist. Supplying an image later requires no other
+  change. The component also falls back to the placeholder if an image fails to
+  load.
+</p>
+
+<h3>8.5 Project filtering</h3>
+<p>
+  The active filter lives in the URL query string, so a filtered view is
+  shareable and survives refresh and back-navigation. Only nine
+  interview-relevant technologies are offered as filters — listing all 34 turns
+  the control into a wall of buttons nobody reads.
+</p>
+
+<!-- ============================ 09 ============================ -->
+<h2 class="page-break"><span class="num">09</span>Content Management</h2>
+
+<p>
+  Everything visible on the site is editable through the Django admin at
+  <code>/admin/</code>. No content requires a code change.
+</p>
+<table>
+  <tr><th style="width:40%">To edit</th><th>Go to</th></tr>
+  <tr><td>Name, title, hero copy, about text, links, photo, résumé</td><td>Profiles → Profile</td></tr>
+  <tr><td>Projects, case studies, features, screenshots</td><td>Projects → Projects</td></tr>
+  <tr><td>Technology tags</td><td>Projects → Technologies</td></tr>
+  <tr><td>Skills and levels</td><td>Skills → Skill categories</td></tr>
+  <tr><td>Coursework</td><td>Skills → Coursework subjects</td></tr>
+  <tr><td>Degree</td><td>Education → Education</td></tr>
+  <tr><td>Inbound messages</td><td>Contact → Contact messages</td></tr>
+</table>
+
+<h3>9.1 Adding the outstanding assets</h3>
+<table>
+  <tr><th style="width:26%">Asset</th><th>Procedure</th></tr>
+  <tr><td><strong>Screenshots</strong></td><td>Open a project → <em>Project images</em> → upload, set order and alt text. The placeholder is replaced automatically.</td></tr>
+  <tr><td><strong>Video walkthrough</strong></td><td>Paste a YouTube URL into the project's <code>video_url</code>. An embedded player appears in the case study.</td></tr>
+  <tr><td><strong>Live demo</strong></td><td>Paste the URL into <code>live_url</code>. The button appears; while empty, no dead button is shown.</td></tr>
+  <tr><td><strong>Résumé</strong></td><td>Upload a PDF to Profile → <code>resume</code>. Download buttons appear in the hero and about page.</td></tr>
+  <tr><td><strong>Repository URL</strong></td><td>Edit <code>github_url</code> on the project.</td></tr>
+</table>
+<p>After adding or renaming a project, regenerate the sitemap:</p>
+<pre>python manage.py generate_sitemap --base-url https://yourdomain.com</pre>
+
+<!-- ============================ 10 ============================ -->
+<h2><span class="num">10</span>Quality Requirements</h2>
+
+<h3>10.1 Accessibility</h3>
+<p>All verified programmatically against the running site:</p>
+<div class="two-col">
+<ul>
+  <li>Semantic HTML with a <code>main</code> landmark</li>
+  <li>Skip link as the first tab stop</li>
+  <li>Exactly one <code>h1</code> per page</li>
+  <li><code>lang</code> set on the document</li>
+  <li>Every image carries alt text</li>
+  <li>Every button and link has an accessible name</li>
+  <li>Visible focus ring for keyboard users only</li>
+  <li>Form errors linked via <code>aria-describedby</code></li>
+  <li>Filter buttons expose <code>aria-pressed</code></li>
+  <li>Result regions marked <code>aria-live="polite"</code></li>
+  <li>All motion disabled under <code>prefers-reduced-motion</code></li>
+</ul>
+</div>
+
+<h3>10.2 Performance</h3>
+<table>
+  <tr><th style="width:34%">Measure</th><th>Result</th></tr>
+  <tr><td>Total bundle, gzipped</td><td class="mono-cell">≈124 KB</td></tr>
+  <tr><td>Vendor split</td><td>React, Framer Motion and app code in separate chunks</td></tr>
+  <tr><td>Profile photo</td><td>3.1 MB source → <strong>96 KB</strong> optimised (800×800, progressive JPEG)</td></tr>
+  <tr><td>Images</td><td>Lazy by default; hero and first cards eager</td></tr>
+  <tr><td>Loading states</td><td>Shape-matched skeletons rather than spinners, preventing layout shift</td></tr>
+  <tr><td>Fonts</td><td>Preconnected, <code>display=swap</code></td></tr>
+</table>
+
+<h3>10.3 SEO</h3>
+<ul>
+  <li>Per-page title and meta description, set on navigation</li>
+  <li>Open Graph and Twitter Card tags</li>
+  <li>JSON-LD <code>Person</code> schema with job title, location, institution and verified profile links</li>
+  <li>Generated <code>sitemap.xml</code> covering <strong>9 URLs</strong> — 4 static paths plus one per project — alongside <code>robots.txt</code>. The 404 route is correctly excluded.</li>
+  <li>Canonical URL — <strong>currently <code>example.com</code>; must be updated at launch</strong></li>
+</ul>
+
+<h3>10.4 Security</h3>
+<table>
+  <tr><th style="width:34%">Control</th><th>Implementation</th></tr>
+  <tr><td>Secrets</td><td><code>.env</code>, git-ignored; <code>.env.example</code> documents every variable. Verified absent from the repository.</td></tr>
+  <tr><td>API exposure</td><td>Read-only except the contact endpoint</td></tr>
+  <tr><td>Contact abuse</td><td>Honeypot, spam patterns, 5/hour throttle</td></tr>
+  <tr><td>Private data</td><td>CGPA withheld unless explicitly published; message IP and user agent never serialised</td></tr>
+  <tr><td>Production headers</td><td>HSTS, SSL redirect, secure cookies, nosniff, <code>X-Frame-Options: DENY</code> — all active when <code>DEBUG=False</code></td></tr>
+  <tr><td>Verification</td><td><code>manage.py check --deploy</code> passes clean</td></tr>
+</table>
+
+<!-- ============================ 11 ============================ -->
+<h2 class="page-break"><span class="num">11</span>Testing</h2>
+
+<p><strong>55 automated tests, all passing</strong> — 35 backend, 20 frontend.
+Per-suite counts below were re-derived from the source files on 12 September
+2026 and sum to those totals.</p>
+<table>
+  <tr><th style="width:30%">Suite</th><th style="width:12%">Tests</th><th>Covers</th></tr>
+  <tr><td><strong>Backend — contact</strong></td><td class="mono-cell">11</td><td>Valid submission, email normalisation, every validation failure, honeypot, spam patterns, metadata capture, read-blocking, throttle firing on the sixth request</td></tr>
+  <tr><td><strong>Backend — projects</strong></td><td class="mono-cell">12</td><td>Slug generation, ordering, featured and technology filters, detail payload, 404, write-rejection, unused technologies excluded</td></tr>
+  <tr><td><strong>Backend — education</strong></td><td class="mono-cell">4</td><td>CGPA withheld by default, returned once published, <strong>absent from the raw response body</strong>, ongoing date range</td></tr>
+  <tr><td><strong>Backend — profiles</strong></td><td class="mono-cell">5</td><td>Singleton enforcement, updates still permitted, empty-state response, read-only</td></tr>
+  <tr><td><strong>Backend — skills</strong></td><td class="mono-cell">3</td><td>Level ordering, human-readable display, <strong>no numeric proficiency exposed</strong></td></tr>
+  <tr><td><strong>Backend total</strong></td><td class="mono-cell"><strong>35</strong></td><td></td></tr>
+  <tr><td><strong>Frontend — ImageFrame</strong></td><td class="mono-cell">3</td><td>Image renders, placeholder substitutes, loading attribute</td></tr>
+  <tr><td><strong>Frontend — ProjectCard</strong></td><td class="mono-cell">6</td><td>Content, case study link, GitHub link, <strong>live demo hidden without a URL</strong>, technology collapsing</td></tr>
+  <tr><td><strong>Frontend — ArchitectureDiagram</strong></td><td class="mono-cell">5</td><td>Known flows, external branch, branch omitted when absent, nothing for unknown slug</td></tr>
+  <tr><td><strong>Frontend — CommandPalette</strong></td><td class="mono-cell">6</td><td>Closed state, listing, filtering, empty result, Escape, links omitted when absent</td></tr>
+  <tr><td><strong>Frontend total</strong></td><td class="mono-cell"><strong>20</strong></td><td></td></tr>
+</table>
+<p>
+  Several tests encode the authenticity rules directly — CGPA absence from the
+  raw body, no numeric proficiency fields, no dead demo buttons — so a future
+  change that breaks a promise made in §03 fails the suite rather than shipping.
+</p>
+<p>Manual verification also covered: every page in both themes with zero console
+errors — the five real routes, all five case studies, and the 404 state — plus
+mobile overflow on every page, reduced-motion behaviour, and the contact form
+end to end in a real browser.</p>
+
+<!-- ============================ 12 ============================ -->
+<h2><span class="num">12</span>Deployment</h2>
+
+<p><strong>Status: not yet deployed.</strong> Full procedure in
+<code>DEPLOYMENT.md</code>.</p>
+<table>
+  <tr><th style="width:22%">Component</th><th style="width:22%">Target</th><th>Notes</th></tr>
+  <tr><td>Frontend</td><td>Vercel</td><td>Free; needs <code>vercel.json</code> rewrite so client routes do not 404 on refresh</td></tr>
+  <tr><td>Backend + PostgreSQL</td><td>Railway</td><td>≈$5/month; no cold starts. A single <code>DATABASE_URL</code> configures the database.</td></tr>
+  <tr><td>Domain</td><td>Namecheap / Cloudflare</td><td>≈$12/year — reads far better than a platform subdomain</td></tr>
+</table>
+<p>
+  <strong>Render was explicitly rejected:</strong> its free tier sleeps after 15
+  minutes, producing a ~50 second cold start that reads as a broken site.
+</p>
+<div class="callout">
+  <span class="label">Known deployment constraint</span>
+  <p>
+    Railway's filesystem is ephemeral, so uploaded screenshots are lost on
+    redeploy. Once images are added regularly, move media to object storage
+    (S3 or Cloudflare R2, which has a free tier) via <code>django-storages</code>.
+  </p>
+</div>
+
+<h3>12.1 Launch checklist</h3>
+<div class="two-col">
+<ul>
+  <li><code>.env</code> absent from git</li>
+  <li>Fresh <code>SECRET_KEY</code> generated for production</li>
+  <li><code>DEBUG=False</code></li>
+  <li><code>ALLOWED_HOSTS</code> set to the real domain</li>
+  <li>CORS and CSRF origins set to the real frontend URL</li>
+  <li>Admin password changed from the development default</li>
+  <li><code>seed_portfolio</code> run</li>
+  <li>Canonical URL and OG tags updated from <code>example.com</code></li>
+  <li>Sitemap regenerated with the real domain</li>
+  <li>Contact form submits successfully in production</li>
+  <li>Refreshing a case study URL does not 404</li>
+  <li>All five repository links verified</li>
+</ul>
+</div>
+
+<!-- ============================ 13 ============================ -->
+<h2 class="page-break"><span class="num">13</span>Outstanding Work</h2>
+
+<p>The site is complete and shippable. Every item below is wired to hide rather
+than break while absent, and all are content changes through the admin — none
+require code.</p>
+
+<table>
+  <tr><th style="width:6%">#</th><th style="width:24%">Item</th><th style="width:12%">Owner</th><th>Notes</th></tr>
+  <tr><td class="mono-cell">O1</td><td><strong>Screenshots</strong> for all five projects</td><td>Subject</td><td>Designed placeholders in place. Highest visual impact of the remaining work.</td></tr>
+  <tr><td class="mono-cell">O2</td><td><strong>YouTube walkthroughs</strong></td><td>Subject</td><td>Chosen in place of deploying. Embed appears once a URL is set.</td></tr>
+  <tr><td class="mono-cell">O3</td><td><strong>Résumé PDF</strong></td><td>Subject</td><td>Download buttons hidden until uploaded.</td></tr>
+  <tr><td class="mono-cell">O4</td><td><strong>Verify repository URLs</strong></td><td>Subject</td><td>All five are being reorganised. <strong>PromptCanvas URL is a known mismatch.</strong></td></tr>
+  <tr><td class="mono-cell">O5</td><td><strong>Deployment</strong></td><td>Subject</td><td>Procedure documented; not yet executed.</td></tr>
+  <tr><td class="mono-cell">O6</td><td><strong>Canonical URL and OG tags</strong></td><td>Either</td><td>Still <code>example.com</code>. Must change at launch.</td></tr>
+  <tr><td class="mono-cell">O7</td><td><strong>Provision PostgreSQL</strong></td><td>Either</td><td>Currently SQLite locally. Set <code>USE_SQLITE=False</code> plus either <code>DATABASE_URL</code> or the <code>DB_*</code> values, then migrate and seed.</td></tr>
+  <tr><td class="mono-cell">O8</td><td><strong>OG preview image</strong></td><td>Either</td><td><code>/og-image.png</code> is referenced but does not exist. Link previews are currently imageless.</td></tr>
+  <tr><td class="mono-cell">O9</td><td><strong>Confirm the public email</strong></td><td>Subject</td><td>The site publishes <code>jahidhr05@gmail.com</code>. A second address, <code>hello.jahidhr@gmail.com</code>, is also in active use. Confirm which belongs on the site; if it changes, edit it in <em>Profile</em> and in <code>seed_portfolio.py</code> so a reseed does not revert it.</td></tr>
+</table>
+
+<h3>13.1 Optional future enhancements</h3>
+<p>Considered and deliberately deferred, not rejected:</p>
+<ul>
+  <li><strong>Email notifications</strong> — the code path exists; only SMTP variables are needed.</li>
+  <li><strong>Object storage for media</strong> — required once screenshots are added and the site is on Railway.</li>
+  <li><strong>Additional projects</strong> — the model and command palette pick them up automatically; only an architecture flow definition would need adding.</li>
+</ul>
+
+<!-- ============================ 14 ============================ -->
+<h2><span class="num">14</span>Decision Log</h2>
+
+<table>
+  <tr><th style="width:6%">#</th><th style="width:28%">Decision</th><th>Rationale</th></tr>
+  <tr><td class="mono-cell">D1</td><td>Named skill levels, not percentages</td><td>A bar implies precision that does not exist and invites unwinnable comparison. Enforced by a test.</td></tr>
+  <tr><td class="mono-cell">D2</td><td>No Experience or Achievements section</td><td>Nothing genuine to show. An empty section is worse than an absent one; a padded one is disqualifying.</td></tr>
+  <tr><td class="mono-cell">D3</td><td>No AI skills claimed</td><td>Owner is at the learning stage and asked for this explicitly, including removal of a drafted "currently learning" line.</td></tr>
+  <tr><td class="mono-cell">D4</td><td>Full case studies for all five projects</td><td>Five substantial case studies read stronger than three plus two thin cards.</td></tr>
+  <tr><td class="mono-cell">D5</td><td>Empty fields hide their section</td><td>The mechanism that lets the site ship before screenshots, demos and résumé exist without looking unfinished.</td></tr>
+  <tr><td class="mono-cell">D6</td><td>Architecture diagrams as inline SVG</td><td>Shows systems thinking rather than claiming it. No network request; theme-aware; crisp at any zoom.</td></tr>
+  <tr><td class="mono-cell">D7</td><td>Reference site's visuals adopted, its content architecture rejected</td><td>The reference is an agency selling services, leading with client counts and testimonials. None of those exist here, and inventing them was ruled out.</td></tr>
+  <tr><td class="mono-cell">D8</td><td>Photo in the hero rather than only in About</td><td>Owner deferred the choice. The reference balanced its hero with a figure; a real photograph serves recruiters better than an illustration.</td></tr>
+  <tr><td class="mono-cell">D9</td><td>Accent deepened from the reference red</td><td>Retains the energy, reads more controlled, and passes AA contrast where the brighter tone fails at small sizes.</td></tr>
+  <tr><td class="mono-cell">D10</td><td>Command palette included</td><td>Small, genuinely useful, and an immediate technical signal to the intended audience.</td></tr>
+  <tr><td class="mono-cell">D11</td><td>GitHub statistics excluded</td><td>Would surface repositories the owner is still reorganising.</td></tr>
+  <tr><td class="mono-cell">D12</td><td>Blog excluded</td><td>Only worthwhile if maintained; a stale blog is worse than none.</td></tr>
+  <tr><td class="mono-cell">D13</td><td>Contact messages stored, not emailed</td><td>Nothing is lost if SMTP is unconfigured. Notification is additive.</td></tr>
+  <tr><td class="mono-cell">D14</td><td>SQLite default locally, PostgreSQL in production</td><td>Originally MySQL, switched on 12 Sep 2026: managed Postgres is cheaper and more widely available, <code>psycopg</code> installs without system build tools, and it is Django's best-tested path. SQLite still lets the project run before credentials exist.</td></tr>
+  <tr><td class="mono-cell">D15</td><td><code>Reveal</code> force-reveals after 900ms</td><td>Fixes a real defect where case study sections rendered but stayed invisible. Content must never depend on an animation.</td></tr>
+  <tr><td class="mono-cell">D16</td><td><code>DATABASE_URL</code> takes precedence over discrete settings</td><td>Every managed Postgres host issues one connection string. Supporting it means production needs a single database variable instead of five, and the same settings file serves local and hosted environments unchanged.</td></tr>
+</table>
+
+<!-- ============================ 15 ============================ -->
+<h2 class="page-break"><span class="num">15</span>Appendix</h2>
+
+<h3>15.1 Commands</h3>
+<pre><span class="c"># Backend</span>
+cd backend
+venv\Scripts\activate                    <span class="c"># Windows</span>
+pip install -r requirements/dev.txt
+python manage.py migrate
+python manage.py seed_portfolio          <span class="c"># loads all real content, idempotent</span>
+python manage.py seed_portfolio --reset  <span class="c"># wipe and reload</span>
+python manage.py createsuperuser
+python manage.py runserver               <span class="c"># 127.0.0.1:8000, admin at /admin/</span>
+
+<span class="c"># Frontend</span>
+cd frontend
+npm install
+npm run dev                              <span class="c"># localhost:5173, /api proxied to Django</span>
+npm run build
+
+<span class="c"># Tests</span>
+cd backend  &amp;&amp; python manage.py test      <span class="c"># 35</span>
+cd frontend &amp;&amp; npm test                   <span class="c"># 20</span>
+
+<span class="c"># Sitemap</span>
+python manage.py generate_sitemap --base-url https://yourdomain.com</pre>
+
+<h3>15.2 Key files</h3>
+<table>
+  <tr><th style="width:52%">Path</th><th>Contains</th></tr>
+  <tr><td class="mono-cell">backend/apps/profiles/management/commands/seed_portfolio.py</td><td><strong>All site content.</strong> Single source of truth for the seed.</td></tr>
+  <tr><td class="mono-cell">frontend/src/styles/index.css</td><td>Theme tokens for both palettes</td></tr>
+  <tr><td class="mono-cell">frontend/tailwind.config.js</td><td>Type scale, spacing, keyframes</td></tr>
+  <tr><td class="mono-cell">frontend/src/components/ArchitectureDiagram.jsx</td><td>Per-project flow definitions</td></tr>
+  <tr><td class="mono-cell">frontend/src/components/Reveal.jsx</td><td>Scroll reveal with the visibility guarantee</td></tr>
+  <tr><td class="mono-cell">backend/config/settings.py</td><td>Environment-driven configuration</td></tr>
+  <tr><td class="mono-cell">backend/.env.example</td><td>Every required variable, documented</td></tr>
+</table>
+
+<h3>15.3 Credentials policy</h3>
+<div class="callout">
+  <span class="label">Before any deployment</span>
+  <p>
+    The development superuser (<code>jahid</code>) uses a weak local password
+    that <strong>must be changed before deployment</strong>. Generate a fresh
+    <code>SECRET_KEY</code> for production and never reuse the development one.
+    <code>.env</code> is git-ignored and verified absent from the repository —
+    keep it that way.
+  </p>
+</div>
+
+<h3>15.4 Development environment note</h3>
+<p>
+  VS Code may report unresolved imports for <code>django</code>,
+  <code>rest_framework</code> and <code>decouple</code>. This is the editor
+  pointing at the system Python rather than the virtual environment. Fix with
+  <em>Python: Select Interpreter</em> → <code>backend\venv\Scripts\python.exe</code>.
+  The code is correct.
+</p>
+
+<!-- ============================ 16 ============================ -->
+<h2 class="page-break"><span class="num">16</span>Revision Notes</h2>
+
+<p>
+  Each revision re-verifies the document against the repository rather than
+  against the previous revision. What changed, and why:
+</p>
+
+<h3>16.1 v1.1 — 12 September 2026</h3>
+<p>
+  The database moved from <strong>MySQL to PostgreSQL</strong>. Managed Postgres
+  is cheaper and far more widely available on free and low-cost tiers,
+  <code>psycopg</code> installs without system build tools, and it is Django's
+  best-tested path. Settings, requirements, <code>.env.example</code>,
+  <code>DEPLOYMENT.md</code> and <code>README.md</code> were all updated
+  together, and §7, §12, O7, D14 and D16 rewritten to match.
+</p>
+<div class="callout rule-box">
+  <span class="label">Why MySQL still appears in this document</span>
+  <p>
+    MySQL is correctly retained in three places and must not be edited out: as a
+    <strong>skill</strong> (§2.4 — the subject's strongest database, and one of
+    the featured five), as <strong>MicroMart's database</strong> (§05), and in
+    the <strong>learning journey</strong> (§2.3). Only the portfolio site's own
+    database changed. Both sets of statements are true simultaneously.
+  </p>
+</div>
+
+<h3>16.2 v1.2 — 12 September 2026</h3>
+<p>
+  A verification pass over every counted or enumerated claim, checked against
+  the source files rather than carried forward. Five corrections:
+</p>
+<table>
+  <tr><th style="width:6%">#</th><th style="width:32%">Previously stated</th><th>Verified reality</th></tr>
+  <tr><td class="mono-cell">R1</td><td>Backend contact suite: 10 tests</td><td><strong>11</strong> — counted in <code>apps/contact/tests.py</code></td></tr>
+  <tr><td class="mono-cell">R2</td><td>Backend skills suite: 4 tests</td><td><strong>3</strong> — counted in <code>apps/skills/tests.py</code></td></tr>
+  <tr><td class="mono-cell">R3</td><td>Per-suite rows did not sum to the stated 55, and no subtotals were shown, so the discrepancy was invisible</td><td>Backend and frontend <strong>subtotal rows added</strong> (35 and 20). The table is now self-checking.</td></tr>
+  <tr><td class="mono-cell">R4</td><td>&ldquo;Sitemap covering all nine routes&rdquo;</td><td>Routes and URLs were conflated. <strong>6 routes</strong> are defined; the sitemap holds <strong>9 URLs</strong> (4 static + 5 case studies), and the 404 is correctly excluded.</td></tr>
+  <tr><td class="mono-cell">R5</td><td>&ldquo;Manual verification covered all ten routes&rdquo;</td><td>Ten <em>pages</em> were checked, not ten routes. Restated without the false route count.</td></tr>
+</table>
+<p>
+  One new outstanding item was opened rather than silently resolved:
+  <strong>O9</strong>, a discrepancy between the published email address and a
+  second address in active use. The document records both and asks, per §3.1,
+  rather than guessing which is correct.
+</p>
+
+<h3>16.3 Keeping this document current</h3>
+<p>
+  Re-verify and re-render whenever any of the following changes: the database or
+  hosting choice, the test counts, the routes, the five projects or their
+  repository URLs, or any authenticity rule in §03. Sections <strong>03</strong>
+  (authenticity), <strong>13</strong> (outstanding work) and <strong>14</strong>
+  (decision log) go stale fastest. Counts in §11 should be re-derived from the
+  test files, never copied from the previous revision.
+</p>
+
+<footer class="doc-end">
+  <p>
+    <strong>Portfolio PRD v1.2</strong> — Md. Jahid Hasan Raihan · 12 September 2026.
+    Every factual claim in this document originates from the subject's own
+    statements or from project state verified against the repository on the date
+    above. Where information was unavailable it is marked outstanding in §13
+    rather than assumed. Companion document: <code>docs/ABOUT_JAHID.pdf</code>.
+  </p>
+</footer>
+
+</body>
+</html>

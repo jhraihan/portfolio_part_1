@@ -1,6 +1,6 @@
 # Deployment
 
-Frontend on Vercel (free), backend and MySQL on Railway (about $5/month).
+Frontend on Vercel (free), backend and PostgreSQL on Railway (about $5/month).
 
 Do the backend first — the frontend needs its URL.
 
@@ -30,7 +30,7 @@ git ls-files | grep -c "\.env$"      # must print 0
 1. Sign in at [railway.app](https://railway.app) with GitHub.
 2. **New Project → Deploy from GitHub repo** → select the repository.
 3. **Settings → Root Directory**: `backend`
-4. **New → Database → Add MySQL** in the same project.
+4. **New → Database → Add PostgreSQL** in the same project.
 
 ### Environment variables
 
@@ -41,20 +41,16 @@ SECRET_KEY=<generate a new one, see below>
 DEBUG=False
 ALLOWED_HOSTS=<your-app>.up.railway.app
 USE_SQLITE=False
-
-DB_NAME=${{MySQL.MYSQLDATABASE}}
-DB_USER=${{MySQL.MYSQLUSER}}
-DB_PASSWORD=${{MySQL.MYSQLPASSWORD}}
-DB_HOST=${{MySQL.MYSQLHOST}}
-DB_PORT=${{MySQL.MYSQLPORT}}
+DATABASE_URL=${{Postgres.DATABASE_URL}}
 
 CORS_ALLOWED_ORIGINS=https://<your-site>.vercel.app
 CSRF_TRUSTED_ORIGINS=https://<your-site>.vercel.app
 SECURE_SSL_REDIRECT=True
 ```
 
-The `${{MySQL.*}}` values are Railway references — it substitutes the real
-credentials, so no password is ever typed or committed.
+`${{Postgres.DATABASE_URL}}` is a Railway reference — it substitutes the real
+connection string at deploy time, so no password is ever typed or committed.
+One variable replaces the five discrete `DB_*` settings.
 
 Generate a fresh production secret key (never reuse the development one):
 
@@ -169,5 +165,5 @@ Until then, re-upload after a redeploy, or commit images to the repository.
 | Option | Cost | Trade-off |
 |---|---|---|
 | Vercel + Render | Free | Backend sleeps after 15 min; ~50s cold start. Avoid. |
-| Vercel + PythonAnywhere | Free | Free MySQL, no sleeping, but manual deploys. |
+| Vercel + Neon | Free | Serverless Postgres with a generous free tier; pairs well with any host. |
 | VPS (Hostinger, DigitalOcean) | $4–6/mo | Full control; you manage Nginx, Gunicorn, and SSL. |
