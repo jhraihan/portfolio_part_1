@@ -54,3 +54,6 @@ docs/_part*.html
 
 # CV — imported into Django media; keeps personal details out of the repo
 /cv/
+
+# Temporary verification scripts
+_*.mjs
