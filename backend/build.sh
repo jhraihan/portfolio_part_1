@@ -24,3 +24,31 @@ else:
     print("Empty database — seeding portfolio content.")
     call_command("seed_portfolio")
 PY
+
+# Create the admin account on first deploy.
+#
+# Render's free tier has no shell, so createsuperuser cannot be run
+# interactively. The credentials come from environment variables and are
+# used only when that user does not already exist, so a later password
+# change through the admin is never overwritten.
+#
+# Remove ADMIN_PASSWORD from the Render dashboard once the account exists.
+python manage.py shell <<'PY'
+import os
+
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
+
+username = os.environ.get("ADMIN_USERNAME", "")
+password = os.environ.get("ADMIN_PASSWORD", "")
+email = os.environ.get("ADMIN_EMAIL", "")
+
+if not username or not password:
+    print("ADMIN_USERNAME/ADMIN_PASSWORD not set — skipping admin creation.")
+elif User.objects.filter(username=username).exists():
+    print(f"Admin '{username}' already exists — leaving it untouched.")
+else:
+    User.objects.create_superuser(username=username, email=email, password=password)
+    print(f"Admin '{username}' created.")
+PY
