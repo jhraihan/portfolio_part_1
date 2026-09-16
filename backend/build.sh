@@ -49,6 +49,13 @@ else:
     print("All media already attached — skipping.")
 PY
 
+# Set the YouTube walkthrough URLs.
+#
+# These live outside seed_portfolio because seed only runs against an empty
+# database. The command skips any project that already has a URL, so a link
+# changed through the admin survives the next deploy.
+python manage.py set_video_urls
+
 # Create the admin account on first deploy.
 #
 # Render's free tier has no shell, so createsuperuser cannot be run
