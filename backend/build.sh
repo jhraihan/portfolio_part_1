@@ -25,6 +25,22 @@ else:
     call_command("seed_portfolio")
 PY
 
+# Attach screenshots and the résumé.
+#
+# The image files ship with the repository, but the database rows that point
+# at them do not — a fresh database has projects with no cover image. Run the
+# import whenever any project is still missing one.
+python manage.py shell <<'PY'
+from apps.projects.models import Project
+
+if Project.objects.filter(cover_image="").exists():
+    from django.core.management import call_command
+    print("Projects missing images — attaching committed media.")
+    call_command("attach_media")
+else:
+    print("All projects have images — skipping media import.")
+PY
+
 # Create the admin account on first deploy.
 #
 # Render's free tier has no shell, so createsuperuser cannot be run
