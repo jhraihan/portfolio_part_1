@@ -24,6 +24,11 @@ from apps.projects.models import Project, ProjectImage
 COVERS_DIR = "projects/covers"
 SHOTS_DIR = "projects/screenshots"
 RESUME_DIR = "resume"
+PROFILE_DIR = "profile"
+
+# The optimised profile photo. Several variants exist from earlier crops; this
+# is the one currently in use.
+PROFILE_PHOTO = "raihan_ijQyNAw.jpg"
 
 # Which optimised filename belongs to which project. The stems come from the
 # original screenshot timestamps and are stable once imported.
@@ -90,9 +95,9 @@ class Command(BaseCommand):
         for slug in COVERS:
             attached += self._attach_project(root, slug)
 
-        self._attach_resume(root)
+        attached += self._attach_profile(root)
 
-        self.stdout.write(self.style.SUCCESS(f"\n{attached} images attached."))
+        self.stdout.write(self.style.SUCCESS(f"\n{attached} files attached."))
 
     def _attach_project(self, root, slug):
         try:
@@ -146,26 +151,42 @@ class Command(BaseCommand):
 
         return count
 
-    def _attach_resume(self, root):
+    def _attach_profile(self, root):
+        """Attach the profile photo and résumé."""
         profile = Profile.objects.first()
         if profile is None:
             self.stderr.write("\n! no Profile record")
-            return
+            return 0
 
+        count = 0
+        self.stdout.write("\nProfile")
+
+        # Photo
+        photo_name = f"{PROFILE_DIR}/{PROFILE_PHOTO}"
+        if profile.photo and not self.force:
+            self.stdout.write("  photo already set")
+        elif (root / photo_name).exists():
+            profile.photo.name = photo_name
+            profile.save(update_fields=["photo"])
+            self.stdout.write(f"  photo   -> {PROFILE_PHOTO}")
+            count += 1
+        else:
+            self.stderr.write(f"  ! missing {photo_name}")
+
+        # Résumé — take whichever PDF is present rather than a fixed name, so
+        # replacing the CV does not require editing this file.
         if profile.resume and not self.force:
-            self.stdout.write("\nRésumé already set")
-            return
+            self.stdout.write("  résumé already set")
+            return count
 
         resume_dir = root / RESUME_DIR
-        if not resume_dir.exists():
-            self.stderr.write(f"\n! missing {resume_dir}")
-            return
+        pdfs = sorted(resume_dir.glob("*.pdf")) if resume_dir.exists() else []
 
-        pdfs = sorted(resume_dir.glob("*.pdf"))
         if not pdfs:
-            self.stderr.write("\n! no PDF in media/resume/")
-            return
+            self.stderr.write("  ! no PDF in media/resume/")
+            return count
 
         profile.resume.name = f"{RESUME_DIR}/{pdfs[0].name}"
         profile.save(update_fields=["resume"])
-        self.stdout.write(f"\nRésumé  -> {pdfs[0].name}")
+        self.stdout.write(f"  résumé  -> {pdfs[0].name}")
+        return count + 1

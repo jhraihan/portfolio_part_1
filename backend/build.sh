@@ -31,14 +31,22 @@ PY
 # at them do not — a fresh database has projects with no cover image. Run the
 # import whenever any project is still missing one.
 python manage.py shell <<'PY'
+from apps.profiles.models import Profile
 from apps.projects.models import Project
 
-if Project.objects.filter(cover_image="").exists():
+profile = Profile.objects.first()
+missing = (
+    Project.objects.filter(cover_image="").exists()
+    or (profile is not None and not profile.photo)
+    or (profile is not None and not profile.resume)
+)
+
+if missing:
     from django.core.management import call_command
-    print("Projects missing images — attaching committed media.")
+    print("Media missing — attaching committed files.")
     call_command("attach_media")
 else:
-    print("All projects have images — skipping media import.")
+    print("All media already attached — skipping.")
 PY
 
 # Create the admin account on first deploy.
