@@ -138,8 +138,23 @@ Use a strong password — this one is on the public internet.
 
 4. **Create Static Site.**
 
-Client-side routing is already handled by `frontend/public/_redirects`, so
-refreshing a case study URL will not 404.
+### Client-side routing — required
+
+Render does **not** read the `_redirects` file (that is a Netlify
+convention). Without a rewrite rule, opening or refreshing a case study
+URL returns 404.
+
+Go to **portfolio-web → Redirects/Rewrites → Add Rule**:
+
+| Field | Value |
+|---|---|
+| Source | `/*` |
+| Destination | `/index.html` |
+| Action | **Rewrite** |
+
+It must be **Rewrite**, not Redirect: a redirect changes the address bar
+and breaks client-side routing. The rule applies immediately, with no
+rebuild.
 
 ---
 
@@ -219,7 +234,7 @@ git push                          # Render redeploys automatically
 | `DisallowedHost` error | `ALLOWED_HOSTS` missing the Render hostname |
 | Browser blocks API calls | `CORS_ALLOWED_ORIGINS` missing the frontend URL |
 | Images 404 | `backend/media/` not committed |
-| Refresh gives 404 | `frontend/public/_redirects` missing from the build |
+| Refresh gives 404 | Rewrite rule missing — Render ignores `_redirects`, see step 4 |
 | Too many redirects | `SECURE_SSL_REDIRECT` must be `False` on Render |
 | `bad interpreter` on build | `build.sh` has CRLF endings — `.gitattributes` prevents this |
 
