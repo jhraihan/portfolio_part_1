@@ -6,21 +6,14 @@ import { Magnetic } from '@/components/Magnetic'
 import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion'
 import { useTypewriter } from '@/hooks/useTypewriter'
 
-// What the typewriter cycles through. Every line is factual — each names
-// something actually built or used across the five projects.
+// What the typewriter cycles through. Every line names something actually
+// built across the five projects, and the list spans both ends of the stack.
 const ROTATING = [
   'REST APIs with Django & DRF',
+  'React interfaces that stay fast',
   'role-based access control',
   'relational database schemas',
   'JWT authentication flows',
-  'decoupled React frontends',
-]
-
-// The three numbers are counted from real work, not invented.
-const STATS = [
-  { value: '5', label: 'full applications' },
-  { value: '4', label: 'databases used' },
-  { value: '150+', label: 'LeetCode problems' },
 ]
 
 export function Hero({ profile }) {
@@ -45,20 +38,25 @@ export function Hero({ profile }) {
     reduced
       ? {}
       : {
-          initial: { opacity: 0, y: 20 },
+          initial: { opacity: 0, y: 22 },
           animate: { opacity: 1, y: 0 },
-          transition: { duration: 0.65, delay, ease: [0.16, 1, 0.3, 1] },
+          transition: { duration: 0.7, delay, ease: [0.16, 1, 0.3, 1] },
         }
 
   return (
     <section className="relative overflow-hidden pt-14 pb-section sm:pt-20">
-      {/* Backdrop: grid, radial mask, and two slow ambient glows. */}
+      {/* Backdrop: grid, radial mask, and three slow ambient glows in the
+          accent hues. */}
       <div className="pointer-events-none absolute inset-0 -z-10" aria-hidden="true">
-        <div className="absolute inset-0 bg-grid mask-fade-radial opacity-60" />
-        <div className="absolute -top-40 right-[-15%] h-[34rem] w-[34rem] animate-drift rounded-full bg-accent/[0.07] blur-[130px]" />
+        <div className="absolute inset-0 bg-grid mask-fade-radial opacity-70" />
+        <div className="absolute -top-40 right-[-15%] h-[34rem] w-[34rem] animate-drift rounded-full bg-accent/[0.10] blur-[130px]" />
         <div
-          className="absolute bottom-0 left-[-10%] h-[26rem] w-[26rem] animate-drift rounded-full bg-cyan/[0.05] blur-[120px]"
+          className="absolute bottom-0 left-[-10%] h-[28rem] w-[28rem] animate-drift rounded-full bg-violet/[0.08] blur-[120px]"
           style={{ animationDelay: '-9s' }}
+        />
+        <div
+          className="absolute left-1/3 top-1/4 h-[20rem] w-[20rem] animate-drift rounded-full bg-green/[0.05] blur-[110px]"
+          style={{ animationDelay: '-4s' }}
         />
       </div>
 
@@ -68,13 +66,13 @@ export function Hero({ profile }) {
             {availability && (
               <motion.div
                 {...rise(0)}
-                className="inline-flex items-center gap-2 rounded-full border border-line bg-surface/80 px-3 py-1.5 font-mono text-[11px] text-ink-muted backdrop-blur-sm"
+                className="inline-flex items-center gap-2.5 rounded-full border border-accent/25 bg-accent/[0.06] px-3.5 py-1.5 font-mono text-[11px] text-ink-muted backdrop-blur-sm"
               >
                 <span className="relative flex h-1.5 w-1.5">
                   {!reduced && (
-                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green opacity-70" />
+                    <span className="absolute inline-flex h-full w-full animate-pulse-ring rounded-full bg-accent" />
                   )}
-                  <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-green" />
+                  <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-accent" />
                 </span>
                 {availability}
               </motion.div>
@@ -95,14 +93,21 @@ export function Hero({ profile }) {
               <span className="uppercase tracking-[0.16em]">{title}</span>
             </motion.div>
 
-            {/* Typing line. The live region is polite so it does not
-                interrupt a screen reader mid-sentence. */}
+            {/* Typing line. The live region is polite so it does not interrupt
+                a screen reader mid-sentence. */}
             <motion.p
               {...rise(0.19)}
-              className="mt-7 text-heading font-medium text-ink"
+              className="mt-7 min-h-[1.6em] text-heading font-medium text-ink"
             >
               <span className="text-ink-muted">I build </span>
-              <span className="text-ink" aria-live="polite">
+              <span
+                className={
+                  reduced
+                    ? 'text-accent'
+                    : 'text-gradient-accent animate-gradient-pan'
+                }
+                aria-live="polite"
+              >
                 {text}
               </span>
               {isAnimating && (
@@ -124,7 +129,7 @@ export function Hero({ profile }) {
                 <Link to="/projects" className="btn-primary group">
                   View projects
                   <ArrowRight
-                    className="h-4 w-4 transition-transform group-hover:translate-x-0.5"
+                    className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1"
                     aria-hidden="true"
                   />
                 </Link>
@@ -142,9 +147,12 @@ export function Hero({ profile }) {
                   href={resume}
                   target="_blank"
                   rel="noreferrer noopener"
-                  className="btn-ghost"
+                  className="btn-ghost group"
                 >
-                  <Download className="h-4 w-4" aria-hidden="true" />
+                  <Download
+                    className="h-4 w-4 transition-transform duration-300 group-hover:translate-y-0.5"
+                    aria-hidden="true"
+                  />
                   Resume
                 </a>
               )}
@@ -165,7 +173,7 @@ export function Hero({ profile }) {
                   href={githubUrl}
                   target="_blank"
                   rel="noreferrer noopener"
-                  className="inline-flex items-center gap-1.5 transition-colors hover:text-ink"
+                  className="inline-flex items-center gap-1.5 transition-colors hover:text-accent"
                 >
                   <Github className="h-3.5 w-3.5" aria-hidden="true" />
                   GitHub
@@ -176,7 +184,7 @@ export function Hero({ profile }) {
                   href={linkedinUrl}
                   target="_blank"
                   rel="noreferrer noopener"
-                  className="inline-flex items-center gap-1.5 transition-colors hover:text-ink"
+                  className="inline-flex items-center gap-1.5 transition-colors hover:text-accent"
                 >
                   <Linkedin className="h-3.5 w-3.5" aria-hidden="true" />
                   LinkedIn
@@ -186,51 +194,41 @@ export function Hero({ profile }) {
           </div>
 
           {photo && (
-            <motion.div {...rise(0.22)} className="relative mx-auto w-full max-w-sm lg:mx-0">
-              {/* Corner brackets, drawn as borders rather than an image. */}
-              <div
-                className="absolute -inset-3 rounded-2xl bg-accent/[0.07] blur-2xl"
-                aria-hidden="true"
-              />
-              <div className="relative">
-                <span
-                  className="absolute -left-2 -top-2 h-6 w-6 rounded-tl-md border-l-2 border-t-2 border-accent/60"
-                  aria-hidden="true"
-                />
-                <span
-                  className="absolute -bottom-2 -right-2 h-6 w-6 rounded-br-md border-b-2 border-r-2 border-accent/60"
+            <motion.div
+              {...rise(0.22)}
+              className="relative mx-auto w-full max-w-sm lg:mx-0"
+            >
+              <div className={reduced ? '' : 'animate-float'}>
+                {/* Accent bloom behind the portrait. */}
+                <div
+                  className="absolute -inset-4 rounded-[1.75rem] bg-gradient-to-br from-accent/20 via-violet/10 to-transparent blur-2xl"
                   aria-hidden="true"
                 />
 
-                <div className="overflow-hidden rounded-xl border border-line bg-surface">
-                  <img
-                    src={photo}
-                    alt={displayName}
-                    width={608}
-                    height={608}
-                    fetchpriority="high"
-                    decoding="async"
-                    className="aspect-square w-full object-cover"
+                <div className="relative">
+                  {/* Corner brackets, drawn as borders rather than an image. */}
+                  <span
+                    className="absolute -left-2.5 -top-2.5 h-7 w-7 rounded-tl-lg border-l-2 border-t-2 border-accent/70"
+                    aria-hidden="true"
                   />
+                  <span
+                    className="absolute -bottom-2.5 -right-2.5 h-7 w-7 rounded-br-lg border-b-2 border-r-2 border-accent/70"
+                    aria-hidden="true"
+                  />
+
+                  <div className="overflow-hidden rounded-2xl border border-line bg-surface shadow-[0_24px_70px_-30px_rgb(var(--accent)/0.5)]">
+                    <img
+                      src={photo}
+                      alt={displayName}
+                      width={608}
+                      height={608}
+                      fetchpriority="high"
+                      decoding="async"
+                      className="aspect-square w-full object-cover"
+                    />
+                  </div>
                 </div>
               </div>
-
-              {/* Factual counters. No invented metrics. */}
-              <dl className="mt-6 grid grid-cols-3 gap-px overflow-hidden rounded-xl border border-line bg-line">
-                {STATS.map((stat) => (
-                  <div key={stat.label} className="bg-surface px-3 py-4 text-center">
-                    <dt className="sr-only">{stat.label}</dt>
-                    <dd>
-                      <span className="block font-mono text-xl font-semibold tabular text-ink">
-                        {stat.value}
-                      </span>
-                      <span className="mt-1 block font-mono text-[10px] leading-tight text-ink-faint">
-                        {stat.label}
-                      </span>
-                    </dd>
-                  </div>
-                ))}
-              </dl>
             </motion.div>
           )}
         </div>

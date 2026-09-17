@@ -9,52 +9,61 @@
 
    Dark is the default. The .light class on <html> swaps the palette; every
    component reads these tokens through Tailwind, so nothing hardcodes a
-   colour. Dark uses a slightly blue-shifted near-black rather than pure grey,
-   which reads as a screen rather than as paper.
+   colour.
+
+   The accent is a bright cyan. Every value here was checked against WCAG:
+   cyan-400 reaches 10.96:1 on the dark canvas, and buttons use dark text on
+   the accent rather than white, which would only pass at large sizes.
 --------------------------------------------------------------------------- */
 
 :root {
-  --canvas: 8 8 10;
-  --surface: 15 16 19;
-  --elevated: 23 24 28;
-  --line: 38 39 45;
-  --line-strong: 56 57 65;
+  /* Surfaces carry a slight blue cast so the cyan reads as part of the
+     palette rather than sitting on neutral grey. */
+  --canvas: 8 10 14;
+  --surface: 16 20 27;
+  --elevated: 24 30 40;
+  --line: 38 46 60;
+  --line-strong: 58 70 90;
 
-  --ink: 250 250 251;
-  --ink-muted: 158 160 170;
-  --ink-faint: 108 110 121;
+  --ink: 241 245 249;
+  --ink-muted: 154 166 184;
+  --ink-faint: 106 118 138;
 
-  --accent: 226 58 50;
-  --accent-hover: 240 76 68;
+  --accent: 34 211 238;        /* cyan-400 — 10.96:1 on canvas */
+  --accent-hover: 103 232 249; /* cyan-300 */
+  --accent-deep: 8 145 178;    /* cyan-600, for fills behind light text */
+  --on-accent: 8 10 14;        /* dark text on the bright accent */
 
-  /* Secondary hues, used only for syntax-style category tinting. */
-  --cyan: 56 189 248;
-  --amber: 245 158 11;
+  /* Secondary hues for category tinting and diagram nodes. */
   --violet: 167 139 250;
+  --amber: 251 191 36;
   --green: 52 211 153;
+  --pink: 244 114 182;
 
   color-scheme: dark;
 }
 
 :root.light {
-  --canvas: 251 251 252;
+  --canvas: 250 251 253;
   --surface: 255 255 255;
-  --elevated: 244 245 247;
-  --line: 226 227 232;
-  --line-strong: 203 205 213;
+  --elevated: 241 245 249;
+  --line: 222 229 238;
+  --line-strong: 194 205 219;
 
-  --ink: 13 14 18;
-  --ink-muted: 82 84 94;
-  --ink-faint: 124 127 138;
+  --ink: 12 17 26;
+  --ink-muted: 71 85 105;
+  --ink-faint: 117 130 150;
 
-  /* Deeper in light mode so text on white keeps AA contrast. */
-  --accent: 194 40 33;
-  --accent-hover: 170 32 26;
+  /* Deeper on white: cyan-400 would be unreadable there. */
+  --accent: 14 116 144;        /* cyan-700 — 5.36:1 with white text */
+  --accent-hover: 21 94 117;   /* cyan-800 */
+  --accent-deep: 8 145 178;
+  --on-accent: 255 255 255;
 
-  --cyan: 2 132 199;
+  --violet: 109 40 217;
   --amber: 180 83 9;
-  --violet: 124 58 237;
-  --green: 5 150 105;
+  --green: 4 120 87;
+  --pink: 190 24 93;
 
   color-scheme: light;
 }
@@ -75,20 +84,18 @@
     overflow-x: hidden;
   }
 
-  /* Visible, consistent focus for keyboard users only. */
   :focus-visible {
     @apply outline-none ring-2 ring-accent ring-offset-2 ring-offset-canvas rounded-sm;
   }
 
   ::selection {
-    @apply bg-accent/25 text-ink;
+    @apply bg-accent/30 text-ink;
   }
 
   h1, h2, h3, h4 {
     @apply text-balance;
   }
 
-  /* Slim, unobtrusive scrollbar that matches the palette. */
   ::-webkit-scrollbar {
     width: 10px;
     height: 10px;
@@ -102,7 +109,7 @@
     border: 2px solid rgb(var(--canvas));
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: rgb(var(--ink-faint));
+    background: rgb(var(--accent) / 0.6);
   }
 
   /* Respect the operating system's reduced-motion setting. */
@@ -127,49 +134,62 @@
     @apply py-section;
   }
 
-  /* Small uppercase monospace label used above section headings. */
   .eyebrow {
     @apply inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.18em] text-accent;
   }
 
   .card {
-    @apply rounded-card border border-line bg-surface transition-colors duration-300;
+    @apply rounded-card border border-line bg-surface transition-all duration-300;
   }
 
   .card-interactive {
     @apply card;
   }
   .card-interactive:hover {
-    border-color: rgb(var(--line-strong));
+    border-color: rgb(var(--accent) / 0.45);
+    box-shadow: 0 0 0 1px rgb(var(--accent) / 0.08),
+                0 18px 40px -24px rgb(var(--accent) / 0.45);
   }
 
   .btn {
     @apply relative inline-flex items-center justify-center gap-2 rounded-lg px-5 py-2.5
-           text-sm font-medium transition-all duration-200 ease-out
+           text-sm font-semibold transition-all duration-200 ease-out
            disabled:cursor-not-allowed disabled:opacity-50;
   }
 
+  /* Dark text on the bright accent: white would only reach AA-large. */
   .btn-primary {
-    @apply btn bg-accent text-white hover:bg-accent-hover
-           shadow-[0_1px_0_0_rgb(255_255_255/0.12)_inset,0_6px_20px_-8px_rgb(var(--accent)/0.7)]
-           hover:shadow-[0_1px_0_0_rgb(255_255_255/0.18)_inset,0_10px_28px_-8px_rgb(var(--accent)/0.85)];
+    @apply btn;
+    background-color: rgb(var(--accent));
+    color: rgb(var(--on-accent));
+    box-shadow: 0 6px 22px -10px rgb(var(--accent) / 0.85);
+  }
+  .btn-primary:hover {
+    background-color: rgb(var(--accent-hover));
+    box-shadow: 0 10px 30px -10px rgb(var(--accent) / 0.95);
+    transform: translateY(-1px);
   }
 
   .btn-secondary {
-    @apply btn border border-line bg-surface/60 text-ink backdrop-blur-sm
-           hover:bg-elevated;
+    @apply btn border border-line bg-surface/60 text-ink backdrop-blur-sm;
   }
   .btn-secondary:hover {
-    border-color: rgb(var(--line-strong));
+    border-color: rgb(var(--accent) / 0.55);
+    background-color: rgb(var(--elevated));
+    transform: translateY(-1px);
   }
 
   .btn-ghost {
-    @apply btn text-ink-muted hover:text-ink;
+    @apply btn text-ink-muted hover:text-accent;
   }
 
   .tag {
     @apply inline-flex items-center rounded-md border border-line bg-elevated
-           px-2.5 py-1 font-mono text-xs text-ink-muted;
+           px-2.5 py-1 font-mono text-xs text-ink-muted transition-colors;
+  }
+  .tag:hover {
+    border-color: rgb(var(--accent) / 0.4);
+    color: rgb(var(--ink));
   }
 
   .prose-body {
@@ -181,7 +201,6 @@
            transition-colors hover:decoration-accent;
   }
 
-  /* Terminal-window chrome: three dots and a title bar. */
   .window-bar {
     @apply flex items-center gap-2 border-b border-line bg-elevated/70 px-4 py-2.5;
   }
@@ -200,22 +219,20 @@
     text-wrap: pretty;
   }
 
-  /* Hairline grid backdrop. */
   .bg-grid {
     background-image:
-      linear-gradient(to right, rgb(var(--line) / 0.55) 1px, transparent 1px),
-      linear-gradient(to bottom, rgb(var(--line) / 0.55) 1px, transparent 1px);
+      linear-gradient(to right, rgb(var(--line) / 0.6) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(var(--line) / 0.6) 1px, transparent 1px);
     background-size: 64px 64px;
   }
 
   .bg-grid-sm {
     background-image:
-      linear-gradient(to right, rgb(var(--line) / 0.4) 1px, transparent 1px),
-      linear-gradient(to bottom, rgb(var(--line) / 0.4) 1px, transparent 1px);
+      linear-gradient(to right, rgb(var(--line) / 0.45) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(var(--line) / 0.45) 1px, transparent 1px);
     background-size: 28px 28px;
   }
 
-  /* Faint dot field, used behind cards and empty media slots. */
   .bg-dots {
     background-image: radial-gradient(
       circle at 1px 1px,
@@ -233,7 +250,6 @@
     mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, black 40%, transparent 100%);
   }
 
-  /* Hairline that fades out at both ends. */
   .rule-fade {
     background: linear-gradient(
       to right,
@@ -244,17 +260,49 @@
     );
   }
 
-  .text-gradient {
+  /* Accent-tinted gradient text, used on one or two words only. */
+  .text-gradient-accent {
     @apply bg-clip-text text-transparent;
     background-image: linear-gradient(
-      180deg,
-      rgb(var(--ink)) 30%,
-      rgb(var(--ink) / 0.65) 100%
+      100deg,
+      rgb(var(--accent)) 0%,
+      rgb(var(--accent-hover)) 30%,
+      rgb(var(--violet)) 60%,
+      rgb(var(--accent)) 100%
     );
+    background-size: 200% auto;
   }
 
-  /* Numeric text that will not reflow as digits change. */
   .tabular {
     font-variant-numeric: tabular-nums;
+  }
+
+  /* Thin accent border drawn with a gradient, for feature cards. */
+  .ring-gradient {
+    position: relative;
+  }
+  .ring-gradient::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(
+      140deg,
+      rgb(var(--accent) / 0.55),
+      transparent 40%,
+      transparent 60%,
+      rgb(var(--violet) / 0.4)
+    );
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.35s ease;
+    pointer-events: none;
+  }
+  .group\/spot:hover .ring-gradient::before,
+  .ring-gradient:hover::before {
+    opacity: 1;
   }
 }

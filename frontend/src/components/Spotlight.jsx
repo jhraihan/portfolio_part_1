@@ -46,7 +46,7 @@ export function Spotlight({ children, className = '', as: Tag = 'div' }) {
         className="pointer-events-none absolute inset-0 rounded-[inherit] opacity-[var(--spot)] transition-opacity duration-300"
         style={{
           background:
-            'radial-gradient(340px circle at var(--mx) var(--my), rgb(var(--accent) / 0.09), transparent 70%)',
+            'radial-gradient(360px circle at var(--mx) var(--my), rgb(var(--accent) / 0.13), transparent 70%)',
         }}
       />
       {/* A brighter rim on the border, masked to the edge only. */}
@@ -55,7 +55,7 @@ export function Spotlight({ children, className = '', as: Tag = 'div' }) {
         className="pointer-events-none absolute inset-0 rounded-[inherit] opacity-[var(--spot)] transition-opacity duration-300"
         style={{
           background:
-            'radial-gradient(260px circle at var(--mx) var(--my), rgb(var(--accent) / 0.5), transparent 65%)',
+            'radial-gradient(280px circle at var(--mx) var(--my), rgb(var(--accent) / 0.65), transparent 65%)',
           WebkitMask:
             'linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0)',
           WebkitMaskComposite: 'xor',

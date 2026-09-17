@@ -27,9 +27,9 @@ PROFILE = {
     "email": "jahidhr05@gmail.com",
     "tagline": "I build complete, production-shaped web applications.",
     "hero_intro": (
-        "Backend-focused software engineer working with Django, Django REST "
-        "Framework, React, and MySQL. I build full systems — authentication, "
-        "role-based access, API design, and the database underneath."
+        "Full-stack software engineer working across Django, Django REST "
+        "Framework, React, and PostgreSQL. I build complete systems — the "
+        "interface, the API behind it, and the database underneath."
     ),
     "availability": "Open to remote, hybrid, and onsite roles",
     "about_short": (

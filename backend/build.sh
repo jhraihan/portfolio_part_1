@@ -49,6 +49,13 @@ else:
     print("All media already attached — skipping.")
 PY
 
+# Keep profile copy in step with the seed definition.
+#
+# seed_portfolio only runs against an empty database, so wording edited in
+# the seed file would otherwise never reach an existing deployment. Only
+# narrative fields are touched — media and links are left alone.
+python manage.py sync_profile_copy
+
 # Set the YouTube walkthrough URLs.
 #
 # These live outside seed_portfolio because seed only runs against an empty

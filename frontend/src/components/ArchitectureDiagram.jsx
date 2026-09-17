@@ -14,8 +14,8 @@ const FLOWS = {
   micromart: {
     caption: 'Checkout request path',
     nodes: [
-      { id: 'client', label: 'React SPA', sub: 'browser', tone: 'cyan' },
-      { id: 'api', label: 'Django + DRF', sub: 'JWT verified', tone: 'accent' },
+      { id: 'client', label: 'React SPA', sub: 'browser', tone: 'client' },
+      { id: 'api', label: 'Django + DRF', sub: 'JWT verified', tone: 'api' },
       { id: 'db', label: 'MySQL', sub: 'orders, inventory', tone: 'green' },
     ],
     branch: { from: 'api', label: 'SSLCommerz', sub: 'payment gateway', tone: 'amber' },
@@ -23,8 +23,8 @@ const FLOWS = {
   eduflow: {
     caption: 'Role-scoped request path',
     nodes: [
-      { id: 'client', label: 'React + Vite', sub: 'role-aware UI', tone: 'cyan' },
-      { id: 'api', label: 'DRF', sub: 'permission layer', tone: 'accent' },
+      { id: 'client', label: 'React + Vite', sub: 'role-aware UI', tone: 'client' },
+      { id: 'api', label: 'DRF', sub: 'permission layer', tone: 'api' },
       { id: 'db', label: 'Database', sub: 'courses, results', tone: 'green' },
     ],
     branch: null,
@@ -32,8 +32,8 @@ const FLOWS = {
   intellichat: {
     caption: 'Streaming response path',
     nodes: [
-      { id: 'client', label: 'React', sub: 'SSE listener', tone: 'cyan' },
-      { id: 'api', label: 'Django', sub: 'stream relay', tone: 'accent' },
+      { id: 'client', label: 'React', sub: 'SSE listener', tone: 'client' },
+      { id: 'api', label: 'Django', sub: 'stream relay', tone: 'api' },
       { id: 'db', label: 'PostgreSQL', sub: 'conversations', tone: 'green' },
     ],
     branch: { from: 'api', label: 'Gemini API', sub: 'token stream', tone: 'violet' },
@@ -42,8 +42,8 @@ const FLOWS = {
   medidesk: {
     caption: 'Role-gated module access',
     nodes: [
-      { id: 'client', label: 'React', sub: '4 role views', tone: 'cyan' },
-      { id: 'api', label: 'Django + DRF', sub: 'JWT + RBAC', tone: 'accent' },
+      { id: 'client', label: 'React', sub: '4 role views', tone: 'client' },
+      { id: 'api', label: 'Django + DRF', sub: 'JWT + RBAC', tone: 'api' },
       { id: 'db', label: 'Database', sub: 'records, billing', tone: 'green' },
     ],
     branch: null,
@@ -51,8 +51,8 @@ const FLOWS = {
   promptcanvas: {
     caption: 'Image generation path',
     nodes: [
-      { id: 'client', label: 'React', sub: 'prompt input', tone: 'cyan' },
-      { id: 'api', label: 'Django', sub: 'server-side call', tone: 'accent' },
+      { id: 'client', label: 'React', sub: 'prompt input', tone: 'client' },
+      { id: 'api', label: 'Django', sub: 'server-side call', tone: 'api' },
       { id: 'db', label: 'PostgreSQL', sub: 'stored images', tone: 'green' },
     ],
     branch: { from: 'api', label: 'Hugging Face', sub: 'inference API', tone: 'violet' },
@@ -60,8 +60,8 @@ const FLOWS = {
 }
 
 const TONE_CLASS = {
-  cyan: 'text-cyan',
-  accent: 'text-accent',
+  client: 'text-accent',
+  api: 'text-violet',
   green: 'text-green',
   amber: 'text-amber',
   violet: 'text-violet',
