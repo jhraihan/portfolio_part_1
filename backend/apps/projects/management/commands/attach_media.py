@@ -26,10 +26,6 @@ SHOTS_DIR = "projects/screenshots"
 RESUME_DIR = "resume"
 PROFILE_DIR = "profile"
 
-# The optimised profile photo. Several variants exist from earlier crops; this
-# is the one currently in use.
-PROFILE_PHOTO = "raihan_ijQyNAw.jpg"
-
 # Which optimised filename belongs to which project. The stems come from the
 # original screenshot timestamps and are stable once imported.
 COVERS = {
@@ -161,17 +157,29 @@ class Command(BaseCommand):
         count = 0
         self.stdout.write("\nProfile")
 
-        # Photo
-        photo_name = f"{PROFILE_DIR}/{PROFILE_PHOTO}"
+        # Photo — newest file in media/profile/ wins, so replacing the
+        # picture needs no code change.
         if profile.photo and not self.force:
             self.stdout.write("  photo already set")
-        elif (root / photo_name).exists():
-            profile.photo.name = photo_name
-            profile.save(update_fields=["photo"])
-            self.stdout.write(f"  photo   -> {PROFILE_PHOTO}")
-            count += 1
         else:
-            self.stderr.write(f"  ! missing {photo_name}")
+            photo_dir = root / PROFILE_DIR
+            photos = (
+                sorted(
+                    (f for f in photo_dir.iterdir()
+                     if f.suffix.lower() in {".jpg", ".jpeg", ".png", ".webp"}),
+                    key=lambda f: f.stat().st_mtime,
+                )
+                if photo_dir.exists()
+                else []
+            )
+            if photos:
+                newest = photos[-1]
+                profile.photo.name = f"{PROFILE_DIR}/{newest.name}"
+                profile.save(update_fields=["photo"])
+                self.stdout.write(f"  photo   -> {newest.name}")
+                count += 1
+            else:
+                self.stderr.write(f"  ! no image in media/{PROFILE_DIR}/")
 
         # Résumé — take whichever PDF is present rather than a fixed name, so
         # replacing the CV does not require editing this file.

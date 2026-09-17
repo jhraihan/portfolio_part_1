@@ -137,6 +137,45 @@ See [DEPLOYMENT.md](DEPLOYMENT.md) for the full Vercel + Railway walkthrough.
 
 ---
 
+## Replacing your photo or CV
+
+Both live in the repository, because Render wipes uploaded files on every
+redeploy. Replacing them is three steps.
+
+1. **Drop the new file in the source folder**, keeping any name you like:
+
+   - photo → `images/`
+   - CV → `cv/`
+
+   The newest file in each folder wins, so the old one can stay or go.
+
+2. **Run the command.** It crops and compresses the photo, removes the
+   previous files, and updates the database:
+
+   ```bash
+   cd backend
+   venv\Scripts\activate
+   python manage.py update_profile_media --dry-run   # preview
+   python manage.py update_profile_media
+   ```
+
+   Use `--photo-only` or `--cv-only` to change just one.
+
+3. **Commit and push** — Render redeploys itself:
+
+   ```bash
+   git add backend/media
+   git commit -m "Update profile photo"
+   git push
+   ```
+
+The live site updates in about three minutes. Note that `images/` and `cv/`
+are git-ignored: only the optimised copies under `backend/media/` are
+committed, which keeps the original full-resolution photo and any personal
+details in the CV source out of the public repository.
+
+---
+
 ## Interface notes
 
 - **Command palette** — `Cmd/Ctrl + K` from anywhere. Searches pages and
