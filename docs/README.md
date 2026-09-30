@@ -1,14 +1,17 @@
 # Documentation
 
-Two documents. The PRD covers the **site**; the brief covers the **person**.
+Three documents. The PRD covers the **site**, the brief covers the **person**, and
+the deployment guide covers **running it in production**.
 
 | File | Purpose |
 |---|---|
 | `PORTFOLIO_PRD.pdf` | Product requirements — architecture, decisions, outstanding work. Read this first. |
 | `ABOUT_JAHID.pdf` | Personal and professional brief — background, journey, skills, honest assessment. |
+| `DEPLOYMENT_GUIDE.pdf` | How the live site is built and deployed, day-to-day update workflows, checklists, troubleshooting. |
 | `PORTFOLIO_PRD.html` | Source for the PRD. Edit this, then re-render. |
 | `ABOUT_JAHID.html` | Source for the brief. Edit this, then re-render. |
-| `render-prd.mjs` | Regenerates either PDF from its HTML. |
+| `DEPLOYMENT_GUIDE.html` | Source for the deployment guide. |
+| `render-prd.mjs` | Regenerates any of the PDFs from its HTML. |
 
 ## Regenerating the PDFs
 
@@ -22,6 +25,9 @@ SRC=docs/PORTFOLIO_PRD.html OUT=docs/PORTFOLIO_PRD.pdf \
 
 SRC=docs/ABOUT_JAHID.html OUT=docs/ABOUT_JAHID.pdf \
   LABEL="Md. Jahid Hasan Raihan — Personal & Professional Brief" node docs/render-prd.mjs
+
+SRC=docs/DEPLOYMENT_GUIDE.html OUT=docs/DEPLOYMENT_GUIDE.pdf \
+  LABEL="Deployment Guide — Md. Jahid Hasan Raihan" node docs/render-prd.mjs
 ```
 
 On Windows PowerShell:

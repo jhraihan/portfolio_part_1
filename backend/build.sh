@@ -34,11 +34,15 @@ python manage.py shell <<'PY'
 from apps.profiles.models import Profile
 from apps.projects.models import Project
 
+def absent(field):
+    # A stale reference to a replaced file is as broken as an empty one.
+    return not field or not field.storage.exists(field.name)
+
 profile = Profile.objects.first()
 missing = (
     Project.objects.filter(cover_image="").exists()
-    or (profile is not None and not profile.photo)
-    or (profile is not None and not profile.resume)
+    or (profile is not None and absent(profile.photo))
+    or (profile is not None and absent(profile.resume))
 )
 
 if missing:

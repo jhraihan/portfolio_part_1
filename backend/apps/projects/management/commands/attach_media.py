@@ -68,6 +68,11 @@ GALLERIES = {
 }
 
 
+def _present(field):
+    """True when the field references a file that actually exists."""
+    return bool(field) and field.storage.exists(field.name)
+
+
 class Command(BaseCommand):
     help = "Point database records at media files already present in MEDIA_ROOT."
 
@@ -158,8 +163,10 @@ class Command(BaseCommand):
         self.stdout.write("\nProfile")
 
         # Photo — newest file in media/profile/ wins, so replacing the
-        # picture needs no code change.
-        if profile.photo and not self.force:
+        # picture needs no code change. A reference to a file that is no
+        # longer on disk (replaced and deleted in a later commit) counts as
+        # unset, or production keeps serving a 404.
+        if _present(profile.photo) and not self.force:
             self.stdout.write("  photo already set")
         else:
             photo_dir = root / PROFILE_DIR
@@ -183,7 +190,7 @@ class Command(BaseCommand):
 
         # Résumé — take whichever PDF is present rather than a fixed name, so
         # replacing the CV does not require editing this file.
-        if profile.resume and not self.force:
+        if _present(profile.resume) and not self.force:
             self.stdout.write("  résumé already set")
             return count
 

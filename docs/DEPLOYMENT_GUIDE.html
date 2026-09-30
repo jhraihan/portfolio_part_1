@@ -1,0 +1,647 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Deployment Guide — Md. Jahid Hasan Raihan</title>
+<style>
+  @page { size: A4; margin: 0; }
+  body { padding: 0 16mm; }
+
+  :root {
+    --ink: #14161a;
+    --ink-soft: #3d434d;
+    --ink-faint: #6b7280;
+    --accent: #c2281f;
+    --line: #d9dce2;
+    --line-soft: #eceef2;
+    --surface: #f7f8fa;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    font-family: "Segoe UI", -apple-system, "Helvetica Neue", Arial, sans-serif;
+    font-size: 9.6pt;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    margin: 0;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  h1, h2, h3, h4 { color: var(--ink); margin: 0; font-weight: 600; }
+
+  /* ---------- Cover ---------- */
+  .cover {
+    height: 247mm;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    page-break-after: always;
+  }
+  .cover .rule { width: 54px; height: 3px; background: var(--accent); margin-bottom: 26px; }
+  .cover .kicker {
+    font-family: "Consolas", "Courier New", monospace;
+    font-size: 8.5pt; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 14px;
+  }
+  .cover h1 { font-size: 30pt; line-height: 1.1; letter-spacing: -0.02em; }
+  .cover .sub { font-size: 13pt; color: var(--ink-faint); margin-top: 10px; font-weight: 400; }
+  .cover .meta {
+    margin-top: 46px; padding-top: 18px; border-top: 1px solid var(--line);
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px 32px;
+    font-size: 9pt;
+  }
+  .cover .meta dt {
+    font-family: "Consolas", "Courier New", monospace;
+    font-size: 7.6pt; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--ink-faint); margin-bottom: 3px;
+  }
+  .cover .meta dd { margin: 0; color: var(--ink); font-weight: 500; }
+  .cover .note {
+    margin-top: 38px; padding: 14px 16px; background: var(--surface);
+    border-left: 3px solid var(--accent); font-size: 9pt;
+  }
+
+  /* ---------- Sections ---------- */
+  section { page-break-inside: auto; }
+  h2 {
+    font-size: 15pt; letter-spacing: -0.01em;
+    margin: 26px 0 12px; padding-bottom: 7px;
+    border-bottom: 1.5px solid var(--ink);
+    page-break-after: avoid;
+  }
+  h2 .num {
+    font-family: "Consolas", "Courier New", monospace;
+    font-size: 10pt; color: var(--accent); margin-right: 9px; font-weight: 600;
+  }
+  h3 {
+    font-size: 10.8pt; margin: 18px 0 7px;
+    page-break-after: avoid;
+  }
+  h4 {
+    font-size: 9.6pt; margin: 13px 0 5px;
+    color: var(--ink);
+    page-break-after: avoid;
+  }
+  p { margin: 0 0 8px; }
+  ul, ol { margin: 0 0 9px; padding-left: 17px; }
+  li { margin-bottom: 3.5px; break-inside: avoid; }
+  strong { color: var(--ink); font-weight: 600; }
+  code, .mono {
+    font-family: "Consolas", "Courier New", monospace;
+    font-size: 8.6pt;
+    background: var(--surface);
+    padding: 1px 4px;
+    border-radius: 3px;
+    color: var(--ink);
+  }
+
+  /* ---------- Tables ---------- */
+  table {
+    width: 100%; border-collapse: collapse; margin: 9px 0 14px;
+    font-size: 8.9pt; page-break-inside: avoid;
+  }
+  th {
+    text-align: left; padding: 6px 9px;
+    background: var(--ink); color: #fff; font-weight: 600;
+    font-size: 8.2pt; letter-spacing: 0.04em; text-transform: uppercase;
+  }
+  td { padding: 5.5px 9px; border-bottom: 1px solid var(--line-soft); vertical-align: top; }
+  tr:nth-child(even) td { background: #fbfcfd; }
+  td.mono-cell {
+    font-family: "Consolas", "Courier New", monospace;
+    font-size: 8.3pt; color: var(--ink);
+  }
+
+  /* ---------- Callouts ---------- */
+  .callout {
+    background: var(--surface); border-left: 3px solid var(--accent);
+    padding: 11px 14px; margin: 11px 0 14px; font-size: 9.2pt;
+    page-break-inside: avoid;
+  }
+  .callout.rule-box { border-left-color: var(--ink); }
+  .callout p:last-child { margin-bottom: 0; }
+  .callout .label {
+    font-family: "Consolas", "Courier New", monospace;
+    font-size: 7.6pt; letter-spacing: 0.13em; text-transform: uppercase;
+    color: var(--accent); display: block; margin-bottom: 5px; font-weight: 600;
+  }
+  .callout.rule-box .label { color: var(--ink); }
+
+  /* ---------- Code block ---------- */
+  pre {
+    background: #16181d; color: #e6e8ec;
+    padding: 11px 13px; border-radius: 5px;
+    font-family: "Consolas", "Courier New", monospace;
+    font-size: 8.1pt; line-height: 1.5;
+    overflow: visible; white-space: pre-wrap; word-break: break-word;
+    margin: 8px 0 13px;
+    page-break-inside: avoid;
+  }
+  pre .c { color: #8b929e; }
+
+  /* ---------- Project block ---------- */
+  .project {
+    border: 1px solid var(--line); border-radius: 6px;
+    padding: 14px 16px; margin: 13px 0;
+    page-break-inside: avoid;
+  }
+  .project-head {
+    display: flex; justify-content: space-between; align-items: baseline;
+    gap: 12px; border-bottom: 1px solid var(--line-soft);
+    padding-bottom: 7px; margin-bottom: 9px;
+  }
+  .project-head h3 { margin: 0; font-size: 11.5pt; }
+  .badge {
+    font-family: "Consolas", "Courier New", monospace;
+    font-size: 7.4pt; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--accent); border: 1px solid var(--accent);
+    padding: 2px 6px; border-radius: 3px; white-space: nowrap;
+  }
+  .flow {
+    font-family: "Consolas", "Courier New", monospace;
+    font-size: 8.4pt; background: var(--surface);
+    padding: 7px 10px; border-radius: 4px; margin: 8px 0;
+    color: var(--ink);
+  }
+  .kv { margin: 7px 0; font-size: 9pt; }
+  .kv dt {
+    font-family: "Consolas", "Courier New", monospace;
+    font-size: 7.6pt; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--ink-faint); margin-top: 7px;
+  }
+  .kv dd { margin: 2px 0 0; }
+
+  .two-col { column-count: 2; column-gap: 22px; }
+  .two-col ul { margin-top: 0; }
+
+  .page-break { page-break-before: always; }
+  .avoid-break { page-break-inside: avoid; }
+
+  .toc { font-size: 9.4pt; }
+  .toc li { margin-bottom: 5px; }
+  .toc .sub-item { color: var(--ink-faint); font-size: 8.8pt; }
+
+  footer.doc-end {
+    margin-top: 30px; padding-top: 12px; border-top: 1px solid var(--line);
+    font-size: 8.4pt; color: var(--ink-faint);
+  }
+</style>
+</head>
+<body>
+
+<!-- ===================================================== Cover -->
+<div class="cover">
+  <div class="rule"></div>
+  <div class="kicker">Operations · Render + Neon</div>
+  <h1>Deployment Guide</h1>
+  <div class="sub">How the live portfolio is built, deployed, updated and repaired</div>
+
+  <dl class="meta">
+    <div><dt>Website</dt><dd>portfolio-web-asu3.onrender.com</dd></div>
+    <div><dt>API</dt><dd>portfolio-api-9028.onrender.com/api</dd></div>
+    <div><dt>Admin</dt><dd>portfolio-api-9028.onrender.com/admin/</dd></div>
+    <div><dt>Database</dt><dd>PostgreSQL on Neon (Singapore)</dd></div>
+    <div><dt>Hosting</dt><dd>Render free tier, Singapore</dd></div>
+    <div><dt>Revised</dt><dd>25 September 2026</dd></div>
+  </dl>
+
+  <div class="note">
+    <strong>The one rule to remember:</strong> text lives in the database and is
+    edited in the admin. Files (photo, CV, screenshots) live in the
+    <em>repository</em> and reach the site only through <code>git push</code>.
+    Anything uploaded through the admin disappears.
+  </div>
+</div>
+
+<!-- ===================================================== Contents -->
+<section>
+  <h2><span class="num">00</span>Contents</h2>
+  <ol class="toc">
+    <li>How the system fits together</li>
+    <li>What happens when you push</li>
+    <li>Environment variables</li>
+    <li>Where each kind of content lives</li>
+    <li>Workflows — making common changes</li>
+    <li>Running a command against production</li>
+    <li>The admin account</li>
+    <li>Checklists — before and after every deploy</li>
+    <li>Free-tier behaviour</li>
+    <li>Troubleshooting</li>
+    <li>Rules — what never to do</li>
+    <li>Custom domain (optional)</li>
+    <li>Open item at time of writing</li>
+  </ol>
+</section>
+
+<!-- ===================================================== 01 -->
+<section class="page-break">
+  <h2><span class="num">01</span>How the system fits together</h2>
+
+  <p>Two Render services and one Neon database. Both services build from the
+  same GitHub repository, <code>main</code> branch.</p>
+
+  <div class="flow">Visitor → portfolio-web (static React build) → portfolio-api (Django + gunicorn) → Neon PostgreSQL</div>
+  <div class="flow">portfolio-api → WhiteNoise → backend/media/ (photo, CV, screenshots — committed to git)</div>
+
+  <table>
+    <tr><th>Piece</th><th>Render type</th><th>Root dir</th><th>What it does</th></tr>
+    <tr><td><strong>portfolio-web</strong></td><td>Static Site</td><td class="mono-cell">frontend</td>
+        <td>The React single-page app. Never sleeps; loads instantly.</td></tr>
+    <tr><td><strong>portfolio-api</strong></td><td>Web Service (Python 3.12)</td><td class="mono-cell">backend</td>
+        <td>The REST API, the admin CMS, and the media files. Sleeps after 15 minutes idle.</td></tr>
+    <tr><td><strong>Neon</strong></td><td>External</td><td>—</td>
+        <td>PostgreSQL. Holds every piece of text, every project, every contact message. Survives deploys.</td></tr>
+  </table>
+
+  <div class="callout">
+    <span class="label">Why Neon, not Render Postgres</span>
+    <p>Render's free database is deleted after 30 days. Neon's free tier does not expire.</p>
+  </div>
+
+  <h3>Why media is committed to git</h3>
+  <p>Render's disk is <strong>ephemeral</strong>: it is rebuilt from the repository on every deploy,
+  and anything written to it at runtime is lost. In production Django does not serve
+  media itself; WhiteNoise does, and WhiteNoise only knows about files that existed
+  when the server started. So a file is served only if it is in <code>backend/media/</code>
+  in the repository. This is why <code>backend/media/</code> is deliberately
+  <strong>not</strong> in <code>.gitignore</code>.</p>
+</section>
+
+<!-- ===================================================== 02 -->
+<section class="page-break">
+  <h2><span class="num">02</span>What happens when you push</h2>
+
+  <p>A push to <code>main</code> triggers both services to rebuild automatically. Changing an
+  environment variable in the Render dashboard also triggers a redeploy of that service.</p>
+
+  <h3>2.1 Backend — <code>backend/build.sh</code></h3>
+  <p>Every step is safe to repeat. Only step 6 can change content you edited in the admin (see 5.2).</p>
+  <table>
+    <tr><th>#</th><th>Step</th><th>What it does</th></tr>
+    <tr><td>1</td><td class="mono-cell">pip install -r requirements/prod.txt</td><td>Installs Django, DRF, gunicorn, WhiteNoise.</td></tr>
+    <tr><td>2</td><td class="mono-cell">collectstatic</td><td>Gathers admin CSS/JS for WhiteNoise.</td></tr>
+    <tr><td>3</td><td class="mono-cell">migrate</td><td>Applies any new database migrations to Neon.</td></tr>
+    <tr><td>4</td><td class="mono-cell">seed_portfolio</td><td><strong>Only if the database has no projects.</strong> Loads all content on a brand-new database.</td></tr>
+    <tr><td>5</td><td class="mono-cell">attach_media</td><td>Runs when a project has no cover, or the profile's photo or CV is empty <em>or points at a file that no longer exists</em>. Links records to the committed files.</td></tr>
+    <tr><td>6</td><td class="mono-cell">sync_profile_copy</td><td>Pushes profile <em>wording</em> from <code>seed_portfolio.py</code> to the live database. Never touches photo, CV or links.</td></tr>
+    <tr><td>7</td><td class="mono-cell">set_video_urls</td><td>Sets YouTube walkthrough links on projects that have none. Links edited in the admin are left alone.</td></tr>
+    <tr><td>8</td><td>create admin</td><td>Creates the admin user from <code>ADMIN_USERNAME</code> / <code>ADMIN_PASSWORD</code> if that user does not exist yet.</td></tr>
+  </table>
+  <p>Then Render starts the server:</p>
+  <pre>gunicorn config.wsgi:application --bind 0.0.0.0:$PORT</pre>
+  <p>Render's health check calls <code>/api/profile/</code>. If it fails, the old version keeps running.</p>
+
+  <h3>2.2 Frontend</h3>
+  <pre>npm ci &amp;&amp; npm run build      <span class="c"># publishes frontend/dist</span></pre>
+  <ul>
+    <li><code>VITE_API_URL</code> is <strong>baked in at build time</strong>. Changing it requires a
+      redeploy of <em>portfolio-web</em>, not just the backend.</li>
+    <li>A <strong>rewrite</strong> rule <code>/* → /index.html</code> makes URLs like
+      <code>/projects/micromart</code> work on refresh. It must be <em>Rewrite</em>, not Redirect.
+      Render ignores the <code>_redirects</code> file in <code>public/</code>.</li>
+  </ul>
+
+  <h3>2.3 Timeline of a normal deploy</h3>
+  <ol>
+    <li><code>git push</code> — both services start building.</li>
+    <li>Frontend finishes in about 1–2 minutes.</li>
+    <li>Backend takes about 3–5 minutes (dependency install dominates).</li>
+    <li>Watch progress in Render → service → <strong>Events</strong> / <strong>Logs</strong>.</li>
+    <li>Run the after-deploy checklist (section 08).</li>
+  </ol>
+</section>
+
+<!-- ===================================================== 03 -->
+<section class="page-break">
+  <h2><span class="num">03</span>Environment variables</h2>
+  <p>Set in Render → service → <strong>Environment</strong>. Never commit them. Locally the same
+  names live in <code>backend/.env</code>, which is git-ignored.</p>
+
+  <h3>3.1 portfolio-api</h3>
+  <table>
+    <tr><th>Variable</th><th>Value</th><th>Notes</th></tr>
+    <tr><td class="mono-cell">PYTHON_VERSION</td><td class="mono-cell">3.12.0</td><td></td></tr>
+    <tr><td class="mono-cell">SECRET_KEY</td><td>long random string</td><td>Never reuse the development key.</td></tr>
+    <tr><td class="mono-cell">DEBUG</td><td class="mono-cell">False</td><td>Must be False in production.</td></tr>
+    <tr><td class="mono-cell">USE_SQLITE</td><td class="mono-cell">False</td><td>True would ignore Neon.</td></tr>
+    <tr><td class="mono-cell">DATABASE_URL</td><td>Neon connection string</td><td>Contains the database password — treat as secret.</td></tr>
+    <tr><td class="mono-cell">ALLOWED_HOSTS</td><td class="mono-cell">portfolio-api-9028.onrender.com</td><td>Wrong value → <code>DisallowedHost</code> / 400.</td></tr>
+    <tr><td class="mono-cell">CORS_ALLOWED_ORIGINS</td><td class="mono-cell">https://portfolio-web-asu3.onrender.com</td><td>Wrong value → browser blocks every API call.</td></tr>
+    <tr><td class="mono-cell">CSRF_TRUSTED_ORIGINS</td><td class="mono-cell">https://portfolio-web-asu3.onrender.com</td><td>Comma-separate several origins.</td></tr>
+    <tr><td class="mono-cell">SECURE_SSL_REDIRECT</td><td class="mono-cell">False</td><td>Render already handles HTTPS; True causes a redirect loop.</td></tr>
+    <tr><td class="mono-cell">ADMIN_USERNAME</td><td>your choice</td><td>Used only to create the first admin.</td></tr>
+    <tr><td class="mono-cell">ADMIN_PASSWORD</td><td>strong password</td><td>Remove once the account exists (section 07).</td></tr>
+    <tr><td class="mono-cell">ADMIN_EMAIL</td><td>optional</td><td></td></tr>
+  </table>
+
+  <h4>Optional — email notification for contact messages</h4>
+  <p>Messages are always stored in the database and visible in the admin. To also be emailed,
+  set <code>EMAIL_BACKEND</code> (<code>django.core.mail.backends.smtp.EmailBackend</code>),
+  <code>EMAIL_HOST</code>, <code>EMAIL_PORT</code>, <code>EMAIL_USE_TLS</code>,
+  <code>EMAIL_HOST_USER</code>, <code>EMAIL_HOST_PASSWORD</code> and <code>CONTACT_NOTIFY_EMAIL</code>.
+  For Gmail, use an <em>app password</em>, not your account password.</p>
+
+  <h3>3.2 portfolio-web</h3>
+  <table>
+    <tr><th>Variable</th><th>Value</th><th>Notes</th></tr>
+    <tr><td class="mono-cell">VITE_API_URL</td><td class="mono-cell">https://portfolio-api-9028.onrender.com/api</td>
+        <td>The <code>/api</code> suffix is required. Without it every request 404s.</td></tr>
+  </table>
+
+  <div class="callout rule-box">
+    <span class="label">If a hostname ever changes</span>
+    <p>Update <code>ALLOWED_HOSTS</code>, <code>CORS_ALLOWED_ORIGINS</code>, <code>CSRF_TRUSTED_ORIGINS</code>
+    and <code>VITE_API_URL</code> together, then redeploy <strong>both</strong> services.</p>
+  </div>
+</section>
+
+<!-- ===================================================== 04 -->
+<section class="page-break">
+  <h2><span class="num">04</span>Where each kind of content lives</h2>
+  <p>Almost every deployment problem comes from mixing these up.</p>
+  <table>
+    <tr><th>Content</th><th>Stored in</th><th>How to change it</th><th>Needs a push?</th></tr>
+    <tr><td>Name, tagline, about text, links, availability</td><td>Neon database</td><td>Admin → Profiles → Profile</td><td>No — live instantly</td></tr>
+    <tr><td>Project text, tech stack, video link, order</td><td>Neon database</td><td>Admin → Projects</td><td>No</td></tr>
+    <tr><td>Skills, education</td><td>Neon database</td><td>Admin</td><td>No</td></tr>
+    <tr><td>Contact messages</td><td>Neon database</td><td>Admin → Contact (inbox)</td><td>—</td></tr>
+    <tr><td><strong>Profile photo, CV</strong></td><td>Repository: <code>backend/media/</code></td><td><code>update_profile_media</code> (5.3)</td><td><strong>Yes</strong></td></tr>
+    <tr><td><strong>Project screenshots</strong></td><td>Repository: <code>backend/media/</code></td><td>See 5.4</td><td><strong>Yes</strong></td></tr>
+    <tr><td>Page design, layout, code</td><td>Repository</td><td>Edit code</td><td>Yes</td></tr>
+    <tr><td>Sitemap, robots.txt</td><td>Repository: <code>frontend/public/</code></td><td><code>generate_sitemap</code></td><td>Yes</td></tr>
+  </table>
+
+  <div class="callout">
+    <span class="label">Why admin uploads fail</span>
+    <p>The admin's upload button saves the file to Render's disk and points the database at it.
+    WhiteNoise never serves the file because it did not exist at startup, so the site shows a broken image.
+    The next deploy deletes the file anyway. <strong>Use the admin for text only.</strong></p>
+  </div>
+</section>
+
+<!-- ===================================================== 05 -->
+<section class="page-break">
+  <h2><span class="num">05</span>Workflows — making common changes</h2>
+  <p>Backend commands run from <code>backend/</code> with the virtual environment active
+  (<code>venv\Scripts\activate</code> on Windows). Frontend commands run from <code>frontend/</code>.</p>
+
+  <h3>5.1 Change code (any feature, fix or design change)</h3>
+  <pre><span class="c"># 1. Test locally</span>
+cd backend  &amp;&amp; python manage.py test          <span class="c"># all backend tests must pass</span>
+cd frontend &amp;&amp; npm test &amp;&amp; npm run lint &amp;&amp; npm run build
+
+<span class="c"># 2. Look at what you are about to commit</span>
+git status
+git diff
+
+<span class="c"># 3. Commit and push</span>
+git add &lt;files&gt;
+git commit -m "Describe the change"
+git push</pre>
+  <p>Then watch both services in Render and run the checklist in section 08.</p>
+
+  <h3>5.2 Change text on the site</h3>
+  <ol>
+    <li>Open <code>https://portfolio-api-9028.onrender.com/admin/</code> and sign in.</li>
+    <li>Edit the Profile, a Project, a Skill or an Education entry. Save.</li>
+    <li>Reload the website. No deploy needed.</li>
+  </ol>
+  <p>Admin edits are never overwritten by a deploy, with one exception: the profile's narrative fields
+  (tagline, hero intro, about text and similar) are re-synced from <code>seed_portfolio.py</code> on every
+  deploy by <code>sync_profile_copy</code>. <strong>If you edit profile wording in the admin, make the same edit
+  in <code>seed_portfolio.py</code></strong>, or the next deploy puts the old wording back.</p>
+
+  <h3>5.3 Replace the profile photo or CV</h3>
+  <pre><span class="c"># 1. Drop the new file into the git-ignored source folder</span>
+<span class="c">#    photo -&gt; images/      CV (PDF) -&gt; cv/</span>
+
+<span class="c"># 2. Optimise it into backend/media/ and update the local database</span>
+python manage.py update_profile_media --dry-run       <span class="c"># preview</span>
+python manage.py update_profile_media                 <span class="c"># or --photo-only / --cv-only</span>
+
+<span class="c"># 3. Commit the media and push</span>
+git add backend/media
+git commit -m "Update profile photo"
+git push</pre>
+  <p>On deploy, <code>build.sh</code> notices the live database points at a file that no longer exists
+  and re-links it to the newest file in <code>media/profile/</code>. No admin step is needed.</p>
+  <p>If you replace the photo but keep the <em>same filename</em>, the live record is still valid, so
+  nothing needs re-linking; browsers may show the old picture until their cache expires.</p>
+
+  <h3 class="page-break">5.4 Change project screenshots</h3>
+  <p>Screenshot filenames are listed by hand in two commands. Both need updating:</p>
+  <ol>
+    <li>Put the new screenshots in <code>images/&lt;project-folder&gt;/</code>.</li>
+    <li>In <code>backend/apps/projects/management/commands/import_media.py</code>, update <code>COVERS</code>
+      and <code>CAPTIONS</code> for that project if the cover or captions change.</li>
+    <li>Run <code>python manage.py import_media</code>. It optimises the images into
+      <code>backend/media/projects/</code> and updates your <em>local</em> database.</li>
+    <li>In <code>backend/apps/projects/management/commands/attach_media.py</code>, update
+      <code>COVERS</code> and <code>GALLERIES</code> to the new output filenames.</li>
+    <li>Commit <code>backend/media</code> and both command files, then push.</li>
+    <li>The live database still points at the old gallery. Re-link it with
+      <code>attach_media --force</code> against production (section 06).</li>
+  </ol>
+  <div class="callout">
+    <span class="label">Note</span>
+    <p><code>attach_media --force</code> rebuilds every gallery, so captions return to the values in
+    <code>attach_media.py</code>. Keep captions edited in the admin in step with that file.</p>
+  </div>
+
+  <h3>5.5 Add a new project</h3>
+  <ol>
+    <li>Create the project and its text in the admin (or add it to <code>seed_portfolio.py</code>).</li>
+    <li>Add its screenshots as in 5.4, adding the new slug to the mappings in both commands.</li>
+    <li>Regenerate the sitemap, then commit and push:
+      <pre>python manage.py generate_sitemap --base-url https://portfolio-web-asu3.onrender.com</pre></li>
+  </ol>
+
+  <h3>5.6 Change a dependency or the database schema</h3>
+  <ul>
+    <li><strong>New Python package:</strong> add it to <code>backend/requirements/base.txt</code>
+      (or <code>prod.txt</code> if production-only). Render installs it on the next build.</li>
+    <li><strong>Model change:</strong> run <code>python manage.py makemigrations</code> locally, commit the
+      migration file. <code>build.sh</code> applies it to Neon. Never edit a migration that is already deployed.</li>
+    <li><strong>New npm package:</strong> <code>npm install &lt;pkg&gt;</code> and commit both
+      <code>package.json</code> and <code>package-lock.json</code>. <code>npm ci</code> fails if they disagree.</li>
+    <li><strong>New environment variable:</strong> add it to <code>backend/.env.example</code> with a comment,
+      and to the Render dashboard <em>before</em> pushing code that needs it.</li>
+  </ul>
+</section>
+
+<!-- ===================================================== 06 -->
+<section class="page-break">
+  <h2><span class="num">06</span>Running a command against production</h2>
+  <p>Render's free tier has no shell. To run a management command on the live database, run it on
+  your own machine with <code>DATABASE_URL</code> pointed at Neon. Your local <code>backend/media/</code>
+  must match what is pushed, because file checks read your local disk.</p>
+
+  <h4>Git Bash</h4>
+  <pre>cd backend
+DATABASE_URL="&lt;Neon connection string&gt;" USE_SQLITE=False python manage.py &lt;command&gt;</pre>
+
+  <h4>PowerShell</h4>
+  <pre>cd backend
+$env:DATABASE_URL="&lt;Neon connection string&gt;"; $env:USE_SQLITE="False"
+python manage.py &lt;command&gt;
+Remove-Item Env:DATABASE_URL, Env:USE_SQLITE      <span class="c"># back to local afterwards</span></pre>
+
+  <p>Copy the connection string from Render → portfolio-api → Environment, or from the Neon dashboard.</p>
+
+  <table>
+    <tr><th>Command</th><th>Use it to</th></tr>
+    <tr><td class="mono-cell">changepassword &lt;username&gt;</td><td>Reset the admin password.</td></tr>
+    <tr><td class="mono-cell">attach_media</td><td>Repair a broken photo or CV link immediately, without waiting for a deploy.</td></tr>
+    <tr><td class="mono-cell">attach_media --force</td><td>Re-link every cover, gallery, photo and CV to the committed files.</td></tr>
+    <tr><td class="mono-cell">sync_profile_copy</td><td>Push profile wording from <code>seed_portfolio.py</code>.</td></tr>
+  </table>
+
+  <div class="callout rule-box">
+    <span class="label">Be careful</span>
+    <p>This is the real database. Never run <code>seed_portfolio</code>, <code>flush</code>,
+    <code>import_media</code> or <code>update_profile_media</code> this way. Unset the variables
+    afterwards so later local commands do not touch production by accident.</p>
+  </div>
+</section>
+
+<!-- ===================================================== 07 -->
+<section>
+  <h2><span class="num">07</span>The admin account</h2>
+  <ul>
+    <li><strong>URL:</strong> <code>https://portfolio-api-9028.onrender.com/admin/</code></li>
+    <li><strong>Credentials:</strong> the values of <code>ADMIN_USERNAME</code> and <code>ADMIN_PASSWORD</code>
+      in Render → portfolio-api → Environment. They are not stored anywhere in the repository.</li>
+    <li><strong>Once you can log in,</strong> delete <code>ADMIN_PASSWORD</code> from Render. The account stays;
+      the build only creates it when it does not exist and never changes an existing password.</li>
+    <li><strong>Forgotten password:</strong> <code>changepassword</code> against production (section 06).</li>
+    <li>Change the password from inside the admin (top right → Change password) whenever you like.</li>
+  </ul>
+</section>
+
+<!-- ===================================================== 08 -->
+<section class="page-break">
+  <h2><span class="num">08</span>Checklists</h2>
+
+  <h3>8.1 Before every push</h3>
+  <ul>
+    <li>☐ <code>python manage.py test</code> passes</li>
+    <li>☐ <code>npm test</code>, <code>npm run lint</code> and <code>npm run build</code> pass</li>
+    <li>☐ <code>git status</code> shows only files you meant to change</li>
+    <li>☐ No <code>.env</code> file tracked: <code>git ls-files | grep -c "\.env$"</code> prints <code>0</code></li>
+    <li>☐ New images or CV are in <code>backend/media/</code> <em>and staged</em></li>
+    <li>☐ New environment variables already added in Render</li>
+    <li>☐ New migrations committed</li>
+  </ul>
+
+  <h3>8.2 After every deploy</h3>
+  <p>The first request may take about 50 seconds if the backend was asleep.</p>
+  <ul>
+    <li>☐ Both services show <strong>Live</strong> in Render, with the latest commit</li>
+    <li>☐ <code>/api/profile/</code> returns JSON</li>
+    <li>☐ Hero shows your name and <strong>photo</strong></li>
+    <li>☐ All project cards show screenshots</li>
+    <li>☐ A case study opens with its diagram and gallery</li>
+    <li>☐ Refreshing <code>/projects/micromart</code> does not 404</li>
+    <li>☐ Résumé downloads</li>
+    <li>☐ A test contact message appears in the admin</li>
+    <li>☐ Light/dark toggle works</li>
+  </ul>
+
+  <h4>Quick checks from a terminal (Git Bash)</h4>
+  <pre><span class="c"># Which photo does the live API point at?</span>
+curl -s https://portfolio-api-9028.onrender.com/api/profile/ | grep -o '"photo":"[^"]*"'
+
+<span class="c"># Does that file load? (expect 200)</span>
+curl -s -o /dev/null -w "%{http_code}\n" &lt;photo URL from above&gt;
+
+<span class="c"># Does client-side routing survive a refresh? (expect 200)</span>
+curl -s -o /dev/null -w "%{http_code}\n" https://portfolio-web-asu3.onrender.com/projects/micromart</pre>
+</section>
+
+<!-- ===================================================== 09 -->
+<section>
+  <h2><span class="num">09</span>Free-tier behaviour</h2>
+  <table>
+    <tr><th>Behaviour</th><th>Effect</th></tr>
+    <tr><td>Backend sleeps after 15 minutes idle</td><td>The next visitor waits about 50 seconds for project data.</td></tr>
+    <tr><td>Static frontend never sleeps</td><td>The page shell appears instantly.</td></tr>
+    <tr><td>Disk is ephemeral</td><td>Runtime uploads are lost on every deploy (section 01).</td></tr>
+    <tr><td>No shell</td><td>Run commands from your machine (section 06).</td></tr>
+  </table>
+  <p>Before sending the link to a recruiter, open the site yourself a minute earlier to wake the backend.
+  Render's paid always-on instance removes the cold start; everything else can stay free.</p>
+</section>
+
+<!-- ===================================================== 10 -->
+<section class="page-break">
+  <h2><span class="num">10</span>Troubleshooting</h2>
+  <table>
+    <tr><th>Symptom</th><th>Cause</th><th>Fix</th></tr>
+    <tr><td>Profile photo broken</td><td>Database points at a file that is not committed (uploaded via admin, or replaced and deleted)</td><td>Commit the photo and push; or <code>attach_media</code> against production</td></tr>
+    <tr><td>All images 404</td><td><code>backend/media/</code> not committed</td><td>Commit and push it</td></tr>
+    <tr><td>Page loads but no project data</td><td>Backend asleep</td><td>Wait about 50 s and reload</td></tr>
+    <tr><td>Browser console: CORS error</td><td><code>CORS_ALLOWED_ORIGINS</code> lacks the frontend URL</td><td>Fix the variable (no trailing slash)</td></tr>
+    <tr><td>Every API call 404s</td><td><code>VITE_API_URL</code> missing <code>/api</code></td><td>Fix it, redeploy <em>portfolio-web</em></td></tr>
+    <tr><td>400 Bad Request / <code>DisallowedHost</code></td><td><code>ALLOWED_HOSTS</code> wrong</td><td>Set it to the API hostname</td></tr>
+    <tr><td>Too many redirects</td><td><code>SECURE_SSL_REDIRECT=True</code></td><td>Set it to <code>False</code></td></tr>
+    <tr><td>Refresh on a case study 404s</td><td>Rewrite rule missing</td><td>Add <code>/* → /index.html</code>, action Rewrite</td></tr>
+    <tr><td>Admin CSRF failure on login</td><td><code>CSRF_TRUSTED_ORIGINS</code> wrong</td><td>Include the relevant https origin</td></tr>
+    <tr><td>Build: <code>bad interpreter</code></td><td><code>build.sh</code> saved with Windows line endings</td><td><code>.gitattributes</code> forces LF; re-add the file</td></tr>
+    <tr><td>Build: <code>npm ci</code> fails</td><td><code>package-lock.json</code> out of date</td><td>Run <code>npm install</code>, commit the lock file</td></tr>
+    <tr><td>Build: module not found</td><td>Package missing from requirements</td><td>Add it to <code>requirements/</code></td></tr>
+    <tr><td>Profile wording reverted after deploy</td><td><code>sync_profile_copy</code> restored the seed text</td><td>Edit <code>seed_portfolio.py</code> too (5.2)</td></tr>
+    <tr><td>Contact form: 429</td><td>Rate limit, 5 per hour per IP</td><td>Intended. Wait an hour</td></tr>
+  </table>
+  <p>For any other failure, read Render → service → <strong>Logs</strong>. The failing command and its
+  error are near the end of the build log.</p>
+</section>
+
+<!-- ===================================================== 11 -->
+<section>
+  <h2><span class="num">11</span>Rules — what never to do</h2>
+  <ul>
+    <li><strong>Never upload images or the CV through the admin.</strong> Commit them (5.3, 5.4).</li>
+    <li><strong>Never add <code>backend/media/</code> to <code>.gitignore</code>.</strong> The site's images would vanish on the next deploy.</li>
+    <li><strong>Never commit <code>.env</code></strong> or paste <code>SECRET_KEY</code>, <code>DATABASE_URL</code> or passwords anywhere public.</li>
+    <li><strong>Never commit <code>images/</code> or <code>cv/</code>.</strong> They hold full-resolution originals and personal details; only the optimised copies belong in git.</li>
+    <li><strong>Never set <code>DEBUG=True</code> in production.</strong> It exposes settings and stack traces to visitors.</li>
+    <li><strong>Never run <code>seed_portfolio</code> against production.</strong></li>
+    <li><strong>Keep the API read-only</strong> except <code>POST /api/contact/</code>.</li>
+    <li><strong>Push only after both test suites pass.</strong></li>
+  </ul>
+</section>
+
+<!-- ===================================================== 12 -->
+<section>
+  <h2><span class="num">12</span>Custom domain (optional)</h2>
+  <ol>
+    <li>Buy a domain, then Render → portfolio-web → Settings → <strong>Custom Domain</strong>. Follow the DNS instructions.</li>
+    <li>Add the new origin to <code>CORS_ALLOWED_ORIGINS</code> and <code>CSRF_TRUSTED_ORIGINS</code> on the backend.</li>
+    <li>Update the canonical link and both <code>og:url</code> tags in <code>frontend/index.html</code>.</li>
+    <li>Regenerate the sitemap with the new <code>--base-url</code>, commit, and push.</li>
+  </ol>
+</section>
+
+<!-- ===================================================== 13 -->
+<section>
+  <h2><span class="num">13</span>Open item at time of writing</h2>
+  <div class="callout">
+    <span class="label">Profile photo — fix written, not yet deployed</span>
+    <p>On 25 September 2026 the live API pointed the profile photo at
+    <code>media/profile/raihan2.jpg</code>, an admin upload that returns 404.
+    <code>attach_media.py</code> and <code>build.sh</code> have been changed so a deploy repairs
+    references to missing files, but these changes are still uncommitted. Commit and push them
+    (with a new photo from 5.3 if wanted) to restore the photo.</p>
+  </div>
+</section>
+
+<footer class="doc-end">
+  Source: <code>docs/DEPLOYMENT_GUIDE.html</code>. Regenerate the PDF with <code>docs/render-prd.mjs</code>
+  (see <code>docs/README.md</code>). Update this guide whenever hosting, environment variables or
+  <code>build.sh</code> change.
+</footer>
+
+</body>
+</html>

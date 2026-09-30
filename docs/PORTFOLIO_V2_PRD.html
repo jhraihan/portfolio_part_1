@@ -1,0 +1,1070 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Portfolio v2 PRD — Static React</title>
+<style>
+  @page { size: A4; margin: 0; }
+  :root {
+    --ink: #10141a; --soft: #39414f; --faint: #6b7686;
+    --accent: #0e7490; --accent-soft: #e0f2f7;
+    --line: #dae0e8; --line-soft: #eef1f5; --bg: #f7f9fb;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: "Segoe UI", -apple-system, Arial, sans-serif;
+    font-size: 9.4pt; line-height: 1.55; color: var(--soft);
+    margin: 0; padding: 0 15mm;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+  h1,h2,h3,h4 { color: var(--ink); margin: 0; font-weight: 600; }
+  p { margin: 0 0 7px; }
+  ul, ol { margin: 0 0 9px; padding-left: 17px; }
+  li { margin-bottom: 3px; }
+  code {
+    font-family: Consolas, "Courier New", monospace; font-size: 8.4pt;
+    background: var(--bg); padding: 1px 4px; border-radius: 3px; color: var(--ink);
+    word-break: break-all;
+  }
+  strong { color: var(--ink); font-weight: 600; }
+  .muted { color: var(--faint); }
+
+  /* cover */
+  .cover { height: 250mm; display: flex; flex-direction: column;
+           justify-content: center; page-break-after: always; }
+  .cover .rule { width: 56px; height: 3px; background: var(--accent); margin-bottom: 24px; }
+  .cover .kicker { font-family: Consolas, monospace; font-size: 8.5pt;
+    letter-spacing: .18em; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; }
+  .cover h1 { font-size: 30pt; line-height: 1.08; letter-spacing: -.02em; }
+  .cover .sub { font-size: 12.5pt; color: var(--faint); margin-top: 10px; font-weight: 400; }
+  .cover dl { margin-top: 42px; padding-top: 18px; border-top: 1px solid var(--line);
+    display: grid; grid-template-columns: 1fr 1fr; gap: 13px 30px; font-size: 9pt; }
+  .cover dt { font-family: Consolas, monospace; font-size: 7.4pt; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--faint); margin-bottom: 2px; }
+  .cover dd { margin: 0; color: var(--ink); font-weight: 500; }
+  .cover .note { margin-top: 34px; padding: 13px 15px; background: var(--bg);
+    border-left: 3px solid var(--accent); font-size: 9pt; }
+
+  /* sections */
+  h2 { font-size: 15pt; margin: 26px 0 11px; padding-bottom: 6px;
+       border-bottom: 1.5px solid var(--ink); page-break-after: avoid; }
+  h2 .num { font-family: Consolas, monospace; font-size: 10pt;
+            color: var(--accent); margin-right: 9px; }
+  h3 { font-size: 11pt; margin: 17px 0 7px; page-break-after: avoid; }
+  h4 { font-size: 9.4pt; margin: 12px 0 5px; color: var(--ink); page-break-after: avoid; }
+
+  table { width: 100%; border-collapse: collapse; margin: 8px 0 13px;
+          font-size: 8.8pt; page-break-inside: avoid; }
+  th { text-align: left; padding: 6px 9px; background: var(--ink); color: #fff;
+       font-weight: 600; font-size: 8pt; letter-spacing: .04em; text-transform: uppercase; }
+  td { padding: 5px 9px; border-bottom: 1px solid var(--line-soft); vertical-align: top; }
+  tr:nth-child(even) td { background: #fbfcfd; }
+  td.k { font-weight: 600; color: var(--ink); width: 22%; }
+  table.kv td.k { width: 26%; }
+
+  .callout { background: var(--bg); border-left: 3px solid var(--accent);
+    padding: 10px 13px; margin: 10px 0 13px; font-size: 9pt; page-break-inside: avoid; }
+  .callout.warn { border-left-color: #b45309; background: #fffbeb; }
+  .callout.rule-box { border-left-color: var(--ink); }
+  .callout p:last-child { margin-bottom: 0; }
+  .callout .label { font-family: Consolas, monospace; font-size: 7.4pt;
+    letter-spacing: .13em; text-transform: uppercase; color: var(--accent);
+    display: block; margin-bottom: 4px; font-weight: 600; }
+  .callout.warn .label { color: #b45309; }
+  .callout.rule-box .label { color: var(--ink); }
+
+  pre { background: #14181f; color: #e6e9ee; padding: 10px 12px; border-radius: 5px;
+    font-family: Consolas, monospace; font-size: 7.9pt; line-height: 1.5;
+    white-space: pre-wrap; word-break: break-word; margin: 7px 0 12px;
+    page-break-inside: avoid; }
+  pre .c { color: #8b93a1; }
+
+  .project { border: 1px solid var(--line); border-radius: 6px; padding: 13px 15px;
+    margin: 12px 0; page-break-inside: avoid; }
+  .project-head { display: flex; justify-content: space-between; align-items: baseline;
+    gap: 10px; border-bottom: 1px solid var(--line-soft); padding-bottom: 6px; margin-bottom: 8px; }
+  .project-head h3 { margin: 0; font-size: 11.5pt; }
+  .badge { font-family: Consolas, monospace; font-size: 7.2pt; letter-spacing: .1em;
+    padding: 2px 6px; border-radius: 3px; white-space: nowrap; }
+  .badge.new { color: #fff; background: var(--accent); }
+  ul.feat { columns: 2; column-gap: 20px; font-size: 8.6pt; }
+  ul.feat li { break-inside: avoid; }
+
+  .page-break { page-break-before: always; }
+  .two-col { column-count: 2; column-gap: 20px; }
+  footer.end { margin-top: 26px; padding-top: 11px; border-top: 1px solid var(--line);
+    font-size: 8.2pt; color: var(--faint); }
+</style>
+</head>
+<body>
+
+<!-- ======================= COVER ======================= -->
+<div class="cover">
+  <div class="rule"></div>
+  <p class="kicker">Product Requirements Document · v2</p>
+  <h1>Developer Portfolio<br>Static React Rebuild</h1>
+  <p class="sub">Md. Jahid Hasan Raihan — Software Engineer</p>
+
+  <dl>
+    <div><dt>Document version</dt><dd>2.0</dd></div>
+    <div><dt>Date</dt><dd>1 October 2026</dd></div>
+    <div><dt>Supersedes</dt><dd>PORTFOLIO_PRD.pdf (v1.1, Django + DRF)</dd></div>
+    <div><dt>Target stack</dt><dd>React 18 · Vite · Tailwind — no backend</dd></div>
+    <div><dt>Hosting</dt><dd>Vercel (static)</dd></div>
+    <div><dt>Projects</dt><dd>6 (PromptCanvas removed)</dd></div>
+  </dl>
+
+  <div class="note">
+    <strong>How to use this document.</strong> It is written to be the only
+    input needed. Open an empty folder, hand this over, and the result should
+    match the existing site: same content, same design, same behaviour — but
+    served as static files with no API call, no database, and no cold start.
+    Every piece of copy the site displays is reproduced verbatim in §6, so
+    nothing has to be recovered from the old codebase.
+  </div>
+</div>
+
+<!-- ======================= 00 ======================= -->
+<h2><span class="num">00</span>Contents</h2>
+<ol>
+  <li><strong>Why v2 exists</strong> — the problem with the current deployment</li>
+  <li><strong>Scope</strong> — what changes, what must not</li>
+  <li><strong>Architecture</strong> — static data model, file layout, routing</li>
+  <li><strong>Content authenticity rules</strong> — binding constraints</li>
+  <li><strong>Owner profile</strong> — identity, education, skills, links</li>
+  <li><strong>Projects</strong> — all six, with full case study copy</li>
+  <li><strong>New project source material</strong> — SellFlow BD and ServoraBD</li>
+  <li><strong>Design system</strong> — palette, type, motion</li>
+  <li><strong>Pages and components</strong> — what to build</li>
+  <li><strong>Assets</strong> — images, résumé, optimisation</li>
+  <li><strong>Quality bar</strong> — accessibility, performance, SEO</li>
+  <li><strong>Testing</strong></li>
+  <li><strong>Deployment to Vercel</strong></li>
+  <li><strong>Build order</strong> — recommended sequence</li>
+  <li><strong>Open items</strong></li>
+</ol>
+
+<!-- ======================= 01 ======================= -->
+<h2 class="page-break"><span class="num">01</span>Why v2 exists</h2>
+
+<h3>1.1 The problem</h3>
+<p>
+  The current portfolio is a Django REST API on Render plus a React client.
+  It works, but Render's free tier stops the backend after fifteen idle
+  minutes. The next visitor waits roughly fifty seconds while it boots —
+  during which the page renders but stays empty, because every piece of
+  content arrives from the API.
+</p>
+<p>
+  Measured on the live site: <strong>2.1 s</strong> once warm,
+  <strong>~50 s</strong> cold. A recruiter arriving from a link is almost
+  always the cold case, and a blank page for the better part of a minute
+  reads as broken rather than slow.
+</p>
+
+<h3>1.2 The decision</h3>
+<div class="callout">
+  <span class="label">Core change</span>
+  <p>
+    Remove the backend entirely. Content moves from a database into
+    JavaScript modules bundled at build time, so the first paint already
+    contains every project, skill and image reference. Deployed to Vercel's
+    CDN, nothing sleeps and nothing is fetched.
+  </p>
+</div>
+
+<table>
+  <tr><th>Aspect</th><th>v1 (current)</th><th>v2 (this document)</th></tr>
+  <tr><td class="k">Content source</td><td>PostgreSQL via REST API</td><td>JS modules in <code>src/data/</code></td></tr>
+  <tr><td class="k">Cold start</td><td>~50 s</td><td>none</td></tr>
+  <tr><td class="k">Warm load</td><td>~2.1 s</td><td>&lt; 1 s target</td></tr>
+  <tr><td class="k">Hosting</td><td>Render web service + static + Neon</td><td>Vercel static only</td></tr>
+  <tr><td class="k">Cost</td><td>$0, or $7/mo to stop sleeping</td><td>$0, no sleep</td></tr>
+  <tr><td class="k">Editing content</td><td>Django admin</td><td>Edit a file, commit, push</td></tr>
+  <tr><td class="k">Contact form</td><td>POST to DRF, stored in DB</td><td>Third-party endpoint — see §9.6</td></tr>
+</table>
+
+<h3>1.3 What is given up</h3>
+<ul>
+  <li><strong>The admin CMS.</strong> Content edits become code edits. Acceptable: the owner is the only editor and already works in the repository.</li>
+  <li><strong>Server-side contact storage.</strong> Replaced by a third-party form endpoint (§9.6).</li>
+  <li><strong>The Django codebase as a portfolio artefact.</strong> Mitigated: the five Django projects it showcases are themselves the evidence, and the v1 repository remains public.</li>
+</ul>
+
+<!-- ======================= 02 ======================= -->
+<h2><span class="num">02</span>Scope</h2>
+
+<h3>2.1 Must not change</h3>
+<div class="callout rule-box">
+  <span class="label">Preserve exactly</span>
+  <p>
+    Visual design, palette, typography, motion, page structure, every word of
+    existing case study copy, all screenshots, all YouTube links, all repo
+    links, the command palette, the architecture diagrams, dark/light theming,
+    and the accessibility and reduced-motion guarantees. A visitor who knew
+    the old site should notice only that it loads faster and has different
+    projects.
+  </p>
+</div>
+
+<h3>2.2 Changes</h3>
+<table>
+  <tr><th>#</th><th>Change</th><th>Detail</th></tr>
+  <tr><td class="k">C1</td><td>Remove the backend</td><td>No Django, no API, no database. Content is bundled.</td></tr>
+  <tr><td class="k">C2</td><td>Drop PromptCanvas</td><td>Remove the project, its route, images and diagram entirely.</td></tr>
+  <tr><td class="k">C3</td><td>Add SellFlow BD</td><td>New case study, position 1. Source material in §7.1.</td></tr>
+  <tr><td class="k">C4</td><td>Add ServoraBD</td><td>New case study, position 2. Source material in §7.2.</td></tr>
+  <tr><td class="k">C5</td><td>Add three live demo links</td><td>SellFlow BD, ServoraBD, MicroMart. The other three keep no live button.</td></tr>
+  <tr><td class="k">C6</td><td>New profile photo</td><td><code>images/raihan2.jpg</code> replaces the current one.</td></tr>
+  <tr><td class="k">C7</td><td>Deploy to Vercel</td><td>Replaces the Render pair.</td></tr>
+</table>
+
+<h3>2.3 Non-goals</h3>
+<ul>
+  <li>No blog, no analytics dashboard, no AI assistant.</li>
+  <li>No headless CMS. Content in the repository is the point.</li>
+  <li>No server-side rendering. A static SPA is sufficient at this size.</li>
+  <li>No redesign. §8 documents the existing system to be reproduced.</li>
+</ul>
+
+<!-- ======================= 03 ======================= -->
+<h2 class="page-break"><span class="num">03</span>Architecture</h2>
+
+<h3>3.1 Stack</h3>
+<table>
+  <tr><th>Layer</th><th>Choice</th><th>Why</th></tr>
+  <tr><td class="k">Framework</td><td>React 18</td><td>Same as v1; components port directly</td></tr>
+  <tr><td class="k">Build</td><td>Vite 6</td><td>Fast, first-class on Vercel</td></tr>
+  <tr><td class="k">Styling</td><td>Tailwind CSS 3</td><td>The design system is already expressed in it</td></tr>
+  <tr><td class="k">Motion</td><td>Framer Motion 11</td><td>Existing animations depend on it</td></tr>
+  <tr><td class="k">Routing</td><td>React Router 7</td><td>Same routes as v1</td></tr>
+  <tr><td class="k">Icons</td><td>Lucide React</td><td>Already used throughout</td></tr>
+  <tr><td class="k">Tests</td><td>Vitest + Testing Library</td><td>Existing tests port unchanged</td></tr>
+</table>
+<p><strong>Explicitly not used:</strong> Next.js, any backend, any database, any state library. React's own hooks are enough.</p>
+
+<h3>3.2 The data layer</h3>
+<p>
+  Everything the API used to return becomes a typed JavaScript module. Images
+  are imported so Vite fingerprints and optimises them; a raw string path
+  would bypass the build.
+</p>
+
+<pre>src/data/
+├── profile.js      <span class="c">// identity, hero copy, about, links, résumé</span>
+├── projects.js     <span class="c">// all six, full case studies, imported images</span>
+├── skills.js       <span class="c">// six categories with levels</span>
+├── education.js    <span class="c">// degree, coursework</span>
+└── index.js        <span class="c">// re-exports</span></pre>
+
+<p>Shape of one project, matching the v1 API exactly so components need no changes:</p>
+<pre>// src/data/projects.js
+import micromartCover from '@/assets/projects/micromart/cover.jpg'
+import micromartShot1 from '@/assets/projects/micromart/01.jpg'
+
+export const projects = [
+  {
+    slug: 'sellflowbd',
+    title: 'SellFlow BD',
+    subtitle: '…',
+    summary: '…',
+    accentLabel: 'SaaS Platform',
+    projectType: 'web_app',
+    status: 'completed',
+    isSolo: true,
+    order: 1,
+    featured: true,
+
+    problem: '…',       <span class="c">// blank lines separate paragraphs</span>
+    solution: '…',
+    architecture: '…',
+    challenges: '…',
+    lessons: '…',
+
+    technologies: ['Python', 'Django', …],
+    features: [{ title: '…', description: '…' }],
+
+    githubUrl: 'https://github.com/jhraihan/SellFlowBD',
+    videoUrl:  'https://youtu.be/4FBawFRC9EY',
+    liveUrl:   'https://sellflow-web.onrender.com',
+
+    coverImage: sellflowCover,
+    images: [{ src: shot1, caption: '…', alt: '…' }],
+  },
+]</pre>
+
+<div class="callout">
+  <span class="label">Camel case</span>
+  <p>
+    v1 served snake_case because DRF did. v2 uses camelCase throughout. When
+    porting a component, rename <code>cover_image</code> → <code>coverImage</code>,
+    <code>live_url</code> → <code>liveUrl</code>, <code>accent_label</code> →
+    <code>accentLabel</code>, <code>video_url</code> → <code>videoUrl</code>,
+    <code>github_url</code> → <code>githubUrl</code>,
+    <code>level_display</code> → <code>levelDisplay</code>,
+    <code>alt_text</code> → <code>alt</code>,
+    <code>date_range</code> → <code>dateRange</code>.
+  </p>
+</div>
+
+<h3>3.3 Replacing the fetch layer</h3>
+<p>
+  v1 routed every read through <code>useApi</code> → <code>services/api.js</code>.
+  Both disappear. Components import data directly and render it on the first
+  pass, which removes all loading and error states from content rendering.
+</p>
+<pre><span class="c">// v1</span>
+const { data: projects, loading, error } = useApi(() =&gt; api.getProjects())
+
+<span class="c">// v2</span>
+import { projects } from '@/data'</pre>
+<p>
+  Keep the skeleton components: they still serve image loading and the
+  contact form's pending state. Delete <code>ErrorState</code> only if nothing
+  references it after the port.
+</p>
+
+<h3>3.4 File layout</h3>
+<pre>portfolio-v2/
+├── public/
+│   ├── favicon.svg
+│   ├── robots.txt
+│   ├── sitemap.xml
+│   └── resume.pdf          <span class="c">// served directly, not imported</span>
+├── src/
+│   ├── assets/
+│   │   ├── profile/raihan.jpg
+│   │   └── projects/&lt;slug&gt;/cover.jpg, 01.jpg, 02.jpg …
+│   ├── components/         <span class="c">// ported unchanged from v1</span>
+│   ├── sections/           <span class="c">// home page blocks</span>
+│   ├── pages/              <span class="c">// one per route</span>
+│   ├── layouts/            <span class="c">// Header, Footer</span>
+│   ├── hooks/              <span class="c">// useTheme, useTypewriter, …</span>
+│   ├── data/               <span class="c">// §3.2</span>
+│   ├── styles/index.css
+│   ├── App.jsx
+│   └── main.jsx
+├── index.html
+├── tailwind.config.js
+├── vite.config.js
+├── vercel.json             <span class="c">// SPA rewrite — see §13.2</span>
+└── package.json</pre>
+
+<h3>3.5 Routes</h3>
+<pre>/                    Home
+/projects            Index, filterable by technology
+/projects/:slug      Case study        × 6
+/about               About, education, skills
+/contact             Contact form
+*                    404</pre>
+<p>
+  Client-side routing needs a rewrite rule on the host, or a refreshed case
+  study URL 404s. See §13.2 — this caught the v1 deployment out.
+</p>
+
+<!-- ======================= 04 ======================= -->
+<h2 class="page-break"><span class="num">04</span>Content authenticity rules</h2>
+<p>These override every other consideration, including making the owner look more impressive.</p>
+
+<div class="callout warn">
+  <span class="label">Never invent</span>
+  <p>
+    Jobs · companies · internships · clients · awards · certifications · user
+    counts · revenue · statistics · years of experience · project features ·
+    technologies · achievements · testimonials.
+  </p>
+  <p style="margin-top:6px">
+    Missing information is marked <code>[CONTENT NEEDED]</code> and raised with
+    the owner. Authenticity outranks impressiveness.
+  </p>
+</div>
+
+<table>
+  <tr><th>Excluded</th><th>Reason</th></tr>
+  <tr><td class="k">AI / ML skills section</td><td>Owner is at the learning stage. No RAG, embeddings, vector databases, LangChain, agents or fine-tuning as skills.</td></tr>
+  <tr><td class="k">"Currently learning AI" line</td><td>Drafted once and explicitly removed at the owner's request.</td></tr>
+  <tr><td class="k">Experience section</td><td>No professional history exists.</td></tr>
+  <tr><td class="k">Achievements section</td><td>Nothing significant to display.</td></tr>
+  <tr><td class="k">CGPA</td><td>Recorded privately (3.30); never displayed.</td></tr>
+  <tr><td class="k">LeetCode count</td><td>Footer link only. The number invites comparison.</td></tr>
+  <tr><td class="k">Skill percentages</td><td>Named levels only — a bar implies precision that does not exist.</td></tr>
+  <tr><td class="k">Hero stat counters</td><td>Removed in v1 at the owner's request. Do not reintroduce.</td></tr>
+  <tr><td class="k">AI attribution</td><td>No Claude/AI co-author trailer in commits, PRs, comments or the site. The owner is sole author.</td></tr>
+</table>
+
+<h3>4.1 Design failure modes to guard against</h3>
+<table>
+  <tr><th>Failure</th><th>Countermeasure</th></tr>
+  <tr><td class="k">Arrogance</td><td>No superlatives. Facts only.</td></tr>
+  <tr><td class="k">"Just a student"</td><td>Presented as a software engineer. The degree is a credential, not a qualifier. <em>Highest-priority guard.</em></td></tr>
+  <tr><td class="k">Generic template</td><td>Custom design, architecture diagrams, named skill levels.</td></tr>
+  <tr><td class="k">Over-designed</td><td>No particles, cursor trails or entry animations.</td></tr>
+  <tr><td class="k">Unfinished</td><td>Empty fields hide their section. No "coming soon", no dead buttons.</td></tr>
+</table>
+
+<h3>4.2 The hiding rule</h3>
+<div class="callout">
+  <span class="label">Structural</span>
+  <p>
+    Any optional field that is empty removes its element entirely rather than
+    rendering a placeholder. A project without <code>liveUrl</code> shows no
+    demo button; without <code>videoUrl</code>, no walkthrough section; a blank
+    case study field omits that numbered section and the numbering closes up.
+    This is what lets the site ship while parts are still missing.
+  </p>
+</div>
+
+<!-- ======================= 05 ======================= -->
+<h2 class="page-break"><span class="num">05</span>Owner profile</h2>
+<p>Every value below is supplied by the owner and must be reproduced verbatim.</p>
+
+<h3>5.1 Identity</h3>
+<table>
+  <tr><td class="k">Full name</td><td>Md. Jahid Hasan Raihan</td></tr>
+  <tr><td class="k">Display name</td><td>Md. Jahid Hasan Raihan</td></tr>
+  <tr><td class="k">Title</td><td>Software Engineer</td></tr>
+  <tr><td class="k">Location</td><td>Dhaka, Bangladesh — shown publicly</td></tr>
+  <tr><td class="k">Email</td><td><code>jahidhr05@gmail.com</code></td></tr>
+  <tr><td class="k">Availability</td><td>Open to remote, hybrid, and onsite roles</td></tr>
+  <tr><td class="k">GitHub</td><td><code>https://github.com/jhraihan</code></td></tr>
+  <tr><td class="k">LinkedIn</td><td><code>https://www.linkedin.com/in/md-jahid-hasan-raihan-745023393</code></td></tr>
+  <tr><td class="k">LeetCode</td><td><code>https://leetcode.com/u/Jahid_Hasan_Raihan/</code> — footer link, no count</td></tr>
+</table>
+
+<h3>5.2 Hero copy — verbatim</h3>
+<table>
+  <tr><td class="k">Tagline</td><td>I build complete, production-shaped web applications.</td></tr>
+  <tr><td class="k">Intro</td><td>Full-stack software engineer working across Django, Django REST Framework, React, and PostgreSQL. I build complete systems — the interface, the API behind it, and the database underneath.</td></tr>
+  <tr><td class="k">Meta description</td><td>Md. Jahid Hasan Raihan — software engineer in Dhaka, Bangladesh. Full-stack applications built with Django, Django REST Framework, React, and MySQL.</td></tr>
+</table>
+
+<h4>Typewriter phrases</h4>
+<p>The hero cycles these five. Each names something actually built, and the list deliberately spans both ends of the stack:</p>
+<pre>REST APIs with Django &amp; DRF
+React interfaces that stay fast
+role-based access control
+relational database schemas
+JWT authentication flows</pre>
+
+<h3>5.3 About — verbatim</h3>
+<p class="muted"><em>Short version, used on the home page:</em></p>
+<p>I build full-stack web applications with Django and React. What interests me is the whole system: how a request travels from the browser through the API into the database and back, how authentication holds it together, and how the schema shapes what is possible.</p>
+<p class="muted"><em>Full version, used on /about:</em></p>
+<p>I am a software engineer based in Dhaka, Bangladesh, completing a BSc in Computer Science and Engineering at Independent University, Bangladesh.</p>
+<p>My programming started with my degree. I chose Computer Science because the field genuinely interested me, and coding turned out to be the part I could not put down. Most of what I know beyond coursework I taught myself, through online courses and by building things that broke until they did not.</p>
+<p>Python came first, then data structures and algorithms, which is still where I go to sharpen how I think about problems. Django came next and stayed — partly because Python already felt natural, and partly because it let me build entire applications rather than fragments. From there: Django REST Framework for APIs, then databases in earnest with MySQL, SQLite, and PostgreSQL, and React on the frontend.</p>
+<p>What I care about is complete, working systems. Every project I have built is a full application rather than an isolated feature: role-based access control, JWT authentication, relational schema design, and a decoupled React frontend talking to a REST API. I would rather understand why something works than just get it working.</p>
+
+<h3>5.4 Education</h3>
+<table>
+  <tr><td class="k">Degree</td><td>BSc in Computer Science and Engineering</td></tr>
+  <tr><td class="k">Institution</td><td>Independent University, Bangladesh</td></tr>
+  <tr><td class="k">Location</td><td>Dhaka, Bangladesh</td></tr>
+  <tr><td class="k">Dates</td><td>2022 — 2026 · Final year — expected December 2026</td></tr>
+  <tr><td class="k">CGPA</td><td>3.30 — <strong>never displayed</strong></td></tr>
+  <tr><td class="k">Coursework</td><td>Data Structures · Algorithms · Database Management Systems · Operating Systems · Computer Networks · Object-Oriented Programming · Software Engineering</td></tr>
+</table>
+
+<h3>5.5 Skills</h3>
+<p>
+  Levels are named, never numeric. Within a category the strongest come first.
+  Featured five, surfaced most prominently: <strong>Django · Django REST
+  Framework · React · MySQL · Python</strong>.
+</p>
+<table>
+  <tr><th>Category</th><th>Core</th><th>Strong</th><th>Working</th><th>Familiar</th></tr>
+  <tr><td class="k">Languages</td><td>Python</td><td>SQL, HTML, CSS</td><td>JavaScript</td><td>Java</td></tr>
+<tr><td class="k">Backend</td><td>Django, Django REST Framework, Django ORM</td><td>REST API design, Authentication (JWT, session, OAuth)</td><td><span class="muted">—</span></td><td>FastAPI, Node.js</td></tr>
+<tr><td class="k">Frontend</td><td><span class="muted">—</span></td><td>React, React Router, Fetch API</td><td>Tailwind CSS, Context API, Vite, Bootstrap</td><td>Next.js</td></tr>
+<tr><td class="k">Databases</td><td><span class="muted">—</span></td><td>MySQL, PostgreSQL, SQLite, Database design and normalisation</td><td>Query optimisation</td><td><span class="muted">—</span></td></tr>
+<tr><td class="k">DevOps and Deployment</td><td><span class="muted">—</span></td><td>Git, GitHub, Environment management</td><td>Linux, Vercel / Netlify, Railway / Render / PythonAnywhere</td><td>Nginx, GitHub Actions, AWS</td></tr>
+<tr><td class="k">Tools</td><td><span class="muted">—</span></td><td>VS Code, Postman, Git CLI, AI coding tools</td><td>pgAdmin / MySQL Workbench</td><td>Figma</td></tr>
+</table>
+
+<!-- ======================= 06 ======================= -->
+<h2 class="page-break"><span class="num">06</span>Projects</h2>
+<p>
+  Six projects, all solo, all complete. Display order below is the required
+  order. Copy for the four carried over is reproduced verbatim — do not
+  rewrite it.
+</p>
+
+<table>
+  <tr><th>#</th><th>Project</th><th>Label</th><th>Live demo</th><th>State</th></tr>
+  <tr><td class="k">1</td><td>SellFlow BD</td><td>SaaS Platform</td><td>yes</td><td>new — write copy</td></tr>
+  <tr><td class="k">2</td><td>ServoraBD</td><td>Marketplace</td><td>yes</td><td>new — write copy</td></tr>
+  <tr><td class="k">3</td><td>MicroMart</td><td>E-commerce</td><td>yes</td><td>copy below</td></tr>
+  <tr><td class="k">4</td><td>EduFlow</td><td>EdTech</td><td>—</td><td>copy below</td></tr>
+  <tr><td class="k">5</td><td>IntelliChat</td><td>AI Application</td><td>—</td><td>copy below</td></tr>
+  <tr><td class="k">6</td><td>MediDesk</td><td>Healthcare</td><td>—</td><td>copy below</td></tr>
+</table>
+
+<div class="callout warn">
+  <span class="label">Removed</span>
+  <p>
+    <strong>PromptCanvas</strong> is dropped from v2. Delete its data entry,
+    route, images and architecture-diagram definition. Do not leave a redirect.
+  </p>
+</div>
+
+<div class="project"><div class="project-head"><h3>1. SellFlow BD</h3><span class="badge new">NEW</span></div><table class="kv"><tr><td class="k">Slug / route</td><td><code>/projects/sellflowbd</code></td></tr>
+<tr><td class="k">Order</td><td>1</td></tr>
+<tr><td class="k">Label</td><td>SaaS Platform</td></tr>
+<tr><td class="k">Subtitle</td><td>Multi-tenant order and delivery platform for F-commerce sellers</td></tr>
+<tr><td class="k">GitHub</td><td><code>https://github.com/jhraihan/SellFlowBD</code></td></tr>
+<tr><td class="k">YouTube</td><td><code>https://youtu.be/4FBawFRC9EY</code></td></tr>
+<tr><td class="k">Live demo</td><td><code>https://sellflow-web.onrender.com</code></td></tr>
+<tr><td class="k">Stack</td><td>Python · JavaScript · React · Vite · Django · Django REST Framework · REST API · JWT · PostgreSQL · SQLite · GitHub Actions</td></tr></table><h4>Case study copy</h4><div class="callout"><span class="label">To be written at build time</span><p>Draw problem, approach, architecture, hardest problem and lessons from the project's own README, which the owner supplied in full. Section 6 of this document records the source material. Write in the same register as the existing five case studies: factual, first person, no superlatives.</p></div><h4>Screenshots</h4><p>5 PNGs in <code>images/Sell-flow/</code>. The clearest title shot becomes the cover; the rest form the gallery.</p></div>
+<div class="project"><div class="project-head"><h3>2. ServoraBD</h3><span class="badge new">NEW</span></div><table class="kv"><tr><td class="k">Slug / route</td><td><code>/projects/servorabd</code></td></tr>
+<tr><td class="k">Order</td><td>2</td></tr>
+<tr><td class="k">Label</td><td>Marketplace</td></tr>
+<tr><td class="k">Subtitle</td><td>Local service marketplace built around a computed trust score</td></tr>
+<tr><td class="k">GitHub</td><td><code>https://github.com/jhraihan/ServoraBD</code></td></tr>
+<tr><td class="k">YouTube</td><td><code>https://youtu.be/P6uvjq-dDbA</code></td></tr>
+<tr><td class="k">Live demo</td><td><code>https://servorabd-web.onrender.com</code></td></tr>
+<tr><td class="k">Stack</td><td>Python · JavaScript · React · Vite · Django · Django REST Framework · REST API · JWT · PostgreSQL · Playwright</td></tr></table><h4>Case study copy</h4><div class="callout"><span class="label">To be written at build time</span><p>Draw problem, approach, architecture, hardest problem and lessons from the project's own README, which the owner supplied in full. Section 6 of this document records the source material. Write in the same register as the existing five case studies: factual, first person, no superlatives.</p></div><h4>Screenshots</h4><p>4 PNGs in <code>images/servora/</code>. The clearest title shot becomes the cover; the rest form the gallery.</p></div>
+<div class="project"><div class="project-head"><h3>3. MicroMart</h3></div><table class="kv"><tr><td class="k">Slug / route</td><td><code>/projects/micromart</code></td></tr>
+<tr><td class="k">Order</td><td>3</td></tr>
+<tr><td class="k">Label</td><td>E-commerce</td></tr>
+<tr><td class="k">Subtitle</td><td>Multi-role e-commerce platform with integrated payments</td></tr>
+<tr><td class="k">GitHub</td><td><code>https://github.com/jhraihan/MicroMart</code></td></tr>
+<tr><td class="k">YouTube</td><td><code>https://youtu.be/6ujWklMaXg0</code></td></tr>
+<tr><td class="k">Live demo</td><td><code>https://micromart-17ws.onrender.com</code></td></tr>
+<tr><td class="k">Stack</td><td>Python · JavaScript · React · Django · Django REST Framework · REST API · JWT · MySQL · SSLCommerz</td></tr></table><h4>Summary</h4><p>A fully decoupled e-commerce platform serving three distinct user types — customers, sellers, and administrators — with product discovery, cart and checkout, payment processing through SSLCommerz, order tracking, and seller and inventory management.</p><h4>01 · The problem</h4><p>A working e-commerce system is not one application but several overlapping ones. A customer browsing and buying, a seller managing a storefront and inventory, and an administrator overseeing the marketplace each need a different view of the same data, with different permissions over it. I built MicroMart to work through that problem end to end rather than build a storefront in isolation.</p><h4>02 · The approach</h4><p>A decoupled architecture: a React single-page application on the frontend, a Django and Django REST Framework API on the backend, and MySQL underneath. Authentication uses JWT, with the token identifying which of the three user types is making a request and what that user is permitted to do. Payments run through SSLCommerz.</p><h4>03 · Features (15)</h4><ul class="feat"><li><strong>Registration and authentication</strong> — JWT-based authentication across three user types.</li><li><strong>Product search</strong> — Search across the product catalogue.</li><li><strong>Voice search</strong> — Spoken queries as an alternative to typing.</li><li><strong>Shopping cart</strong> — Cart management through to checkout.</li><li><strong>Payment processing</strong> — Checkout through the SSLCommerz payment gateway.</li><li><strong>Product reviews</strong> — Customer reviews on purchased products.</li><li><strong>Order tracking</strong> — Order status visible to customer and seller.</li><li><strong>Store management</strong> — Sellers manage their own storefront.</li><li><strong>Product and inventory management</strong> — Catalogue and stock levels per seller.</li><li><strong>Sales analytics</strong> — Sales figures for sellers and administrators.</li><li><strong>Pricing management</strong> — Seller-controlled product pricing.</li><li><strong>User management</strong> — Administrative control over platform accounts.</li><li><strong>Complaint management</strong> — Customer complaints routed for administrative review.</li><li><strong>Fraud monitoring</strong> — Administrative monitoring for suspicious activity.</li><li><strong>Seller verification</strong> — Verification step before a seller can trade.</li></ul><h4>04 · Architecture</h4><p>The React SPA holds no server state of its own; every read and write goes through the REST API. A request carries a JWT, which the backend verifies before resolving the user&#x27;s type and permissions. Views are scoped so that a seller reaches only their own store, products, and orders, while an administrator sees across the marketplace.
+
+Checkout is the most involved path. The cart is validated against current inventory and pricing, an order is created in a pending state, and the user is handed off to SSLCommerz. The gateway&#x27;s response determines whether the order is confirmed, inventory is decremented, and the order enters the tracking flow — or whether it is abandoned and the reservation released.</p><h4>05 · Hardest problem</h4><p>The hardest part was the complete order and payment workflow. Taking a payment is straightforward in isolation; keeping an order, its inventory, and its payment state consistent is not. A user can abandon a payment mid-flow, a gateway callback can arrive late or twice, and inventory must not be decremented for an order that was never paid for. Getting the states and their transitions right — so that no path leaves the system in a half-finished state — took the most thought of anything in the project.</p><h4>06 · What I learned</h4><p>That the interesting part of a feature is usually its failure cases. The happy path through checkout took a fraction of the time; everything after it — abandoned payments, duplicate callbacks, stock that must not be committed prematurely — was the actual work. I also learned how much a clear set of order states simplifies the code around them: once the transitions were explicit, most of the conditional logic scattered through the views disappeared.</p><h4>Cover</h4><p><code>screenshot-2026-09-07-221100.jpg</code></p><h4>Gallery (4)</h4><ul class="feat"><li><code>screenshot-2026-09-07-221111.jpg</code> — Product catalogue and category browsing</li><li><code>screenshot-2026-09-07-221122.jpg</code> — Product detail and purchase flow</li><li><code>screenshot-2026-09-07-223935.jpg</code> — Cart and checkout</li><li><code>screenshot-2026-09-07-223946.jpg</code> — Seller dashboard</li></ul></div>
+<div class="project"><div class="project-head"><h3>4. EduFlow</h3></div><table class="kv"><tr><td class="k">Slug / route</td><td><code>/projects/eduflow</code></td></tr>
+<tr><td class="k">Order</td><td>4</td></tr>
+<tr><td class="k">Label</td><td>EdTech</td></tr>
+<tr><td class="k">Subtitle</td><td>Role-based learning management system</td></tr>
+<tr><td class="k">GitHub</td><td><code>https://github.com/jhraihan/Edu-Flow</code></td></tr>
+<tr><td class="k">YouTube</td><td><code>https://youtu.be/yTR0klKN5f4</code></td></tr>
+<tr><td class="k">Live demo</td><td><span class="muted">none — button hidden</span></td></tr>
+<tr><td class="k">Stack</td><td>Python · JavaScript · React · Vite · Tailwind CSS · Context API · Django · Django REST Framework · REST API · JWT</td></tr></table><h4>Summary</h4><p>A learning management system with separate Admin, Teacher, and Student roles, covering courses, lessons, assignments, enrolments, submissions, and results. Built with a Django REST Framework backend and a React frontend, with client state handled by native React hooks rather than an external state library.</p><h4>01 · The problem</h4><p>A learning platform is defined by who is allowed to do what. A teacher creating an assignment, a student submitting to it, and an administrator overseeing both act on the same records with very different rights. EduFlow was an exercise in getting that permission model right rather than bolting roles onto an application built without them.</p><h4>02 · The approach</h4><p>Role-based access control with three distinct roles, enforced on the backend and reflected in the interface so users are never shown controls they cannot use. Authentication is JWT-based, with user lookup by phone number rather than email. The frontend is React with Vite and Tailwind CSS, kept deliberately free of heavy state dependencies.</p><h4>03 · Features (8)</h4><ul class="feat"><li><strong>Role-based access control</strong> — Distinct permissions and interface for Admin, Teacher, and Student.</li><li><strong>Phone-based authentication</strong> — JWT authentication with user lookup by phone number.</li><li><strong>Course and lesson management</strong> — Full CRUD for courses and their lessons.</li><li><strong>Assignments and submissions</strong> — Teachers set assignments; students submit against them.</li><li><strong>Enrolment management</strong> — Students enrolled onto courses.</li><li><strong>Results</strong> — Recorded and viewable per student.</li><li><strong>Server-driven notifications</strong> — Interface feedback driven by API responses.</li><li><strong>Confirmation dialogs</strong> — Destructive actions confirmed before they run.</li></ul><h4>04 · Architecture</h4><p>The Django REST Framework backend exposes CRUD endpoints for courses, lessons, assignments, enrolments, submissions, and results. Permissions are enforced at the API layer: the role carried by the authenticated user determines both which records are returned and which operations are allowed on them.
+
+On the frontend, client state is managed with native React hooks — useState, useEffect, and React Context — with no external state management library. Server responses drive banner notifications, and destructive actions route through a shared confirmation dialog.</p><h4>05 · Hardest problem</h4><p>Keeping one set of permission rules authoritative. Three roles acting on the same records means every endpoint has to answer two questions rather than one: may this user perform this action, and which records may they perform it on. Answering only the first leaves a teacher able to reach another teacher&#x27;s course simply by changing an id in the URL.
+
+The rule I settled on was that the interface never decides access. The API scopes every queryset by the authenticated user&#x27;s role, and the frontend hides controls purely as a convenience. Hiding a button is a design choice; scoping a queryset is the actual boundary.</p><h4>06 · What I learned</h4><p>How much a project benefits from deciding the permission model before writing the first view. Roles added afterwards tend to become scattered conditionals; roles designed in stay in one place.
+
+I also deliberately built the frontend with nothing but useState, useEffect, and Context, to find out where that genuinely stops being enough. For an application of this size it never did — which was worth knowing firsthand rather than assuming.</p><h4>Cover</h4><p><code>screenshot-2026-09-11-230511.jpg</code></p><h4>Gallery (4)</h4><ul class="feat"><li><code>screenshot-2026-09-11-230523.jpg</code> — Course overview</li><li><code>screenshot-2026-09-11-230535.jpg</code> — Assignments and submissions</li><li><code>screenshot-2026-09-11-230549.jpg</code> — Results and grading</li><li><code>screenshot-2026-09-11-230601.jpg</code> — Administration</li></ul></div>
+<div class="project"><div class="project-head"><h3>5. IntelliChat</h3></div><table class="kv"><tr><td class="k">Slug / route</td><td><code>/projects/intellichat</code></td></tr>
+<tr><td class="k">Order</td><td>5</td></tr>
+<tr><td class="k">Label</td><td>AI Application</td></tr>
+<tr><td class="k">Subtitle</td><td>Streaming AI chat application with persistent conversations</td></tr>
+<tr><td class="k">GitHub</td><td><code>https://github.com/jhraihan/Intelli-Chat</code></td></tr>
+<tr><td class="k">YouTube</td><td><code>https://youtu.be/D6H_cSP2K68</code></td></tr>
+<tr><td class="k">Live demo</td><td><span class="muted">none — button hidden</span></td></tr>
+<tr><td class="k">Stack</td><td>Python · JavaScript · React · Tailwind CSS · Django · Django REST Framework · Server-Sent Events · PostgreSQL · Redis · Google Gemini API</td></tr></table><h4>Summary</h4><p>A chat application built on the Google Gemini API, streaming responses token by token over Server-Sent Events. Conversations persist in PostgreSQL so a session survives a page reload, and responses render as Markdown with syntax-highlighted code blocks.</p><h4>01 · The problem</h4><p>A chat interface that waits for a complete model response before showing anything feels broken, even when it is working. The response has to arrive progressively, and it has to survive a page reload. Both requirements change how the backend is built.</p><h4>02 · The approach</h4><p>Django streams the model&#x27;s response to the browser over Server-Sent Events rather than returning a single completed reply. Conversations and messages are persisted in PostgreSQL, so a user can reload and continue where they left off. Responses are rendered as Markdown with syntax highlighting and a copy-code control.</p><h4>03 · Features (5)</h4><ul class="feat"><li><strong>Streaming responses</strong> — Model output streamed token by token over Server-Sent Events.</li><li><strong>Persistent conversations</strong> — Conversations and messages stored in PostgreSQL and restored on reload.</li><li><strong>Markdown rendering</strong> — Headings, lists, tables, links, and fenced code blocks.</li><li><strong>Syntax highlighting</strong> — Highlighted code blocks with a copy-code control.</li><li><strong>Authentication</strong> — Register, sign in, and sign out, with sessions surviving reload.</li></ul><h4>04 · Architecture</h4><p>React sends a request to POST /api/chat/. Django calls the Gemini API and streams the result back as a sequence of Server-Sent Events: a meta event first, then repeated delta events carrying generated text as it arrives, and finally either a done or an error event to close the stream.
+
+Conversations and their messages are written to PostgreSQL, which is what allows a reloaded page to restore prior context. Users register, sign in, and sign out, and the session survives a reload.</p><h4>05 · Hardest problem</h4><p>Streaming forced me to give up the request/response shape I was used to. A normal Django view builds a complete response and returns it; here the connection has to stay open while text arrives in fragments, each one forwarded to the browser immediately.
+
+That created a second problem: a stream can end in more than one way. It can complete, it can fail partway through, and the client can disconnect while the model is still generating. I settled on an explicit event protocol — a meta event, repeated delta events, and a terminating done or error — so the frontend always knows which of those happened instead of inferring it from a stream that simply stopped.</p><h4>06 · What I learned</h4><p>That a persistence layer changes what an interface can promise. Once conversations and messages were stored in PostgreSQL rather than held in memory, a page reload stopped being a data-loss event, and the frontend could be much simpler as a result.
+
+More generally, this project taught me to design the protocol between client and server first. Once the event sequence was decided, both sides became straightforward to write.</p><h4>Cover</h4><p><code>screenshot-2026-09-09-220646.jpg</code></p><h4>Gallery (3)</h4><ul class="feat"><li><code>screenshot-2026-09-09-220636.jpg</code> — Sign-in with demo access</li><li><code>screenshot-2026-09-09-220709.jpg</code> — Streaming response with syntax-highlighted code</li><li><code>screenshot-2026-09-09-221030.jpg</code> — Conversation history</li></ul></div>
+<div class="project"><div class="project-head"><h3>6. MediDesk</h3></div><table class="kv"><tr><td class="k">Slug / route</td><td><code>/projects/medidesk</code></td></tr>
+<tr><td class="k">Order</td><td>6</td></tr>
+<tr><td class="k">Label</td><td>Healthcare</td></tr>
+<tr><td class="k">Subtitle</td><td>Hospital management system with four-role access control</td></tr>
+<tr><td class="k">GitHub</td><td><code>https://github.com/jhraihan/Medi-Desk</code></td></tr>
+<tr><td class="k">YouTube</td><td><code>https://youtu.be/PQhEbOxRwpY</code></td></tr>
+<tr><td class="k">Live demo</td><td><span class="muted">none — button hidden</span></td></tr>
+<tr><td class="k">Stack</td><td>Python · JavaScript · React · Django · Django REST Framework · REST API · JWT</td></tr></table><h4>Summary</h4><p>A hospital operations system covering patients, doctors, appointments, prescriptions, and billing, with JWT authentication and role-based access across Admin, Doctor, Patient, and Receptionist.</p><h4>01 · The problem</h4><p>Hospital workflows are a permissions problem before they are a software problem. A receptionist books appointments but must not read clinical notes; a doctor issues prescriptions but does not manage billing; a patient sees only their own records. MediDesk models those boundaries across four roles.</p><h4>02 · The approach</h4><p>JWT authentication with access to each module restricted by role. Appointments, prescriptions, patient and doctor records, billing, and a medicine catalogue each expose only the operations a given role is permitted to perform.</p><h4>03 · Features (7)</h4><ul class="feat"><li><strong>Role-based authentication</strong> — JWT authentication with module access by role across four user types.</li><li><strong>Appointment management</strong> — Book, approve, complete, or cancel, with filtering by doctor, patient, and date.</li><li><strong>Prescription system</strong> — Digital prescriptions linking multiple medicines with dosage and duration.</li><li><strong>Doctor and patient portals</strong> — Full CRUD for patient records and doctor profiles.</li><li><strong>Doctor availability</strong> — Real-time availability toggle affecting bookings.</li><li><strong>Billing and invoicing</strong> — Patient bills with tracked totals and payment status.</li><li><strong>Medicine inventory</strong> — Searchable catalogue of hospital medicines and pharmacy registry.</li></ul><h4>04 · Architecture</h4><p>Appointments move through an explicit lifecycle — booked, approved, completed, or cancelled — with filtering by doctor, patient, and date. Prescriptions link a consultation to multiple medicines, each with its own dosage and duration, so a prescription is a structured record rather than free text.
+
+Billing generates patient invoices with tracked totals and payment status. Doctor availability is a live toggle, which is what makes the booking flow reflect real capacity.</p><h4>05 · Hardest problem</h4><p>Modelling a prescription properly. Storing it as text would have been quick, but a prescription is genuinely structured data: one consultation links to several medicines, and each of those carries its own dosage and duration. Getting that relation right was what made the medicine catalogue and the prescription history useful rather than decorative.
+
+Four roles also made access control harder than the three-role projects. A receptionist books appointments but has no business reading clinical records; a doctor issues prescriptions but does not manage billing. Each module had to be reasoned about separately rather than governed by one blanket rule.</p><h4>06 · What I learned</h4><p>That the schema decides what the application can do later. Because prescriptions were modelled as real relations rather than free text, features like searching the medicine catalogue and linking dosages came almost for free — whereas a text field would have made all of it impossible without a migration and a rewrite.
+
+I also learned to treat an appointment as a lifecycle rather than a row. Booked, approved, completed, and cancelled are distinct states with rules about which transitions are legal, and naming them explicitly kept the logic contained.</p><h4>Cover</h4><p><code>screenshot-2026-09-14-175313.jpg</code></p><h4>Gallery (3)</h4><ul class="feat"><li><code>screenshot-2026-09-14-175326.jpg</code> — Appointments and scheduling</li><li><code>screenshot-2026-09-14-175338.jpg</code> — Patient records</li><li><code>screenshot-2026-09-14-175353.jpg</code> — Prescriptions and billing</li></ul></div>
+
+<!-- ======================= 07 ======================= -->
+<h2 class="page-break"><span class="num">07</span>New project source material</h2>
+<p>
+  Both new case studies must be written from the owner's own README text,
+  summarised below. Write in the same register as the existing four: factual,
+  first person, no superlatives, and no claim that is not in the source.
+</p>
+
+<h3>7.1 SellFlow BD</h3>
+<p><strong>What it is:</strong> a multi-tenant SaaS platform for Bangladeshi Facebook and Instagram sellers. One seller signs up, creates a store, invites staff, and runs order entry, confirmation, inventory, courier booking, delivery tracking, COD reconciliation, returns and profit from a single dashboard.</p>
+
+<h4>The problem</h4>
+<p>Thousands of Bangladeshi businesses sell entirely through Facebook and Instagram. Orders arrive as Messenger chats, comments and phone calls; almost everything ships cash on delivery through a third-party courier. There is no storefront, no checkout and no system of record, so the seller tracks orders in a notebook and discovers months later that the business is not profitable.</p>
+<p><strong>Cash on delivery is the fact that makes the domain hard</strong> — the seller ships goods before being paid, which creates every requirement below.</p>
+
+<table>
+  <tr><th>Problem</th><th>How it is handled</th></tr>
+  <tr><td>Orders scattered across DMs, comments and calls</td><td>One order book with search, filters and a full status timeline</td></tr>
+  <tr><td>Fake and unconfirmed orders waste delivery money</td><td>Phone confirmation with logged call outcomes; stock committed only once confirmed</td></tr>
+  <tr><td>The same customer orders twice on two channels</td><td>Duplicate detection warns on a recent open order with overlapping products, with explicit override</td></tr>
+  <tr><td>Repeat offenders who refuse delivery</td><td>Automatic customer risk scoring from delivery and return history, plus a blacklist</td></tr>
+  <tr><td>Overselling stock already promised</td><td>Separate <code>on_hand</code> and <code>reserved</code> counts, so availability is always truthful</td></tr>
+  <tr><td>Courier money arrives in a bulk spreadsheet</td><td>Upload statement, match against shipments, review a preview, then commit; shortfalls surfaced as a number</td></tr>
+  <tr><td>Returns quietly destroy the margin</td><td>Returns capture forward delivery cost, return charge and written-off stock, feeding into profit</td></tr>
+  <tr><td>Revenue looks healthy but profit is unknown</td><td>Net profit after COGS, delivery cost, return loss and operating expenses</td></tr>
+</table>
+
+<h4>Architecture — the three pieces carrying most of the weight</h4>
+<ul>
+  <li><strong>Tenant isolation, enforced in three layers.</strong> A base manager returning nothing when no store is resolved; a mixin resolving the tenant from the user's own memberships; a view mixin scoping every query and injecting the store on writes. Cross-tenant access returns 404, never 403, so the API never confirms another tenant's record exists.</li>
+  <li><strong>The order state machine</strong> declares legal transitions as data and attaches stock side effects to them, inside a transaction with a row lock and an immutable audit trail.</li>
+  <li><strong>Inventory is an append-only ledger.</strong> Every movement records its resulting balances, and concurrent reservations are serialised with <code>select_for_update()</code> so the last unit in stock cannot be sold twice.</li>
+</ul>
+<p>Fourteen domain apps, each shaped the same way: <code>models.py</code> for structure, <code>services.py</code> for business logic, thin views handling only HTTP. The same <code>create_order()</code> runs for the dashboard, the public order form and the API alike.</p>
+<p>Access is capability-based: five roles (owner, manager, order staff, delivery staff, accountant) map to named capabilities checked on every request.</p>
+
+<h4>Candidate "hardest problem"</h4>
+<p>COD reconciliation is the strongest choice. A courier statement is uploaded as CSV and becomes a draft; nothing settles until confirmed. Rows land in four buckets — matched, amount mismatch, unmatched, already settled. Committing settles only matched rows; mismatches are skipped unless explicitly opted into, because a silent mismatch is money quietly lost. Column names vary between couriers, so the parser accepts several spellings and strips currency symbols.</p>
+<p>Alternatives, if a different angle reads better: multi-tenant isolation failing closed, or serialising concurrent stock reservations.</p>
+
+<h4>Other facts available</h4>
+<ul>
+  <li>Revenue recognised on <em>Delivered</em>, never on order creation — a pending COD order is not revenue.</li>
+  <li>Money is always <code>DecimalField(max_digits=12, decimal_places=2)</code>; a test walks every analytics endpoint and fails if any value returns as a float.</li>
+  <li>Courier credentials encrypted at rest with Fernet and never returned by the API.</li>
+  <li>Every courier sits behind one adapter interface; manual, Pathao and Steadfast ship today.</li>
+  <li>No Celery or Redis: scheduled work runs from a GitHub Actions schedule calling a protected endpoint every 15 minutes.</li>
+  <li>Phone numbers normalise to <code>+8801XXXXXXXXX</code> on save.</li>
+  <li>Order numbers come from an atomic per-store counter, never <code>COUNT(*) + 1</code>.</li>
+</ul>
+
+<h3 class="page-break">7.2 ServoraBD</h3>
+<p><strong>What it is:</strong> a marketplace connecting customers in Dhaka with verified electricians, plumbers, AC technicians and other tradespeople. The owner's own framing: <em>"The point of this project is not the booking flow — that is a well-understood problem. It is the trust model."</em></p>
+
+<h4>The problem with star ratings</h4>
+<p>A provider with one 5-star review outranks a provider with two hundred jobs averaging 4.8. Ratings cluster so tightly at 4.5–5.0 that they carry almost no information, and they only measure jobs that were completed — a provider who accepts ten bookings and abandons eight can hold a perfect score.</p>
+
+<div class="callout">
+  <span class="label">Use carefully</span>
+  <p>
+    The README contrasts two provider profiles (Kamal 84.2, Shakib 53.5) to
+    show the difference. These are <strong>illustrative examples the system
+    produces</strong>, not real users. If used on the site, frame them that
+    way — never as customer data.
+  </p>
+</div>
+
+<h4>The trust score — six factors</h4>
+<table>
+  <tr><th>Factor</th><th>Weight</th><th>Captures</th></tr>
+  <tr><td>Verification depth</td><td>20%</td><td>Has this person proven who they are?</td></tr>
+  <tr><td>Job volume</td><td>15%</td><td>Is there enough evidence to judge them?</td></tr>
+  <tr><td>Completion reliability</td><td>20%</td><td>When they commit, do they finish?</td></tr>
+  <tr><td>Cancellation discipline</td><td>15%</td><td>How often do they break a commitment?</td></tr>
+  <tr><td>Responsiveness</td><td>10%</td><td>How long does a customer wait?</td></tr>
+  <tr><td>Review quality</td><td>20%</td><td>What do verified customers say?</td></tr>
+</table>
+
+<h4>The three techniques that make it work</h4>
+<ul>
+  <li><strong>Bayesian smoothing</strong> on completion rate and reviews, so low-volume providers regress toward the platform mean instead of scoring 100 on a single job.</li>
+  <li><strong>Damage-weighted, time-decayed cancellations</strong> — cancelling an hour before costs 4× what cancelling two days ahead costs, and old cancellations fade with a 180-day half-life.</li>
+  <li><strong>Logarithmic volume</strong> saturating at 100 jobs, so farming trivial jobs has sharply diminishing returns.</li>
+</ul>
+<p>Penalties for upheld disputes apply <em>after</em> the weighted sum, so one serious incident cannot be diluted by strong performance elsewhere.</p>
+
+<h4>Candidate "hardest problem"</h4>
+<p>Designing a score that resists gaming. Each technique above answers a specific attack: a single glowing review, a well-timed cancellation, or a pile of trivial jobs. The anti-gaming design is the engineering story.</p>
+
+<h4>Verification figures — attribute carefully</h4>
+<div class="callout warn">
+  <span class="label">Attribution</span>
+  <p>
+    These come from the owner's own test runs and seeded data, not production
+    traffic. Present them as measured locally, never as live usage.
+  </p>
+</div>
+<ul>
+  <li>587 backend tests; 47 frontend unit and component tests.</li>
+  <li>Playwright runs both golden paths plus a WCAG 2.1 AA scan of every page, Chromium at a 360 px viewport.</li>
+  <li>Provider search p95 <strong>100 ms</strong> across 10,018 seeded providers (target 400 ms).</li>
+  <li>Nightly trust recompute for 10,018 providers in <strong>175 s</strong> (target 15 min).</li>
+  <li>Landing page LCP <strong>1.58 s</strong> on Slow 4G with 4× CPU throttling (target 2.5 s).</li>
+  <li>axe-core reports no WCAG 2.1 AA violations; pip-audit and npm audit report zero known vulnerabilities.</li>
+  <li>The trust engine reproduces both PRD worked examples exactly (84.19 and 53.48).</li>
+</ul>
+<p>The security review fixed a rate-limit bypass through forged <code>X-Forwarded-For</code> headers, stopped accepting HTML files renamed to <code>.jpg</code>, added an audit failing the suite if any route omits its permission check, and upgraded to Django 5.2 LTS.</p>
+
+<h4>Deployment status — resolve before writing</h4>
+<div class="callout warn">
+  <span class="label">Open question</span>
+  <p>
+    The README says <em>"The site is not deployed yet."</em> The owner supplied
+    <code>servorabd-web.onrender.com</code> as a live link. Confirm which is
+    current before publishing a demo button — a dead demo link is worse than
+    none.
+  </p>
+</div>
+
+<!-- ======================= 08 ======================= -->
+<h2 class="page-break"><span class="num">08</span>Design system</h2>
+<p>Reproduce exactly. Every value was contrast-checked; do not substitute by eye.</p>
+
+<h3>8.1 Palette</h3>
+<p>Defined once as CSS custom properties on <code>:root</code> and <code>:root.light</code>, consumed as Tailwind tokens. Nothing hardcodes a colour.</p>
+<table>
+  <tr><th>Token</th><th>Dark (default)</th><th>Light</th><th>Role</th></tr>
+  <tr><td class="k">--canvas</td><td><code>8 10 14</code></td><td><code>250 251 253</code></td><td>Page background</td></tr>
+  <tr><td class="k">--surface</td><td><code>16 20 27</code></td><td><code>255 255 255</code></td><td>Cards</td></tr>
+  <tr><td class="k">--elevated</td><td><code>24 30 40</code></td><td><code>241 245 249</code></td><td>Inputs, tags</td></tr>
+  <tr><td class="k">--line</td><td><code>38 46 60</code></td><td><code>222 229 238</code></td><td>Default border</td></tr>
+  <tr><td class="k">--line-strong</td><td><code>58 70 90</code></td><td><code>194 205 219</code></td><td>Hover border</td></tr>
+  <tr><td class="k">--ink</td><td><code>241 245 249</code></td><td><code>12 17 26</code></td><td>Primary text</td></tr>
+  <tr><td class="k">--ink-muted</td><td><code>154 166 184</code></td><td><code>71 85 105</code></td><td>Body text</td></tr>
+  <tr><td class="k">--ink-faint</td><td><code>106 118 138</code></td><td><code>117 130 150</code></td><td>Metadata</td></tr>
+  <tr><td class="k">--accent</td><td><code>34 211 238</code></td><td><code>14 116 144</code></td><td>Accent</td></tr>
+  <tr><td class="k">--accent-hover</td><td><code>103 232 249</code></td><td><code>21 94 117</code></td><td>Hover</td></tr>
+  <tr><td class="k">--on-accent</td><td><code>8 10 14</code></td><td><code>255 255 255</code></td><td>Text on accent</td></tr>
+  <tr><td class="k">--violet</td><td><code>167 139 250</code></td><td><code>109 40 217</code></td><td>Category tint</td></tr>
+  <tr><td class="k">--green</td><td><code>52 211 153</code></td><td><code>4 120 87</code></td><td>Category tint</td></tr>
+  <tr><td class="k">--amber</td><td><code>251 191 36</code></td><td><code>180 83 9</code></td><td>Category tint</td></tr>
+  <tr><td class="k">--pink</td><td><code>244 114 182</code></td><td><code>190 24 93</code></td><td>Category tint</td></tr>
+</table>
+
+<div class="callout">
+  <span class="label">Why dark text on the accent</span>
+  <p>
+    Cyan-400 reaches <strong>10.96:1</strong> on the dark canvas. White text on
+    that same cyan reaches only 3.68:1 — AA-large, not enough for button
+    labels. So buttons use <code>--on-accent</code> (near-black) on dark, and
+    the light theme drops to cyan-700 where white works at 5.36:1.
+  </p>
+</div>
+
+<h3>8.2 Typography</h3>
+<table>
+  <tr><th>Token</th><th>Size</th><th>Use</th></tr>
+  <tr><td class="k">hero</td><td><code>clamp(3rem, 7.5vw, 6.5rem)</code> / 0.98 / -0.04em</td><td>Hero name only</td></tr>
+  <tr><td class="k">display-lg</td><td><code>clamp(2.75rem, 6vw, 5rem)</code></td><td>Reserved</td></tr>
+  <tr><td class="k">display</td><td><code>clamp(2.25rem, 4.5vw, 3.5rem)</code></td><td>Page titles</td></tr>
+  <tr><td class="k">heading-lg</td><td><code>clamp(1.75rem, 3vw, 2.5rem)</code></td><td>Section headings</td></tr>
+  <tr><td class="k">heading</td><td><code>clamp(1.375rem, 2vw, 1.75rem)</code></td><td>Subsections</td></tr>
+  <tr><td class="k">body</td><td><code>1.0625rem / 1.7</code></td><td>Prose</td></tr>
+</table>
+<p>Inter for reading (400–800); JetBrains Mono for metadata, eyebrows, tags, diagram nodes and keyboard hints.</p>
+
+<div class="callout warn">
+  <span class="label">Naming trap — do not repeat</span>
+  <p>
+    The hero size was first named <code>display-xl</code>. Tailwind silently
+    generated nothing because it prefix-collides with the existing
+    <code>display</code> key, and the heading fell back to 16 px. It is named
+    <code>hero</code> for that reason. Avoid font-size keys that prefix another
+    key. Note also that Tailwind config changes need a Vite restart — they are
+    not hot-reloaded.
+  </p>
+</div>
+
+<h3>8.3 Motion</h3>
+<table>
+  <tr><th>Effect</th><th>Behaviour</th></tr>
+  <tr><td class="k">Scroll reveal</td><td>Fade and 16 px rise on entering the viewport</td></tr>
+  <tr><td class="k">Typewriter</td><td>Hero cycles five phrases with a blinking caret and a panning gradient</td></tr>
+  <tr><td class="k">Magnetic buttons</td><td>Primary actions drift toward the cursor; transform applied to the node, no re-render</td></tr>
+  <tr><td class="k">Spotlight cards</td><td>Cursor-following radial glow via CSS custom properties, not state</td></tr>
+  <tr><td class="k">Ambient glows</td><td>Three slow drifting blurs behind the hero, in accent / violet / green</td></tr>
+  <tr><td class="k">Floating portrait</td><td>6 s vertical float with corner brackets</td></tr>
+  <tr><td class="k">Card hover</td><td>Accent border glow, cover image scales 1.04, gradient ring fades in</td></tr>
+  <tr><td class="k">Scroll progress</td><td>Hairline accent bar under the header</td></tr>
+  <tr><td class="k">Skeletons</td><td>Shimmer placeholders matching real content shape</td></tr>
+</table>
+
+<div class="callout rule-box">
+  <span class="label">Non-negotiable motion rule</span>
+  <p>
+    <strong>Content must never depend on an animation to become visible.</strong>
+    The <code>Reveal</code> component enforces this two ways: reduced motion
+    renders a plain element, and a 900 ms timer reveals regardless — so a missed
+    intersection cannot strand real content at zero opacity.
+  </p>
+  <p style="margin-top:6px">
+    This exists because it was violated once. Case study sections rendered into
+    the DOM but stayed permanently invisible: <code>whileInView</code> never
+    fired inside a collapsed grid child. Every section of every case study was
+    affected.
+  </p>
+</div>
+
+<h3>8.4 Layout tokens</h3>
+<ul>
+  <li>Container <code>max-width: 75rem</code>, prose <code>44rem</code>.</li>
+  <li>Section padding <code>clamp(4.5rem, 10vw, 8.5rem)</code>.</li>
+  <li>Card radius <code>0.875rem</code>.</li>
+  <li>Grid backdrop 64 px; small variant 28 px; dot field 20 px.</li>
+  <li>Decorative glows must sit inside a clipped container — a negative z-index escapes the parent's <code>overflow-hidden</code> and causes horizontal scroll on mobile.</li>
+</ul>
+
+<!-- ======================= 09 ======================= -->
+<h2 class="page-break"><span class="num">09</span>Pages and components</h2>
+
+<h3>9.1 Home</h3>
+<table>
+  <tr><th>#</th><th>Section</th><th>Content</th></tr>
+  <tr><td class="k">1</td><td>Hero</td><td>Availability pill, name at hero scale, title with terminal glyph, typewriter, intro, actions, floating portrait. <strong>No stat counters.</strong></td></tr>
+  <tr><td class="k">2</td><td>Featured projects</td><td>All six cards in a responsive grid</td></tr>
+  <tr><td class="k">3</td><td>Systems, not screens</td><td>Four engineering principles — copy in §9.2</td></tr>
+  <tr><td class="k">4</td><td>What I work with</td><td>Six skill categories, level legend, coursework</td></tr>
+  <tr><td class="k">5</td><td>About preview</td><td>Short bio and education card</td></tr>
+  <tr><td class="k">6</td><td>Contact CTA</td><td>Closing call to action with direct email</td></tr>
+</table>
+
+<h3>9.2 "Systems, not screens" — verbatim</h3>
+<p>Eyebrow <em>How I build</em>; description: "The same four decisions shape every project below. They are the reason these are applications rather than demos."</p>
+<table>
+  <tr><th>Title</th><th>Body</th><th>Tint</th></tr>
+  <tr><td class="k">Decoupled by default</td><td>A React client that holds no server state, talking to a REST API that owns all of it. Every project is built this way, which keeps the contract between frontend and backend explicit.</td><td>accent</td></tr>
+  <tr><td class="k">Permissions at the API</td><td>Access rules live on the server, not in the interface. A hidden button is a design choice; a scoped queryset is a security boundary. MicroMart, EduFlow, and MediDesk all enforce roles at the API layer.</td><td>violet</td></tr>
+  <tr><td class="k">Schema before features</td><td>The database shape decides what the application can do later. I design relations and constraints first, then build against them — across PostgreSQL, MySQL, and SQLite.</td><td>green</td></tr>
+  <tr><td class="k">State machines over flags</td><td>Orders, appointments, and submissions each move through defined states. Getting those transitions right is what stops a system ending up in a half-finished condition.</td><td>amber</td></tr>
+</table>
+<p class="muted">With SellFlow BD added, both the permissions and state-machine entries could name it too — it is the strongest example of each. Optional.</p>
+
+<h3>9.3 Case study page</h3>
+<p>Up to six numbered sections, numbered only across those that render:</p>
+<pre>01  The problem
+02  The approach
+03  Features            (two columns, check glyphs)
+04  Architecture        (request-flow diagram + prose)
+05  Hardest problem
+06  What I learned</pre>
+<p>Then, conditionally: a YouTube embed if <code>videoUrl</code> is set, and a screenshot gallery if images exist. A sticky sidebar lists the stack.</p>
+<p>
+  Images use <code>fit="contain"</code> in the gallery and on the cover, because
+  the screenshots are wide desktop captures that lose their edges under
+  <code>cover</code>. Project cards keep <code>cover</code> — a card needs a
+  filled thumbnail.
+</p>
+
+<h3>9.4 Architecture diagrams</h3>
+<p>
+  Inline SVG, one per project, defined in
+  <code>components/ArchitectureDiagram.jsx</code>. Terminal-window chrome with a
+  caption, colour-coded nodes, an optional dashed branch for an external
+  service. Horizontal on wide screens, stacked with downward connectors on
+  narrow ones so no node is clipped. A project with no definition renders
+  nothing.
+</p>
+<table>
+  <tr><th>Project</th><th>Flow</th><th>Branch</th></tr>
+  <tr><td class="k">sellflowbd</td><td>React → Django + DRF (tenant-scoped) → PostgreSQL</td><td>Courier APIs (Pathao / Steadfast)</td></tr>
+  <tr><td class="k">servorabd</td><td>React → Django + DRF → PostgreSQL</td><td>Trust engine (scheduled recompute)</td></tr>
+  <tr><td class="k">micromart</td><td>React SPA → Django + DRF (JWT verified) → MySQL</td><td>SSLCommerz</td></tr>
+  <tr><td class="k">eduflow</td><td>React + Vite → DRF (permission layer) → Database</td><td>—</td></tr>
+  <tr><td class="k">intellichat</td><td>React (SSE listener) → Django (stream relay) → PostgreSQL</td><td>Gemini API — animated connectors</td></tr>
+  <tr><td class="k">medidesk</td><td>React (4 role views) → Django + DRF (JWT + RBAC) → Database</td><td>—</td></tr>
+</table>
+<p>Node tones: client = accent, api = violet, database = green, payment branch = amber, model branch = violet.</p>
+
+<h3>9.5 Command palette</h3>
+<p>
+  <code>Cmd/Ctrl + K</code> from anywhere. Groups results into Navigation, Case
+  studies, Actions and Links; built from the data module so a new project
+  appears without touching it. Arrows navigate, Enter selects, Escape closes —
+  Escape bound at the document so it works regardless of focus.
+  Guard <code>scrollIntoView</code>: it is absent in some environments and
+  throws in jsdom.
+</p>
+
+<h3>9.6 Contact form — the one real decision</h3>
+<p>Without a backend the form needs a third-party endpoint. Recommended: <strong>Formspree</strong> free tier (50 submissions/month) or <strong>Web3Forms</strong> (250/month, no account).</p>
+<pre>const res = await fetch('https://formspree.io/f/&lt;id&gt;', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+  body: JSON.stringify({ name, email, subject, message }),
+})</pre>
+<p>Preserve from v1: client-side validation with per-field errors, <code>aria-invalid</code> and <code>aria-describedby</code>, the honeypot <code>website</code> field, loading state, success state with "Send another message", and a plain <code>mailto:</code> fallback in the sidebar so the form is never the only route.</p>
+<p class="muted">The endpoint id is not a secret — it is public by design and rate-limited by the provider.</p>
+
+<h3>9.7 Components to port unchanged</h3>
+<div class="two-col">
+<ul>
+  <li><code>Reveal</code> — with its 900 ms guarantee</li>
+  <li><code>Spotlight</code> — cursor glow</li>
+  <li><code>Magnetic</code> — button drift</li>
+  <li><code>ImageFrame</code> — placeholder + <code>fit</code> prop</li>
+  <li><code>ProjectCard</code></li>
+  <li><code>ArchitectureDiagram</code></li>
+  <li><code>CommandPalette</code></li>
+  <li><code>SectionHeading</code>, <code>Skeleton</code>, <code>ThemeToggle</code></li>
+  <li><code>Header</code> with scroll progress, <code>Footer</code></li>
+  <li>Hooks: <code>useTheme</code>, <code>useTypewriter</code>, <code>useCountUp</code>, <code>useScrollProgress</code>, <code>usePrefersReducedMotion</code>, <code>useDocumentTitle</code></li>
+</ul>
+</div>
+<p>Delete: <code>useApi</code>, <code>services/api.js</code>, and <code>ErrorState</code> if unreferenced.</p>
+
+<!-- ======================= 10 ======================= -->
+<h2 class="page-break"><span class="num">10</span>Assets</h2>
+
+<h3>10.1 Sources</h3>
+<table>
+  <tr><th>Asset</th><th>Source</th><th>Count</th></tr>
+  <tr><td class="k">Profile photo</td><td><code>images/raihan2.jpg</code> (614 KB)</td><td>1</td></tr>
+  <tr><td class="k">SellFlow BD</td><td><code>images/Sell-flow/</code></td><td>5</td></tr>
+  <tr><td class="k">ServoraBD</td><td><code>images/servora/</code></td><td>4</td></tr>
+  <tr><td class="k">MicroMart</td><td><code>images/micro-mart/</code></td><td>5</td></tr>
+  <tr><td class="k">EduFlow</td><td><code>images/edu-flow/</code></td><td>5</td></tr>
+  <tr><td class="k">IntelliChat</td><td><code>images/intelli-chat/</code></td><td>4</td></tr>
+  <tr><td class="k">MediDesk</td><td><code>images/medi-desk/</code></td><td>4</td></tr>
+  <tr><td class="k">Résumé</td><td><code>cv/cv_part1.pdf</code> (89 KB)</td><td>1</td></tr>
+</table>
+<p class="muted">PromptCanvas images are not carried over.</p>
+
+<h3>10.2 Optimisation</h3>
+<p>Raw PNG screenshots are roughly ten times larger than needed. Convert once at import time:</p>
+<table>
+  <tr><td class="k">Screenshots</td><td>Max width 1600 px, progressive JPEG, quality 84. Observed: 1017 KB → 129 KB.</td></tr>
+  <tr><td class="k">Profile photo</td><td>Square centre crop, 800×800, quality 88. Observed: 989 KB → 96 KB.</td></tr>
+  <tr><td class="k">Location</td><td><code>src/assets/</code> and imported, so Vite fingerprints them. Not <code>public/</code>.</td></tr>
+  <tr><td class="k">Résumé</td><td><code>public/resume.pdf</code> — referenced by path, never imported.</td></tr>
+</table>
+
+<h3>10.3 Covers</h3>
+<p>The cover is the screenshot showing the product's name most clearly — usually the landing or sign-in screen. For the four carried-over projects the existing covers are already chosen; §6 names each file.</p>
+
+<!-- ======================= 11 ======================= -->
+<h2><span class="num">11</span>Quality bar</h2>
+
+<h3>11.1 Accessibility — all verified in v1, must hold</h3>
+<div class="two-col">
+<ul>
+  <li>Semantic HTML with a <code>main</code> landmark</li>
+  <li>Skip link as the first tab stop</li>
+  <li>Exactly one <code>h1</code> per page</li>
+  <li><code>lang</code> set on the document</li>
+  <li>Every image carries alt text</li>
+  <li>Every button and link has an accessible name</li>
+  <li>Visible focus ring, keyboard users only</li>
+  <li>Form errors linked by <code>aria-describedby</code></li>
+  <li>Filter buttons expose <code>aria-pressed</code></li>
+  <li>Result regions <code>aria-live="polite"</code></li>
+  <li>All motion off under <code>prefers-reduced-motion</code></li>
+  <li>No horizontal scroll at 320 px</li>
+</ul>
+</div>
+
+<h3>11.2 Performance targets</h3>
+<table>
+  <tr><th>Measure</th><th>v1 actual</th><th>v2 target</th></tr>
+  <tr><td class="k">Bundle, gzipped</td><td>≈124 KB</td><td>≤ 140 KB</td></tr>
+  <tr><td class="k">First contentful paint</td><td>~2.1 s warm, ~50 s cold</td><td>&lt; 1 s, always</td></tr>
+  <tr><td class="k">Content visible</td><td>after API response</td><td>first paint</td></tr>
+  <tr><td class="k">Lighthouse performance</td><td>not measured</td><td>≥ 95</td></tr>
+</table>
+<p>Vendor chunks split as in v1: react, motion, app. Images lazy by default; hero and first two cards eager.</p>
+
+<h3>11.3 SEO</h3>
+<ul>
+  <li>Per-page title and meta description via <code>useDocumentTitle</code>.</li>
+  <li>Open Graph and Twitter Card tags.</li>
+  <li>JSON-LD <code>Person</code> schema — job title, location, institution, <code>sameAs</code> profile links.</li>
+  <li><code>sitemap.xml</code> covering all nine routes, plus <code>robots.txt</code>.</li>
+  <li><strong>Set the canonical URL to the real Vercel domain at launch.</strong> v1 shipped with <code>example.com</code> for weeks.</li>
+  <li>Create <code>/og-image.png</code>. v1 referenced one that never existed, so link previews were imageless.</li>
+</ul>
+
+<!-- ======================= 12 ======================= -->
+<h2><span class="num">12</span>Testing</h2>
+<p>Vitest plus Testing Library. Port the v1 suite and extend it. Several tests deliberately encode the content rules from §4, so a change that breaks a promise fails the suite rather than shipping.</p>
+<table>
+  <tr><th>Suite</th><th>Asserts</th></tr>
+  <tr><td class="k">ImageFrame</td><td>Renders an image; substitutes the placeholder without one; honours <code>loading</code> and <code>fit</code></td></tr>
+  <tr><td class="k">ProjectCard</td><td>Content, case study link, GitHub link, <strong>live demo hidden without a URL</strong>, technology collapsing</td></tr>
+  <tr><td class="k">ArchitectureDiagram</td><td>Known flows, external branch, branch omitted when absent, nothing for an unknown slug</td></tr>
+  <tr><td class="k">CommandPalette</td><td>Closed state, listing, filtering, empty result, Escape, links omitted when absent</td></tr>
+  <tr><td class="k">data (new)</td><td>Six projects; PromptCanvas absent; exactly three have <code>liveUrl</code>; every project has a cover, a GitHub URL and a video URL; no skill exposes a numeric level</td></tr>
+  <tr><td class="k">Contact (new)</td><td>Validation errors, honeypot present, success state</td></tr>
+</table>
+<p>Manual: every route in both themes with no console errors; mobile at 320/390/412 px; reduced-motion; the contact form end to end.</p>
+
+<!-- ======================= 13 ======================= -->
+<h2 class="page-break"><span class="num">13</span>Deployment to Vercel</h2>
+
+<h3>13.1 Setup</h3>
+<pre><span class="c"># Vercel → Add New → Project → import the repository</span>
+Framework preset   Vite            <span class="c"># auto-detected</span>
+Build command      npm run build
+Output directory   dist
+Install command    npm ci</pre>
+<p>No environment variables are required. If a Formspree id is used it may be inlined — it is public by design.</p>
+
+<h3>13.2 SPA rewrite — required</h3>
+<div class="callout warn">
+  <span class="label">This broke v1</span>
+  <p>
+    Without a rewrite, <code>/projects/micromart</code> opened directly returns
+    404. Navigating inside the site works, so it is easy to miss — but every
+    shared link is the failing case. Vercel reads <code>vercel.json</code>; a
+    Netlify <code>_redirects</code> file is ignored.
+  </p>
+</div>
+<pre>// vercel.json
+{
+  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
+}</pre>
+
+<h3>13.3 Launch checklist</h3>
+<div class="two-col">
+<ul>
+  <li>All six case studies open directly, not only by clicking</li>
+  <li>Three live demo buttons appear; the other three show none</li>
+  <li>All six video embeds play</li>
+  <li>Every screenshot loads; none broken</li>
+  <li>Résumé downloads</li>
+  <li>Contact form submits and mail arrives</li>
+  <li>Light/dark toggle persists across reload</li>
+  <li><code>Cmd/Ctrl + K</code> opens and navigates</li>
+  <li>No console errors on any route</li>
+  <li>Canonical URL and OG tags point at the real domain</li>
+  <li><code>og-image.png</code> exists</li>
+  <li>Sitemap lists all nine routes</li>
+  <li>No horizontal scroll at 320 px</li>
+  <li>Lighthouse ≥ 95 performance, 100 accessibility</li>
+</ul>
+</div>
+
+<h3>13.4 Custom domain</h3>
+<p>
+  Roughly $12/year. <code>jahidhasan.dev</code> reads considerably better than a
+  <code>.vercel.app</code> subdomain. After adding it, update the canonical
+  link, both <code>og:url</code> tags, and regenerate the sitemap.
+</p>
+
+<!-- ======================= 14 ======================= -->
+<h2><span class="num">14</span>Build order</h2>
+<table>
+  <tr><th>#</th><th>Step</th><th>Verify before moving on</th></tr>
+  <tr><td class="k">1</td><td>Scaffold Vite + React + Tailwind; copy <code>index.css</code> and <code>tailwind.config.js</code> verbatim</td><td>Dev server runs; accent token resolves</td></tr>
+  <tr><td class="k">2</td><td>Optimise and place all assets (§10)</td><td>Sizes match the targets</td></tr>
+  <tr><td class="k">3</td><td>Write <code>src/data/</code> — profile, skills, education, four carried-over projects</td><td>Copy is byte-identical to §5–6</td></tr>
+  <tr><td class="k">4</td><td>Port components and hooks; delete the fetch layer</td><td>No import of <code>useApi</code> remains</td></tr>
+  <tr><td class="k">5</td><td>Build Home, Projects, ProjectDetail, About, Contact, 404</td><td>Every route renders, no console errors</td></tr>
+  <tr><td class="k">6</td><td>Write the two new case studies from §7</td><td>No claim absent from the source</td></tr>
+  <tr><td class="k">7</td><td>Add their diagram definitions</td><td>Both render, and stack on mobile</td></tr>
+  <tr><td class="k">8</td><td>Wire the contact form</td><td>A real submission arrives</td></tr>
+  <tr><td class="k">9</td><td>SEO, sitemap, OG image</td><td>Real domain, not a placeholder</td></tr>
+  <tr><td class="k">10</td><td>Tests</td><td>All pass, including the new data suite</td></tr>
+  <tr><td class="k">11</td><td>Deploy with <code>vercel.json</code></td><td>Direct case study URL returns 200</td></tr>
+</table>
+
+<!-- ======================= 15 ======================= -->
+<h2><span class="num">15</span>Open items</h2>
+<table>
+  <tr><th>#</th><th>Item</th><th>Needed from</th></tr>
+  <tr><td class="k">O1</td><td><strong>ServoraBD live status.</strong> README says not deployed; a live URL was supplied. Confirm before publishing the demo button.</td><td>Owner</td></tr>
+  <tr><td class="k">O2</td><td><strong>New CV.</strong> The owner mentioned replacing it, but <code>cv/</code> still holds only the September file. Supply a newer PDF or confirm the current one stands.</td><td>Owner</td></tr>
+  <tr><td class="k">O3</td><td><strong>Public email.</strong> The site publishes <code>jahidhr05@gmail.com</code>; <code>hello.jahidhr@gmail.com</code> is also in use. Confirm which belongs on the site.</td><td>Owner</td></tr>
+  <tr><td class="k">O4</td><td><strong>Contact endpoint.</strong> Formspree or Web3Forms; the owner creates the account and supplies the id.</td><td>Owner</td></tr>
+  <tr><td class="k">O5</td><td><strong>Custom domain.</strong> Optional but recommended.</td><td>Owner</td></tr>
+  <tr><td class="k">O6</td><td><strong>Skills refresh.</strong> The table in §5.5 predates SellFlow BD and ServoraBD. Both used PostgreSQL heavily and ServoraBD used Playwright; consider whether any level has genuinely moved. Do not inflate.</td><td>Owner</td></tr>
+</table>
+
+<footer class="end">
+  <p>
+    <strong>Portfolio v2 PRD</strong> — Md. Jahid Hasan Raihan · 1 October 2026.
+    Every factual claim originates from the owner's own statements or from the
+    verified state of the v1 site. Where information was unavailable it is
+    listed in §15 rather than assumed.
+  </p>
+</footer>
+
+</body>
+</html>
