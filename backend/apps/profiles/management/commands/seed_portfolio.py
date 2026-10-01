@@ -109,6 +109,7 @@ TECHNOLOGIES = [
     ("Nginx", "devops", 43),
     ("GitHub Actions", "devops", 44),
     ("AWS", "devops", 45),
+    ("Playwright", "tool", 46),
     ("SSLCommerz", "service", 50),
     ("Google Gemini API", "service", 51),
     ("Hugging Face API", "service", 52),
@@ -120,8 +121,243 @@ TECHNOLOGIES = [
 # ---------------------------------------------------------------------------
 # Case study sections the owner has not yet supplied are left blank on
 # purpose. The frontend omits empty sections entirely.
+#
+# This list is the source of truth for project records: sync_projects writes
+# it to an existing database on every deploy. A project removed from here must
+# also be named in REMOVED_PROJECTS, or it lingers in production.
+
+REMOVED_PROJECTS = ["promptcanvas"]
 
 PROJECTS = [
+    {
+        "title": "SellFlow BD",
+        "slug": "sellflowbd",
+        "subtitle": "Multi-tenant order and delivery platform for F-commerce sellers",
+        "accent_label": "SaaS Platform",
+        "summary": (
+            "A multi-tenant SaaS platform for Bangladeshi Facebook and Instagram "
+            "sellers, turning scattered DM orders into a controlled order-to-cash "
+            "pipeline: order entry, phone confirmation, inventory reservation, "
+            "courier booking, delivery tracking, COD reconciliation, returns and "
+            "profit — all scoped per store."
+        ),
+        "project_type": "web_app",
+        "status": "completed",
+        "is_solo": True,
+        "is_featured": True,
+        "order": 1,
+        "problem": (
+            "Thousands of Bangladeshi businesses sell entirely through Facebook "
+            "and Instagram. Orders arrive as Messenger chats, comments and phone "
+            "calls, and almost everything ships cash on delivery through a "
+            "third-party courier. There is no storefront, no checkout and no "
+            "system of record, so the seller tracks orders in a notebook or a "
+            "spreadsheet and finds out months later that the business is not "
+            "actually profitable.\n\n"
+            "Cash on delivery is the fact that makes this domain hard. The seller "
+            "ships goods before being paid, and every other requirement follows "
+            "from that: fake orders that waste delivery money, repeat customers "
+            "who refuse parcels, stock promised twice, courier money arriving in "
+            "a bulk spreadsheet, and returns that quietly erase the margin."
+        ),
+        "solution": (
+            "A multi-tenant SaaS platform that turns that chatter into a "
+            "controlled order-to-cash pipeline. A seller signs up, creates a "
+            "store, invites staff, and runs the whole operation from one "
+            "dashboard: order entry, phone confirmation, inventory, courier "
+            "booking, delivery tracking, COD reconciliation, returns and "
+            "profit.\n\n"
+            "An order is created as pending and confirmed after a logged call to "
+            "the customer — which is the point stock is reserved. It is then "
+            "booked with a courier through its API, or by pasting a consignment "
+            "ID when the courier has no API. Courier webhooks and a scheduled "
+            "poll bring status updates back in. On delivery the COD amount "
+            "becomes collectable, and when the courier's statement arrives it is "
+            "reconciled against the shipments it covers."
+        ),
+        "architecture": (
+            "The backend is a Django REST API organised into fourteen domain "
+            "apps, each with the same shape: models for structure, a services "
+            "layer for business logic, and thin views that only handle HTTP. "
+            "Because the rules live in services, the same order-creation path "
+            "runs for the dashboard, the public order form and the API alike.\n\n"
+            "Tenant isolation is enforced in three layers: a base manager that "
+            "returns nothing when no store is resolved, a mixin that resolves the "
+            "tenant from the user's own memberships, and a view mixin that scopes "
+            "every query and injects the store on writes. A store that is not "
+            "yours returns 404 rather than 403, so the API never confirms that "
+            "another tenant's record exists.\n\n"
+            "The order state machine declares its legal transitions as data and "
+            "attaches stock side effects to them, inside a transaction with a row "
+            "lock and an append-only status history. Inventory is itself an "
+            "append-only ledger, and concurrent reservations are serialised with "
+            "select_for_update() so the last unit in stock cannot be sold twice. "
+            "Access is capability-based: five roles map to named capabilities "
+            "that the API checks on every request.\n\n"
+            "The deployment targets Render's free tier, which has no background "
+            "workers, so there is no Celery or Redis. A GitHub Actions schedule "
+            "calls a protected endpoint every fifteen minutes to sync shipments "
+            "and run the alert scans."
+        ),
+        "challenges": (
+            "Reconciling cash on delivery. A courier pays out in bulk and sends "
+            "a statement as a spreadsheet, and the seller has to work out which "
+            "parcels it covers and whether the amounts are right — which is "
+            "exactly where money goes missing without anyone noticing.\n\n"
+            "I built it to be safe rather than clever. An uploaded statement "
+            "becomes a draft, and nothing is settled until someone confirms it. "
+            "Every row lands in one of four buckets: matched, amount mismatch, "
+            "unmatched, or already settled. Committing settles only the matched "
+            "rows; a mismatch is skipped unless the seller explicitly opts in, "
+            "because a silent mismatch is money quietly lost, and when one is "
+            "committed the shortfall is recorded and shown on the COD ledger. "
+            "Couriers name their columns differently, so the parser accepts "
+            "several spellings of each field and strips currency symbols and "
+            "thousands separators."
+        ),
+        "lessons": "",
+        "github_url": "https://github.com/jhraihan/SellFlowBD",
+        "live_url": "https://sellflow-web.onrender.com",
+        "video_url": "https://youtu.be/4FBawFRC9EY",
+        "technologies": [
+            "React",
+            "Vite",
+            "Django",
+            "Django REST Framework",
+            "PostgreSQL",
+            "JWT",
+            "REST API",
+            "SQLite",
+            "GitHub Actions",
+            "Python",
+            "JavaScript",
+        ],
+        "features": [
+            ("Multi-tenant stores", "Each seller's data isolated per store, with staff invited by role."),
+            ("Order book", "Search, filters and a full status timeline for every order."),
+            ("Phone confirmation", "Logged call outcomes; stock is reserved only once an order is confirmed."),
+            ("Duplicate detection", "Warns on a recent open order with overlapping products, with an explicit override."),
+            ("Customer risk scoring", "Scored from delivery and return history, with a blacklist."),
+            ("Inventory ledger", "Separate on-hand and reserved counts in an append-only stock ledger."),
+            ("Courier booking", "Pathao and Steadfast through their APIs, or a manually entered consignment ID."),
+            ("Delivery tracking", "Courier webhooks and scheduled polling, mapped onto the order state machine."),
+            ("COD reconciliation", "Courier statements uploaded, matched against shipments, reviewed, then committed."),
+            ("Returns", "Received, inspected and resolved per item — restocked or written off at cost."),
+            ("Profit analytics", "Net profit after cost of goods, delivery, return loss and expenses, by product, courier, district and staff."),
+            ("Role-based capabilities", "Owner, manager, order staff, delivery staff and accountant, checked on every request."),
+            ("Public store and order form", "Customers browse a store page and order without an account."),
+            ("Invoices and parcel labels", "A5 invoice and thermal parcel label PDFs for each order."),
+            ("Plans and usage limits", "A per-period order allowance checked before an order is created."),
+        ],
+    },
+    {
+        "title": "ServoraBD",
+        "slug": "servorabd",
+        "subtitle": "Local service marketplace built around a computed trust score",
+        "accent_label": "Marketplace",
+        "summary": (
+            "A marketplace connecting customers in Dhaka with electricians, "
+            "plumbers and other tradespeople. The engineering centre is not the "
+            "booking flow but the trust model: a six-factor score computed from "
+            "recorded platform events, designed so that star ratings cannot be "
+            "gamed by low-volume or unreliable providers."
+        ),
+        "project_type": "web_app",
+        "status": "completed",
+        "is_solo": True,
+        "is_featured": True,
+        "order": 2,
+        "problem": (
+            "Hiring a tradesperson online usually comes down to a star rating, "
+            "and star ratings carry very little information. A provider with one "
+            "5-star review outranks one with two hundred jobs averaging 4.8. "
+            "Ratings cluster so tightly between 4.5 and 5.0 that they barely "
+            "separate anyone, and they only measure jobs that were completed — a "
+            "provider who accepts ten bookings and abandons eight can still hold "
+            "a perfect score.\n\n"
+            "ServoraBD connects customers in Dhaka with electricians, plumbers, "
+            "AC technicians and other tradespeople. The booking flow is a "
+            "well-understood problem; the point of the project is the trust "
+            "model."
+        ),
+        "solution": (
+            "Every provider carries a trust score built from six measurable "
+            "factors, each derived from recorded platform events rather than "
+            "self-report: verification depth (20%), job volume (15%), completion "
+            "reliability (20%), cancellation discipline (15%), responsiveness "
+            "(10%) and review quality (20%). Search ranks providers by that "
+            "score rather than by price, and the provider list shows the score "
+            "alongside the jobs done, cancellations and reply time behind it.\n\n"
+            "Around it sits the rest of a marketplace: OTP sign-up and JWT "
+            "authentication with separate customer and provider accounts, "
+            "provider profiles with service areas, availability and identity "
+            "verification, a booking request lifecycle, double-blind reviews, "
+            "and cash settlement with commission and an earnings ledger."
+        ),
+        "architecture": (
+            "Django REST Framework on PostgreSQL, with a mobile-first React "
+            "client built with Vite. There is no Celery, Redis or Docker: "
+            "recurring work, including the nightly trust recompute, runs as "
+            "Django management commands under a scheduler. Every run is "
+            "recorded, and an administrator can see a job that has stopped.\n\n"
+            "The trust engine keeps snapshots of each score and an audit trail "
+            "of how it changed. Measured locally with 10,018 providers, provider "
+            "search returns in 100 ms at the 95th percentile and the full "
+            "nightly recompute takes 175 seconds.\n\n"
+            "The backend has 587 tests and the frontend 47. Playwright runs both "
+            "golden paths and an accessibility scan of every page at a 360-pixel "
+            "phone viewport, and axe-core reports no WCAG 2.1 AA violations."
+        ),
+        "challenges": (
+            "Making the score hard to game. Every simple scoring rule invites an "
+            "obvious exploit, so each part of the design answers a specific "
+            "one.\n\n"
+            "A single glowing review should not beat a long record, so "
+            "completion rate and reviews use Bayesian smoothing: a provider with "
+            "little history regresses toward the platform mean instead of "
+            "scoring 100 on one job. A cancellation's cost depends on when it "
+            "happens — cancelling an hour before a job costs four times what "
+            "cancelling two days ahead does — and old cancellations fade with a "
+            "180-day half-life. Job volume is logarithmic and saturates at 100 "
+            "jobs, so farming trivial jobs has sharply diminishing returns. "
+            "Penalties for upheld disputes apply after the weighted sum, so one "
+            "serious incident cannot be diluted by strong performance "
+            "elsewhere.\n\n"
+            "The arithmetic is pinned down by a runnable reference "
+            "implementation that asserts every worked figure in the "
+            "specification, and the engine reproduces both worked examples "
+            "exactly."
+        ),
+        "lessons": "",
+        "github_url": "https://github.com/jhraihan/ServoraBD",
+        "live_url": "https://servorabd-web.onrender.com",
+        "video_url": "https://youtu.be/P6uvjq-dDbA",
+        "technologies": [
+            "React",
+            "Vite",
+            "Django",
+            "Django REST Framework",
+            "PostgreSQL",
+            "JWT",
+            "REST API",
+            "Playwright",
+            "GitHub Actions",
+            "Python",
+            "JavaScript",
+        ],
+        "features": [
+            ("Six-factor trust score", "Verification, volume, completion, cancellations, responsiveness and reviews, weighted into one score."),
+            ("Trust-ranked search", "Providers ranked by trust rather than price, filterable by service, area, date and tier."),
+            ("Provider profiles", "Service areas, availability and identity verification."),
+            ("Booking lifecycle", "Requests move through an explicit state machine."),
+            ("Double-blind reviews", "Reviews that feed back into the trust score."),
+            ("Cash settlement", "Commission and a per-provider earnings ledger that reconciles against bookings."),
+            ("OTP and JWT authentication", "Separate customer and provider accounts."),
+            ("Service catalogue", "Services grouped by trade, from electrical and plumbing to cleaning and appliance repair."),
+            ("Scheduled jobs", "Every recurring run recorded, with stopped jobs visible to administrators."),
+            ("Accessibility", "No WCAG 2.1 AA violations reported by axe-core on any page."),
+        ],
+    },
     {
         "title": "MicroMart",
         "slug": "micromart",
@@ -137,7 +373,7 @@ PROJECTS = [
         "status": "completed",
         "is_solo": True,
         "is_featured": True,
-        "order": 1,
+        "order": 3,
         "problem": (
             "A working e-commerce system is not one application but several "
             "overlapping ones. A customer browsing and buying, a seller "
@@ -191,6 +427,8 @@ PROJECTS = [
             "the views disappeared."
         ),
         "github_url": "https://github.com/jhraihan/MicroMart",
+        "live_url": "https://micromart-17ws.onrender.com",
+        "video_url": "https://youtu.be/6ujWklMaXg0",
         "technologies": [
             "React",
             "Django",
@@ -236,7 +474,7 @@ PROJECTS = [
         "status": "completed",
         "is_solo": True,
         "is_featured": True,
-        "order": 2,
+        "order": 4,
         "problem": (
             "A learning platform is defined by who is allowed to do what. A "
             "teacher creating an assignment, a student submitting to it, and "
@@ -288,7 +526,9 @@ PROJECTS = [
             "being enough. For an application of this size it never did — "
             "which was worth knowing firsthand rather than assuming."
         ),
-        "github_url": "https://github.com/jhraihan/Learning-Management-System-django-react",
+        "github_url": "https://github.com/jhraihan/Edu-Flow",
+        "live_url": "",
+        "video_url": "https://youtu.be/yTR0klKN5f4",
         "technologies": [
             "React",
             "Vite",
@@ -327,7 +567,7 @@ PROJECTS = [
         "status": "completed",
         "is_solo": True,
         "is_featured": True,
-        "order": 3,
+        "order": 5,
         "problem": (
             "A chat interface that waits for a complete model response before "
             "showing anything feels broken, even when it is working. The "
@@ -376,7 +616,9 @@ PROJECTS = [
             "between client and server first. Once the event sequence was "
             "decided, both sides became straightforward to write."
         ),
-        "github_url": "https://github.com/jhraihan/llm_powered_ai_chatbot",
+        "github_url": "https://github.com/jhraihan/Intelli-Chat",
+        "live_url": "",
+        "video_url": "https://youtu.be/D6H_cSP2K68",
         "technologies": [
             "React",
             "Tailwind CSS",
@@ -412,7 +654,7 @@ PROJECTS = [
         "status": "completed",
         "is_solo": True,
         "is_featured": True,
-        "order": 4,
+        "order": 6,
         "problem": (
             "Hospital workflows are a permissions problem before they are a "
             "software problem. A receptionist books appointments but must not "
@@ -461,7 +703,9 @@ PROJECTS = [
             "states with rules about which transitions are legal, and naming "
             "them explicitly kept the logic contained."
         ),
-        "github_url": "https://github.com/jhraihan/hospital-management-system-django-react",
+        "github_url": "https://github.com/jhraihan/Medi-Desk",
+        "live_url": "",
+        "video_url": "https://youtu.be/PQhEbOxRwpY",
         "technologies": [
             "React",
             "Django",
@@ -479,76 +723,6 @@ PROJECTS = [
             ("Doctor availability", "Real-time availability toggle affecting bookings."),
             ("Billing and invoicing", "Patient bills with tracked totals and payment status."),
             ("Medicine inventory", "Searchable catalogue of hospital medicines and pharmacy registry."),
-        ],
-    },
-    {
-        "title": "PromptCanvas",
-        "slug": "promptcanvas",
-        "subtitle": "Text-to-image generation with stored results",
-        "accent_label": "AI Application",
-        "summary": (
-            "A web application that turns text prompts into generated images "
-            "through the Hugging Face inference API, with authentication and "
-            "generated images stored for later retrieval."
-        ),
-        "project_type": "ai",
-        "status": "completed",
-        "is_solo": True,
-        "is_featured": True,
-        "order": 5,
-        "problem": (
-            "I built PromptCanvas to work through what it takes to put a "
-            "generative model behind a real interface: handling a request that "
-            "takes seconds rather than milliseconds, keeping the model call on "
-            "the server, and storing what comes back."
-        ),
-        "solution": (
-            "A React frontend posts a prompt to a Django API, which calls the "
-            "Hugging Face inference API and returns the generated image. "
-            "Images are stored rather than discarded, so a user's generations "
-            "persist. Access requires a signed-in account."
-        ),
-        "architecture": (
-            "React sends the prompt to the Django API. Django calls Hugging "
-            "Face, receives the generated image, stores it, and returns it to "
-            "the frontend for display. PostgreSQL backs the application; the "
-            "choice was deliberate practice with the database rather than a "
-            "requirement of the workload."
-        ),
-        "challenges": (
-            "Working with a request that takes seconds rather than "
-            "milliseconds. Image generation is slow enough that the usual "
-            "assumptions break down: the interface has to communicate that "
-            "something is happening, and the backend has to hold a request "
-            "open far longer than a typical API call.\n\n"
-            "Keeping the model call server-side was the other constraint. The "
-            "browser never talks to the inference API directly, so the "
-            "credential stays on the server and the request path stays under "
-            "my control."
-        ),
-        "lessons": (
-            "This was the project where I learned what it takes to put an "
-            "external model behind an interface rather than call it from a "
-            "script — handling latency, storing what comes back, and keeping "
-            "credentials off the client.\n\n"
-            "Storing the generated images rather than discarding them was a "
-            "small decision that changed the application: it turned a "
-            "one-shot tool into something with history."
-        ),
-        "github_url": "https://github.com/jhraihan/tech-store-platform-django-react",
-        "technologies": [
-            "React",
-            "Django",
-            "Django REST Framework",
-            "PostgreSQL",
-            "Hugging Face API",
-            "Python",
-            "JavaScript",
-        ],
-        "features": [
-            ("Text-to-image generation", "Prompts sent through the Hugging Face inference API."),
-            ("Image storage", "Generated images stored and retrievable."),
-            ("Authentication", "Sign-in required to generate images."),
         ],
     },
 ]
@@ -670,6 +844,51 @@ EDUCATION = [
 ]
 
 
+def upsert_technologies(write):
+    """Create or update every technology tag. Returns them keyed by name."""
+    tech_map = {}
+    for name, category, order in TECHNOLOGIES:
+        tech, _ = Technology.objects.update_or_create(
+            name=name, defaults={"category": category, "order": order}
+        )
+        tech_map[name] = tech
+    write(f"{len(tech_map)} technologies loaded.")
+    return tech_map
+
+
+def upsert_projects(tech_map, write):
+    """Write every project in PROJECTS, matched by slug.
+
+    Media fields are not part of PROJECTS and are left untouched, so covers
+    and galleries attached separately survive a re-run.
+    """
+    for data in PROJECTS:
+        data = dict(data)
+        tech_names = data.pop("technologies", [])
+        features = data.pop("features", [])
+        slug = data.pop("slug")
+
+        project, created = Project.objects.update_or_create(
+            slug=slug, defaults=data
+        )
+        project.technologies.set([tech_map[n] for n in tech_names if n in tech_map])
+
+        project.features.all().delete()
+        for index, (title, description) in enumerate(features):
+            ProjectFeature.objects.create(
+                project=project,
+                title=title,
+                description=description,
+                order=index,
+            )
+
+        verb = "created" if created else "updated"
+        write(
+            f"  {project.title} {verb} — {len(features)} features, "
+            f"{len(tech_names)} technologies."
+        )
+
+
 class Command(BaseCommand):
     help = "Load the portfolio's real content. Safe to re-run."
 
@@ -709,41 +928,10 @@ class Command(BaseCommand):
             self.stdout.write("Profile created.")
 
     def _seed_technologies(self):
-        tech_map = {}
-        for name, category, order in TECHNOLOGIES:
-            tech, _ = Technology.objects.update_or_create(
-                name=name, defaults={"category": category, "order": order}
-            )
-            tech_map[name] = tech
-        self.stdout.write(f"{len(tech_map)} technologies loaded.")
-        return tech_map
+        return upsert_technologies(self.stdout.write)
 
     def _seed_projects(self, tech_map):
-        for data in PROJECTS:
-            data = dict(data)
-            tech_names = data.pop("technologies", [])
-            features = data.pop("features", [])
-            slug = data.pop("slug")
-
-            project, created = Project.objects.update_or_create(
-                slug=slug, defaults=data
-            )
-            project.technologies.set([tech_map[n] for n in tech_names if n in tech_map])
-
-            project.features.all().delete()
-            for index, (title, description) in enumerate(features):
-                ProjectFeature.objects.create(
-                    project=project,
-                    title=title,
-                    description=description,
-                    order=index,
-                )
-
-            verb = "created" if created else "updated"
-            self.stdout.write(
-                f"  {project.title} {verb} — {len(features)} features, "
-                f"{len(tech_names)} technologies."
-            )
+        upsert_projects(tech_map, self.stdout.write)
 
     def _seed_skills(self):
         for category_data in SKILL_CATEGORIES:

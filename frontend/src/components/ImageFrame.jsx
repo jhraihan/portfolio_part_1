@@ -19,6 +19,10 @@ export function ImageFrame({
   // 'cover' fills the frame and crops; 'contain' fits the whole image inside
   // it, which suits wide desktop screenshots that must not lose their edges.
   fit = 'cover',
+  // Which edge survives a 'cover' crop. Screenshots put their logo and
+  // headline on the left, so cards anchor there rather than slicing the
+  // headline through the middle.
+  position = 'center',
 }) {
   const [failed, setFailed] = useState(false)
   const showPlaceholder = !src || failed
@@ -59,7 +63,7 @@ export function ImageFrame({
           onError={() => setFailed(true)}
           className={`h-full w-full ${
             fit === 'contain' ? 'object-contain' : 'object-cover'
-          }`}
+          } ${position === 'left' ? 'object-left' : 'object-center'}`}
         />
       )}
     </div>

@@ -9,7 +9,8 @@ This command bridges that gap: it points the database rows at files that are
 already on disk, without re-encoding anything. Run it after seeding a fresh
 database so covers, galleries and the résumé are populated.
 
-Idempotent: records that already reference a file are left alone.
+Idempotent: records that already reference an existing file are left alone. A
+reference to a file that is no longer on disk counts as unset and is repaired.
 """
 
 from pathlib import Path
@@ -29,15 +30,27 @@ PROFILE_DIR = "profile"
 # Which optimised filename belongs to which project. The stems come from the
 # original screenshot timestamps and are stable once imported.
 COVERS = {
+    "sellflowbd": "screenshot-2026-09-27-184117.jpg",
+    "servorabd": "screenshot-2026-09-30-151939.jpg",
     "micromart": "screenshot-2026-09-07-221100.jpg",
     "eduflow": "screenshot-2026-09-11-230511.jpg",
     "intellichat": "screenshot-2026-09-09-220646.jpg",
     "medidesk": "screenshot-2026-09-14-175313.jpg",
-    "promptcanvas": "screenshot-2026-09-11-113849.jpg",
 }
 
-# Gallery images in display order, with their captions.
+# Gallery images in display order, with their captions. Must match the
+# captions import_media writes, so a fresh deploy reads the same as local.
 GALLERIES = {
+    "sellflowbd": [
+        ("screenshot-2026-09-27-184143.jpg", "Store dashboard with orders awaiting confirmation"),
+        ("screenshot-2026-09-27-184153.jpg", "Order book with status filters"),
+        ("screenshot-2026-09-27-184222.jpg", "Cash on delivery ledger and courier statements"),
+    ],
+    "servorabd": [
+        ("screenshot-2026-09-30-151950.jpg", "Providers ranked by trust score"),
+        ("screenshot-2026-09-30-152005.jpg", "Service catalogue by trade"),
+        ("screenshot-2026-09-30-152020.jpg", "Sign-up as a customer or a provider"),
+    ],
     "micromart": [
         ("screenshot-2026-09-07-221111.jpg", "Product catalogue and category browsing"),
         ("screenshot-2026-09-07-221122.jpg", "Product detail and purchase flow"),
@@ -60,16 +73,17 @@ GALLERIES = {
         ("screenshot-2026-09-14-175338.jpg", "Patient records"),
         ("screenshot-2026-09-14-175353.jpg", "Prescriptions and billing"),
     ],
-    "promptcanvas": [
-        ("screenshot-2026-09-11-113902.jpg", "Prompt input and generation"),
-        ("screenshot-2026-09-11-113912.jpg", "Generated image detail"),
-        ("screenshot-2026-09-11-113942.jpg", "Generation history"),
-    ],
 }
 
 
 def _present(field):
-    """True when the field references a file that actually exists."""
+    """True when the field references a file that actually exists.
+
+    A reference can outlive its file: replacing a photo deletes the old one
+    from the repository, but the database row in production still names it.
+    Treating that as unset lets the next deploy repair it instead of serving
+    a broken image.
+    """
     return bool(field) and field.storage.exists(field.name)
 
 
@@ -112,7 +126,7 @@ class Command(BaseCommand):
 
         # Cover
         cover_name = f"{COVERS_DIR}/{COVERS[slug]}"
-        if project.cover_image and not self.force:
+        if _present(project.cover_image) and not self.force:
             self.stdout.write("  cover already set")
         elif (root / cover_name).exists():
             # Assigning the name references the existing file directly, with
@@ -124,14 +138,15 @@ class Command(BaseCommand):
         else:
             self.stderr.write(f"  ! missing {cover_name}")
 
-        # Gallery
-        existing = project.images.count()
-        if existing and not self.force:
-            self.stdout.write(f"  gallery already has {existing} images")
+        # Gallery — reattached whole if empty or if any image has lost its
+        # file, so a gallery is never left half-broken.
+        images = list(project.images.all())
+        intact = images and all(_present(i.image) for i in images)
+        if intact and not self.force:
+            self.stdout.write(f"  gallery already has {len(images)} images")
             return count
 
-        if self.force:
-            project.images.all().delete()
+        project.images.all().delete()
 
         for order, (filename, caption) in enumerate(GALLERIES.get(slug, [])):
             name = f"{SHOTS_DIR}/{filename}"

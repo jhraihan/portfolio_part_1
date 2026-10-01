@@ -11,6 +11,24 @@ import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion'
 // Per-project flow definitions. Kept here rather than in the database
 // because the shape of each diagram is a design decision, not content.
 const FLOWS = {
+  sellflowbd: {
+    caption: 'Tenant-scoped order path',
+    nodes: [
+      { id: 'client', label: 'React + Vite', sub: 'seller dashboard', tone: 'client' },
+      { id: 'api', label: 'Django + DRF', sub: 'tenant-scoped', tone: 'api' },
+      { id: 'db', label: 'PostgreSQL', sub: 'orders, stock ledger', tone: 'green' },
+    ],
+    branch: { from: 'api', label: 'Courier APIs', sub: 'Pathao · Steadfast', tone: 'amber' },
+  },
+  servorabd: {
+    caption: 'Trust-ranked search path',
+    nodes: [
+      { id: 'client', label: 'React + Vite', sub: 'mobile-first', tone: 'client' },
+      { id: 'api', label: 'Django + DRF', sub: 'bookings, reviews', tone: 'api' },
+      { id: 'db', label: 'PostgreSQL', sub: 'trust snapshots', tone: 'green' },
+    ],
+    branch: { from: 'api', label: 'Trust engine', sub: 'scheduled recompute', tone: 'violet' },
+  },
   micromart: {
     caption: 'Checkout request path',
     nodes: [
@@ -47,15 +65,6 @@ const FLOWS = {
       { id: 'db', label: 'Database', sub: 'records, billing', tone: 'green' },
     ],
     branch: null,
-  },
-  promptcanvas: {
-    caption: 'Image generation path',
-    nodes: [
-      { id: 'client', label: 'React', sub: 'prompt input', tone: 'client' },
-      { id: 'api', label: 'Django', sub: 'server-side call', tone: 'api' },
-      { id: 'db', label: 'PostgreSQL', sub: 'stored images', tone: 'green' },
-    ],
-    branch: { from: 'api', label: 'Hugging Face', sub: 'inference API', tone: 'violet' },
   },
 }
 

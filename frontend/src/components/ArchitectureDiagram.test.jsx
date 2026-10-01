@@ -34,4 +34,24 @@ describe('ArchitectureDiagram', () => {
     expect(hasDiagram('micromart')).toBe(true)
     expect(hasDiagram('unknown-project')).toBe(false)
   })
+
+  it('has a flow for every published project and none for removed ones', () => {
+    const published = [
+      'sellflowbd',
+      'servorabd',
+      'micromart',
+      'eduflow',
+      'intellichat',
+      'medidesk',
+    ]
+    published.forEach((slug) => expect(hasDiagram(slug)).toBe(true))
+    expect(hasDiagram('promptcanvas')).toBe(false)
+  })
+
+  it('renders the courier branch for SellFlow BD', () => {
+    render(<ArchitectureDiagram slug="sellflowbd" />)
+
+    expect(screen.getByText('Tenant-scoped order path')).toBeInTheDocument()
+    expect(screen.getByText('Courier APIs')).toBeInTheDocument()
+  })
 })

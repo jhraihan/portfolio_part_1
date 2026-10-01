@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
 # Render build step for the Django backend.
 #
-# Runs on every deploy. Migrations and collectstatic are idempotent, so
-# re-running is safe. Content is seeded only when the database is empty,
-# which keeps admin edits from being overwritten on the next deploy.
+# Runs on every deploy, and every step is idempotent. seed_portfolio.py is the
+# source of truth for project and profile text: sync_projects and
+# sync_profile_copy write it on each deploy, so lasting content changes belong
+# in that file rather than the admin.
 
 set -o errexit  # abort the build on the first failing command
 
@@ -25,47 +26,20 @@ else:
     call_command("seed_portfolio")
 PY
 
-# Attach screenshots and the résumé.
-#
-# The image files ship with the repository, but the database rows that point
-# at them do not — a fresh database has projects with no cover image. Run the
-# import whenever any project is still missing one.
-python manage.py shell <<'PY'
-from apps.profiles.models import Profile
-from apps.projects.models import Project
+# Write projects from the seed: new ones are created, existing ones updated,
+# and any named in REMOVED_PROJECTS deleted. Must run before attach_media, so
+# a newly added project exists to receive its images.
+python manage.py sync_projects
 
-def absent(field):
-    # A stale reference to a replaced file is as broken as an empty one.
-    return not field or not field.storage.exists(field.name)
-
-profile = Profile.objects.first()
-missing = (
-    Project.objects.filter(cover_image="").exists()
-    or (profile is not None and absent(profile.photo))
-    or (profile is not None and absent(profile.resume))
-)
-
-if missing:
-    from django.core.management import call_command
-    print("Media missing — attaching committed files.")
-    call_command("attach_media")
-else:
-    print("All media already attached — skipping.")
-PY
-
-# Keep profile copy in step with the seed definition.
-#
-# seed_portfolio only runs against an empty database, so wording edited in
-# the seed file would otherwise never reach an existing deployment. Only
-# narrative fields are touched — media and links are left alone.
+# Keep profile copy in step with the seed. Only narrative fields are touched —
+# media and links are left alone.
 python manage.py sync_profile_copy
 
-# Set the YouTube walkthrough URLs.
-#
-# These live outside seed_portfolio because seed only runs against an empty
-# database. The command skips any project that already has a URL, so a link
-# changed through the admin survives the next deploy.
-python manage.py set_video_urls
+# Point records at the media files committed under backend/media/. The files
+# ship with the repository but the rows that reference them do not, and a
+# replaced file leaves a stale reference behind; attach_media fills the first
+# and repairs the second, and leaves anything already intact alone.
+python manage.py attach_media
 
 # Create the admin account on first deploy.
 #

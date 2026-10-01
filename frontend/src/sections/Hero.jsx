@@ -7,7 +7,7 @@ import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion'
 import { useTypewriter } from '@/hooks/useTypewriter'
 
 // What the typewriter cycles through. Every line names something actually
-// built across the five projects, and the list spans both ends of the stack.
+// built across the six projects, and the list spans both ends of the stack.
 const ROTATING = [
   'REST APIs with Django & DRF',
   'React interfaces that stay fast',

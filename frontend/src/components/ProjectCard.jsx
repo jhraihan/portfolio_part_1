@@ -36,6 +36,7 @@ export function ProjectCard({ project, index = 0 }) {
           alt={`${title} preview`}
           label={accentLabel || 'Preview'}
           aspect="aspect-[16/9]"
+          position="left"
           className={`rounded-none border-0 border-b border-line transition-transform duration-700 ease-out ${
             reduced ? '' : 'group-hover/spot:scale-[1.04]'
           }`}

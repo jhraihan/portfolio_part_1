@@ -4,7 +4,7 @@ import { Reveal } from '@/components/Reveal'
 import { SectionHeading } from '@/components/SectionHeading'
 import { Spotlight } from '@/components/Spotlight'
 
-// Each item describes something visible in the five projects. Nothing here is
+// Each item describes something visible in the six projects. Nothing here is
 // aspirational — every claim is backed by shipped code.
 const PILLARS = [
   {

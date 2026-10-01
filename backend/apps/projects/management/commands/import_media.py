@@ -29,26 +29,45 @@ CV_DIR = REPO_ROOT / "cv"
 
 # project slug -> source folder under images/
 FOLDERS = {
+    "sellflowbd": "Sell-flow",
+    "servorabd": "servora",
     "micromart": "micro-mart",
     "eduflow": "edu-flow",
     "intellichat": "intelli-chat",
     "medidesk": "medi-desk",
-    "promptcanvas": "prompt-canvas",
 }
 
 # The screenshot that shows the product's name most clearly. Matched as a
 # substring of the filename so the long timestamps stay readable here.
 COVERS = {
+    "sellflowbd": "184117",
+    "servorabd": "151939",
     "micromart": "221100",
     "eduflow": "230511",
     "intellichat": "220646",
     "medidesk": "175313",
-    "promptcanvas": "113849",
+}
+
+# Screenshots that must never be published, matched the same way. The
+# SellFlow settings screen shows a real phone number in the store contact
+# field, so it stays out of the public repository.
+EXCLUDE = {
+    "sellflowbd": ["184213"],
 }
 
 # Captions in gallery order, after the cover is removed. Falls back to a
 # generic label when a project has more images than captions.
 CAPTIONS = {
+    "sellflowbd": [
+        "Store dashboard with orders awaiting confirmation",
+        "Order book with status filters",
+        "Cash on delivery ledger and courier statements",
+    ],
+    "servorabd": [
+        "Providers ranked by trust score",
+        "Service catalogue by trade",
+        "Sign-up as a customer or a provider",
+    ],
     "micromart": [
         "Product catalogue and category browsing",
         "Product detail and purchase flow",
@@ -70,11 +89,6 @@ CAPTIONS = {
         "Appointments and scheduling",
         "Patient records",
         "Prescriptions and billing",
-    ],
-    "promptcanvas": [
-        "Prompt input and generation",
-        "Generated image detail",
-        "Generation history",
     ],
 }
 
@@ -98,6 +112,12 @@ class Command(BaseCommand):
             action="store_true",
             help="Report what would be imported without writing anything.",
         )
+        parser.add_argument(
+            "--project",
+            nargs="+",
+            metavar="SLUG",
+            help="Import only these projects, leaving the rest untouched.",
+        )
 
     @transaction.atomic
     def handle(self, *args, **options):
@@ -109,8 +129,17 @@ class Command(BaseCommand):
             self.stderr.write(f"Images directory not found: {IMAGES_DIR}")
             return
 
+        selected = options["project"]
+        if selected:
+            unknown = set(selected) - set(FOLDERS)
+            if unknown:
+                self.stderr.write(f"Unknown project: {', '.join(sorted(unknown))}")
+                return
+
         total_images = 0
         for slug, folder in FOLDERS.items():
+            if selected and slug not in selected:
+                continue
             total_images += self._import_project(slug, folder)
 
         if not options["skip_resume"]:
@@ -134,9 +163,11 @@ class Command(BaseCommand):
             self.stderr.write(f"  ! missing folder {source_dir}")
             return 0
 
+        excluded = EXCLUDE.get(slug, [])
         files = sorted(
             p for p in source_dir.iterdir()
             if p.suffix.lower() in {".png", ".jpg", ".jpeg", ".webp"}
+            and not any(key in p.name for key in excluded)
         )
         if not files:
             self.stderr.write(f"  ! no images in {source_dir}")

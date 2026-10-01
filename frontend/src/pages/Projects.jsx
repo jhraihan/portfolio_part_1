@@ -9,8 +9,8 @@ import { useApi } from '@/hooks/useApi'
 import { useDocumentTitle } from '@/hooks/useDocumentTitle'
 import { api } from '@/services/api'
 
-// Only technologies worth filtering by. Listing all 34 turns the filter into
-// a wall of buttons that nobody reads.
+// Only technologies worth filtering by. Listing every tagged technology turns
+// the filter into a wall of buttons that nobody reads.
 const FILTER_PRIORITY = [
   'django',
   'django-rest-framework',
@@ -72,7 +72,7 @@ export function Projects() {
           </p>
           <h1 className="mt-4 text-display font-bold text-ink">Projects</h1>
           <p className="prose-body mt-5 max-w-prose text-pretty">
-            Five applications, each built end to end. Every one handles
+            Six applications, each built end to end. Every one handles
             authentication, role-based access, and a relational schema behind a
             REST API — and each case study covers the architecture and the
             hardest problem it presented.

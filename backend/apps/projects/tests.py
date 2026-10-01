@@ -1,3 +1,5 @@
+from io import StringIO
+
 from django.test import TestCase
 from django.urls import reverse
 from rest_framework import status
@@ -125,3 +127,92 @@ class ProjectAPITests(TestCase):
 
         self.assertIn("Django", names)
         self.assertNotIn("Unused", names)
+
+
+class SyncProjectsTests(TestCase):
+    """sync_projects is how seed changes reach a database that already has content."""
+
+    def test_creates_every_seed_project(self):
+        from django.core.management import call_command
+
+        from apps.profiles.management.commands.seed_portfolio import PROJECTS
+
+        call_command("sync_projects", stdout=StringIO())
+
+        expected = {p["slug"] for p in PROJECTS}
+        self.assertEqual(set(Project.objects.values_list("slug", flat=True)), expected)
+
+    def test_removes_projects_named_in_removed_list(self):
+        from django.core.management import call_command
+
+        from apps.profiles.management.commands.seed_portfolio import REMOVED_PROJECTS
+
+        for slug in REMOVED_PROJECTS:
+            Project.objects.create(title=slug, slug=slug, subtitle="s", summary="s")
+
+        call_command("sync_projects", stdout=StringIO())
+
+        self.assertFalse(Project.objects.filter(slug__in=REMOVED_PROJECTS).exists())
+
+    def test_leaves_media_fields_alone(self):
+        # Covers are owned by attach_media; a text sync must never clear one.
+        from django.core.management import call_command
+
+        call_command("sync_projects", stdout=StringIO())
+        project = Project.objects.get(slug="micromart")
+        project.cover_image.name = "projects/covers/kept.jpg"
+        project.save()
+
+        call_command("sync_projects", stdout=StringIO())
+
+        project.refresh_from_db()
+        self.assertEqual(project.cover_image.name, "projects/covers/kept.jpg")
+
+    def test_live_demo_links(self):
+        # Exactly the three deployed projects carry a live link; the rest
+        # must not, or the case study shows a button to nowhere.
+        from django.core.management import call_command
+
+        call_command("sync_projects", stdout=StringIO())
+
+        live = set(
+            Project.objects.exclude(live_url="").values_list("slug", flat=True)
+        )
+        self.assertEqual(live, {"sellflowbd", "servorabd", "micromart"})
+
+
+class AttachMediaTests(TestCase):
+    """attach_media must repair references whose files have been deleted."""
+
+    def setUp(self):
+        import shutil
+        import tempfile
+
+        self.media_root = tempfile.mkdtemp()
+        self.addCleanup(shutil.rmtree, self.media_root, ignore_errors=True)
+
+    def test_stale_photo_reference_is_repaired(self):
+        from pathlib import Path
+
+        from django.core.management import call_command
+        from django.test import override_settings
+
+        from apps.profiles.models import Profile
+
+        root = Path(self.media_root)
+        (root / "profile").mkdir()
+        (root / "profile" / "new.jpg").write_bytes(b"jpeg")
+
+        # The row names a photo that no longer exists on disk — the state
+        # production is left in after the photo is replaced.
+        profile = Profile.objects.create(
+            full_name="T", display_name="T", title="T", email="t@example.com"
+        )
+        profile.photo.name = "profile/old.jpg"
+        profile.save()
+
+        with override_settings(MEDIA_ROOT=self.media_root):
+            call_command("attach_media", stdout=StringIO(), stderr=StringIO())
+
+        profile.refresh_from_db()
+        self.assertEqual(profile.photo.name, "profile/new.jpg")
