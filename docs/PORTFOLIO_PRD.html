@@ -199,9 +199,9 @@
   <p class="sub">Md. Jahid Hasan Raihan — Software Engineer</p>
 
   <dl class="meta">
-    <div><dt>Document version</dt><dd>1.2</dd></div>
-    <div><dt>Date</dt><dd>12 September 2026</dd></div>
-    <div><dt>Status</dt><dd>Built &amp; verified · Not yet deployed</dd></div>
+    <div><dt>Document version</dt><dd>1.3</dd></div>
+    <div><dt>Date</dt><dd>1 October 2026</dd></div>
+    <div><dt>Status</dt><dd>Live · Render + Neon</dd></div>
     <div><dt>Owner</dt><dd>Md. Jahid Hasan Raihan</dd></div>
     <div><dt>Stack</dt><dd>Django 5 · DRF · React 18 · Vite · PostgreSQL</dd></div>
     <div><dt>Repository</dt><dd>github.com/jhraihan</dd></div>
@@ -223,7 +223,7 @@
   <li><strong>Subject Profile</strong> — identity, education, journey, skills, career direction</li>
   <li><strong>Content Authenticity Rules</strong> — the binding constraints on all content</li>
   <li><strong>Information Architecture</strong> — sitemap, page specifications</li>
-  <li><strong>Project Portfolio</strong> — all five case studies in detail</li>
+  <li><strong>Project Portfolio</strong> — all six case studies in detail</li>
   <li><strong>Design System</strong> — palette, typography, spacing, motion</li>
   <li><strong>Technical Architecture</strong> — stack, data model, API, frontend structure</li>
   <li><strong>Feature Specifications</strong> — behaviour of each implemented feature</li>
@@ -242,10 +242,10 @@
 
 <h3>1.1 Problem statement</h3>
 <p>
-  A final-year Computer Science student with five substantial, self-built
+  A final-year Computer Science student with six substantial, self-built
   applications and no professional employment history needs a way to be
   evaluated on engineering ability rather than on résumé length. A conventional
-  CV compresses five complete systems into five bullet points and discards
+  CV compresses six complete systems into six bullet points and discards
   everything that makes them evidence: the architecture, the trade-offs, and the
   problems that were genuinely hard to solve.
 </p>
@@ -289,7 +289,7 @@
 <ul>
   <li><strong>Not a blog.</strong> Rejected — the owner is not committed to writing regularly, and a stale blog is worse than none.</li>
   <li><strong>Not an AI showcase.</strong> No AI/ML skills section, no chatbot assistant. The owner is at the learning stage and declined to claim otherwise.</li>
-  <li><strong>Not a design showpiece.</strong> Motion supports hierarchy and never precedes content. No particle fields, cursor trails, or entry animations.</li>
+  <li><strong>Not a design showpiece.</strong> Motion supports hierarchy and never gates content: all of it is disabled under reduced motion, and nothing waits on an animation to appear. No particle fields or cursor trails.</li>
   <li><strong>Not a CV replacement.</strong> A résumé PDF is offered as a download; the site does not attempt to replicate it.</li>
 </ul>
 
@@ -299,7 +299,7 @@
   <p><strong>A software engineer who builds complete, production-shaped web
   applications — not features in isolation.</strong></p>
   <p style="margin-top:7px">
-    Supported by five systems that each carry authentication, role-based access
+    Supported by six systems that each carry authentication, role-based access
     control, a relational schema, and a decoupled React client talking to a REST
     API. The repetition is the argument: this is a consistent competency, not a
     single lucky project.
@@ -504,8 +504,8 @@ together, and has the curiosity and persistence to keep getting better."</p>
 
 <h3>3.3 Permitted AI framing</h3>
 <p>
-  Two projects (IntelliChat, PromptCanvas) integrate external model APIs. They
-  are described <strong>factually, as projects</strong> — what they do and how
+  One project (IntelliChat) integrates an external model API. It is
+  described <strong>factually, as a project</strong> — what they do and how
   they work. This is a description of shipped software, not a claim of AI
   expertise, and the distinction must be preserved.
 </p>
@@ -517,7 +517,7 @@ together, and has the curiosity and persistence to keep getting better."</p>
   <tr><td><strong>Arrogance</strong></td><td>"Expert", "master", superlatives</td><td>Factual copy only; no superlatives anywhere</td></tr>
   <tr><td><strong>"Just a student"</strong></td><td>Apologetic language, "aspiring", timid type</td><td>Presented as a software engineer; degree is a credential, not a qualifier. <em>Highest-priority guard.</em></td></tr>
   <tr><td><strong>Generic template</strong></td><td>Purple gradients, skill bars, "Hi, I'm 👋"</td><td>Custom design system; architecture diagrams; named skill levels</td></tr>
-  <tr><td><strong>Over-designed</strong></td><td>Particles, cursor trails, entry animations</td><td>Motion limited to fades, reveals and hover states</td></tr>
+  <tr><td><strong>Over-designed</strong></td><td>Particles, cursor trails, entry animations</td><td>No particles or cursor trails. The owner asked for richer motion in the 17 Sep redesign, so the hero now animates in; all of it is disabled under reduced motion and none gates content (§6.4)</td></tr>
   <tr><td><strong>Unfinished</strong></td><td>Broken links, "coming soon", placeholder text</td><td>Empty fields hide their section entirely; no dead buttons</td></tr>
 </table>
 
@@ -526,11 +526,11 @@ together, and has the curiosity and persistence to keep getting better."</p>
 
 <h3>4.1 Sitemap</h3>
 <p>Six routes are defined in <code>frontend/src/App.jsx</code> — five real pages
-plus the catch-all 404. With five project slugs, that resolves to
-<strong>10 reachable pages</strong> and <strong>9 indexable URLs</strong>.</p>
+plus the catch-all 404. With six project slugs, that resolves to
+<strong>11 reachable pages</strong> and <strong>10 indexable URLs</strong>.</p>
 <pre>/                       Home
 /projects               Project index, filterable by technology
-/projects/&lt;slug&gt;        Case study            × 5
+/projects/&lt;slug&gt;        Case study            × 6
 /about                  About, education, full skills
 /contact                Contact form and direct links
 *                       404</pre>
@@ -538,8 +538,8 @@ plus the catch-all 404. With five project slugs, that resolves to
 <h3>4.2 Home page composition</h3>
 <table>
   <tr><th style="width:6%">#</th><th style="width:24%">Section</th><th>Purpose and content</th></tr>
-  <tr><td class="mono-cell">1</td><td><strong>Hero</strong></td><td>Availability pill, name at display scale, title, rotating typewriter line, intro paragraph, primary actions, photo with three factual stat cards</td></tr>
-  <tr><td class="mono-cell">2</td><td><strong>Featured projects</strong></td><td>All five project cards in a responsive grid</td></tr>
+  <tr><td class="mono-cell">1</td><td><strong>Hero</strong></td><td>Availability pill, name at display scale, title, rotating typewriter line, intro paragraph, primary actions, location and profile links, framed portrait</td></tr>
+  <tr><td class="mono-cell">2</td><td><strong>Featured projects</strong></td><td>All six project cards in a responsive grid</td></tr>
   <tr><td class="mono-cell">3</td><td><strong>Systems, not screens</strong></td><td>Four engineering principles, each traceable to shipped code</td></tr>
   <tr><td class="mono-cell">4</td><td><strong>What I work with</strong></td><td>Six skill categories with level legend, plus university coursework</td></tr>
   <tr><td class="mono-cell">5</td><td><strong>About preview</strong></td><td>Condensed bio and education card</td></tr>
@@ -549,22 +549,13 @@ plus the catch-all 404. With five project slugs, that resolves to
 <h4>Hero typewriter content</h4>
 <p>Cycles five phrases, each factually true of the projects below:</p>
 <pre>REST APIs with Django &amp; DRF
+React interfaces that stay fast
 role-based access control
 relational database schemas
-JWT authentication flows
-decoupled React frontends</pre>
-
-<h4>Hero statistics</h4>
-<p>Three counters, all verifiable and none invented:</p>
-<table>
-  <tr><th style="width:16%">Value</th><th style="width:34%">Label</th><th>Basis</th></tr>
-  <tr><td class="mono-cell">5</td><td>full applications</td><td>Count of completed projects</td></tr>
-  <tr><td class="mono-cell">4</td><td>databases used</td><td>MySQL, PostgreSQL, SQLite, Redis</td></tr>
-  <tr><td class="mono-cell">150+</td><td>LeetCode problems</td><td>Owner-reported</td></tr>
-</table>
+JWT authentication flows</pre>
 
 <h3>4.3 Case study structure</h3>
-<p>Each of the five case studies renders up to six numbered sections. Numbering
+<p>Each of the six case studies renders up to six numbered sections. Numbering
 counts only sections that actually render, so a missing section never leaves a
 gap in the sequence.</p>
 <table>
@@ -582,16 +573,18 @@ screenshot gallery (if images exist). A persistent sidebar shows the stack.</p>
 <!-- ============================ 05 ============================ -->
 <h2 class="page-break"><span class="num">05</span>Project Portfolio</h2>
 
-<p>Five projects, all solo, all complete, all with public repositories. Display
-order is fixed and set by the owner.</p>
+<p>Six projects, all solo, all with public repositories and recorded
+walkthroughs. Three are deployed with live demos. Display order is fixed and set
+by the owner.</p>
 
 <table>
   <tr><th style="width:6%">#</th><th style="width:18%">Project</th><th style="width:26%">Type</th><th style="width:10%">Features</th><th>Core stack</th></tr>
-  <tr><td class="mono-cell">1</td><td><strong>MicroMart</strong></td><td>E-commerce platform</td><td class="mono-cell">15</td><td>React · Django · DRF · MySQL · JWT · SSLCommerz</td></tr>
-  <tr><td class="mono-cell">2</td><td><strong>EduFlow</strong></td><td>Learning management system</td><td class="mono-cell">8</td><td>React · Vite · Tailwind · DRF · JWT</td></tr>
-  <tr><td class="mono-cell">3</td><td><strong>IntelliChat</strong></td><td>Streaming AI chat</td><td class="mono-cell">5</td><td>React · Django · PostgreSQL · Redis · SSE · Gemini</td></tr>
-  <tr><td class="mono-cell">4</td><td><strong>MediDesk</strong></td><td>Hospital management</td><td class="mono-cell">7</td><td>React · Django · DRF · JWT</td></tr>
-  <tr><td class="mono-cell">5</td><td><strong>PromptCanvas</strong></td><td>Text-to-image generation</td><td class="mono-cell">3</td><td>React · Django · PostgreSQL · Hugging Face</td></tr>
+  <tr><td class="mono-cell">1</td><td><strong>SellFlow BD</strong></td><td>Multi-tenant order platform</td><td class="mono-cell">15</td><td>React · Vite · Django · DRF · PostgreSQL · JWT · GitHub Actions</td></tr>
+  <tr><td class="mono-cell">2</td><td><strong>ServoraBD</strong></td><td>Trust-ranked service marketplace</td><td class="mono-cell">10</td><td>React · Vite · Django · DRF · PostgreSQL · JWT · Playwright</td></tr>
+  <tr><td class="mono-cell">3</td><td><strong>MicroMart</strong></td><td>E-commerce platform</td><td class="mono-cell">15</td><td>React · Django · DRF · MySQL · JWT · SSLCommerz</td></tr>
+  <tr><td class="mono-cell">4</td><td><strong>EduFlow</strong></td><td>Learning management system</td><td class="mono-cell">8</td><td>React · Vite · Tailwind · DRF · JWT</td></tr>
+  <tr><td class="mono-cell">5</td><td><strong>IntelliChat</strong></td><td>Streaming AI chat</td><td class="mono-cell">5</td><td>React · Django · PostgreSQL · Redis · SSE · Gemini</td></tr>
+  <tr><td class="mono-cell">6</td><td><strong>MediDesk</strong></td><td>Hospital management</td><td class="mono-cell">7</td><td>React · Django · DRF · JWT</td></tr>
 </table>
 
 <div class="callout">
@@ -606,7 +599,97 @@ order is fixed and set by the owner.</p>
 <!-- ---- Project 1 ---- -->
 <div class="project">
   <div class="project-head">
-    <h3>1. MicroMart</h3>
+    <h3>1. SellFlow BD</h3>
+    <span class="badge">SaaS Platform</span>
+  </div>
+  <p><em>Multi-tenant order and delivery platform for F-commerce sellers.</em></p>
+
+  <div class="flow">React + Vite (seller dashboard) → Django + DRF (tenant-scoped) → PostgreSQL &nbsp;·&nbsp; branch: Courier APIs</div>
+
+  <dl class="kv">
+    <dt>Problem</dt>
+    <dd>Bangladeshi Facebook and Instagram sellers take orders through Messenger chats, comments and calls, and almost everything ships cash on delivery through a third-party courier. There is no storefront and no system of record, so orders live in a notebook or a spreadsheet. Cash on delivery is what makes the domain hard: goods ship before payment, so fake orders, refused parcels, stock promised twice, bulk courier payouts and returns all erode the margin unseen.</dd>
+
+    <dt>Approach</dt>
+    <dd>A multi-tenant SaaS that runs the whole order-to-cash pipeline from one dashboard. An order starts pending and is confirmed after a logged call to the customer, which is the point stock is reserved. It is booked with a courier through its API, or by consignment ID when the courier has none; webhooks and a scheduled poll bring status back; on delivery the COD amount becomes collectable and is reconciled against the courier's statement.</dd>
+
+    <dt>Architecture detail</dt>
+    <dd>Fourteen domain apps share one shape: models, a services layer holding the business rules, and thin views. Tenant isolation is enforced in three layers, and another tenant's record returns 404 rather than 403, so the API never confirms it exists. The order state machine declares legal transitions as data; stock side effects run inside a transaction with a row lock, inventory is an append-only ledger, and <code>select_for_update()</code> serialises concurrent reservations. Five roles map to named capabilities checked on every request. Render's free tier has no background workers, so a GitHub Actions schedule calls a protected endpoint every fifteen minutes to sync shipments.</dd>
+
+    <dt>Hardest problem</dt>
+    <dd>Reconciling cash on delivery. Couriers pay out in bulk with a spreadsheet statement, which is exactly where money goes missing unnoticed. An uploaded statement becomes a draft, and every row lands in one of four buckets: matched, amount mismatch, unmatched, or already settled. Committing settles only matched rows; a mismatch is skipped unless the seller explicitly opts in, and its shortfall is then recorded on the COD ledger. The parser accepts several spellings of each column, because couriers name them differently.</dd>
+
+    <dt>Lesson</dt>
+    <dd><em>Not yet supplied. The case study omits the section until it is (O10).</em></dd>
+
+    <dt>Features (15)</dt>
+    <dd>Multi-tenant stores · order book with status timeline · phone confirmation · duplicate detection · customer risk scoring · inventory ledger · courier booking (Pathao, Steadfast) · delivery tracking · COD reconciliation · returns · profit analytics · role-based capabilities · public store and order form · invoices and parcel labels · plans and usage limits</dd>
+
+    <dt>Repository</dt>
+    <dd class="mono-cell">github.com/jhraihan/SellFlowBD</dd>
+
+    <dt>Live demo</dt>
+    <dd class="mono-cell">sellflow-web.onrender.com</dd>
+
+    <dt>Walkthrough</dt>
+    <dd class="mono-cell">youtu.be/4FBawFRC9EY</dd>
+  </dl>
+
+  <div class="callout" style="margin-top:10px">
+    <span class="label">Screenshot withheld</span>
+    <p>
+      The source folder holds a Settings screenshot that shows a real phone
+      number. It is excluded by name in <code>import_media</code>, so the
+      gallery carries three screenshots rather than four. Per §3, a private
+      number must never reach the site.
+    </p>
+  </div>
+</div>
+
+<!-- ---- Project 2 ---- -->
+<div class="project">
+  <div class="project-head">
+    <h3>2. ServoraBD</h3>
+    <span class="badge">Marketplace</span>
+  </div>
+  <p><em>Local service marketplace built around a computed trust score.</em></p>
+
+  <div class="flow">React + Vite (mobile-first) → Django + DRF (bookings, reviews) → PostgreSQL &nbsp;·&nbsp; branch: Trust engine</div>
+
+  <dl class="kv">
+    <dt>Problem</dt>
+    <dd>Hiring a tradesperson online usually comes down to a star rating, which carries little information. One 5-star review outranks two hundred jobs averaging 4.8, ratings cluster between 4.5 and 5.0, and they only measure completed jobs: a provider who abandons eight of ten bookings can still hold a perfect score.</dd>
+
+    <dt>Approach</dt>
+    <dd>Every provider carries a trust score built from six factors derived from recorded platform events rather than self-report: verification depth (20%), job volume (15%), completion reliability (20%), cancellation discipline (15%), responsiveness (10%) and review quality (20%). Search ranks by that score rather than by price. Around it sits the rest of a marketplace: OTP sign-up and JWT with separate customer and provider accounts, provider verification, a booking lifecycle, double-blind reviews, and cash settlement with commission and an earnings ledger.</dd>
+
+    <dt>Architecture detail</dt>
+    <dd>DRF on PostgreSQL with a mobile-first React + Vite client, and no Celery, Redis or Docker: recurring work, including the nightly trust recompute, runs as management commands under a scheduler, and every run is recorded. The engine keeps score snapshots and an audit trail. Measured locally with 10,018 providers, search returns in 100 ms at p95 and the full recompute takes 175 seconds. The backend has 587 tests and the frontend 47; Playwright runs both golden paths and an accessibility scan of every page at a 360-pixel viewport, and axe-core reports no WCAG 2.1 AA violations.</dd>
+
+    <dt>Hardest problem</dt>
+    <dd>Making the score hard to game, since every simple rule invites an obvious exploit. Completion rate and reviews use Bayesian smoothing, so a thin history regresses toward the platform mean instead of scoring 100 on one job. A cancellation an hour before a job costs four times one made two days ahead, and old cancellations fade with a 180-day half-life. Job volume is logarithmic and saturates at 100 jobs, and dispute penalties apply after the weighted sum so one serious incident cannot be diluted. A runnable reference implementation asserts every worked figure in the specification.</dd>
+
+    <dt>Lesson</dt>
+    <dd><em>Not yet supplied. The case study omits the section until it is (O10).</em></dd>
+
+    <dt>Features (10)</dt>
+    <dd>Six-factor trust score · trust-ranked search with service, area, date and tier filters · provider profiles and verification · booking lifecycle · double-blind reviews · cash settlement with earnings ledger · OTP and JWT authentication · service catalogue · scheduled jobs with run history · accessibility checked by axe-core</dd>
+
+    <dt>Repository</dt>
+    <dd class="mono-cell">github.com/jhraihan/ServoraBD</dd>
+
+    <dt>Live demo</dt>
+    <dd class="mono-cell">servorabd-web.onrender.com</dd>
+
+    <dt>Walkthrough</dt>
+    <dd class="mono-cell">youtu.be/P6uvjq-dDbA</dd>
+  </dl>
+</div>
+
+<!-- ---- Project 3 ---- -->
+<div class="project">
+  <div class="project-head">
+    <h3>3. MicroMart</h3>
     <span class="badge">E-commerce</span>
   </div>
   <p><em>Multi-role e-commerce platform with integrated payments.</em></p>
@@ -631,13 +714,19 @@ order is fixed and set by the owner.</p>
 
     <dt>Repository</dt>
     <dd class="mono-cell">github.com/jhraihan/MicroMart</dd>
+
+    <dt>Live demo</dt>
+    <dd class="mono-cell">micromart-17ws.onrender.com <span style="color:var(--accent)">— see O11</span></dd>
+
+    <dt>Walkthrough</dt>
+    <dd class="mono-cell">youtu.be/6ujWklMaXg0</dd>
   </dl>
 </div>
 
-<!-- ---- Project 2 ---- -->
+<!-- ---- Project 4 ---- -->
 <div class="project">
   <div class="project-head">
-    <h3>2. EduFlow</h3>
+    <h3>4. EduFlow</h3>
     <span class="badge">EdTech</span>
   </div>
   <p><em>Role-based learning management system.</em></p>
@@ -661,14 +750,17 @@ order is fixed and set by the owner.</p>
     <dd>Role-based access control · phone-based JWT authentication · course &amp; lesson management · assignments &amp; submissions · enrolment management · results · server-driven notifications · confirmation dialogs</dd>
 
     <dt>Repository</dt>
-    <dd class="mono-cell">github.com/jhraihan/Learning-Management-System-django-react</dd>
+    <dd class="mono-cell">github.com/jhraihan/Edu-Flow</dd>
+
+    <dt>Walkthrough</dt>
+    <dd class="mono-cell">youtu.be/yTR0klKN5f4</dd>
   </dl>
 </div>
 
-<!-- ---- Project 3 ---- -->
+<!-- ---- Project 5 ---- -->
 <div class="project">
   <div class="project-head">
-    <h3>3. IntelliChat</h3>
+    <h3>5. IntelliChat</h3>
     <span class="badge">AI Application</span>
   </div>
   <p><em>Streaming AI chat application with persistent conversations.</em></p>
@@ -695,14 +787,17 @@ order is fixed and set by the owner.</p>
     <dd>Token-by-token streaming over SSE · persistent conversations · Markdown rendering · syntax highlighting with copy-code · authentication surviving reload</dd>
 
     <dt>Repository</dt>
-    <dd class="mono-cell">github.com/jhraihan/llm_powered_ai_chatbot</dd>
+    <dd class="mono-cell">github.com/jhraihan/Intelli-Chat</dd>
+
+    <dt>Walkthrough</dt>
+    <dd class="mono-cell">youtu.be/D6H_cSP2K68</dd>
   </dl>
 </div>
 
-<!-- ---- Project 4 ---- -->
+<!-- ---- Project 6 ---- -->
 <div class="project">
   <div class="project-head">
-    <h3>4. MediDesk</h3>
+    <h3>6. MediDesk</h3>
     <span class="badge">Healthcare</span>
   </div>
   <p><em>Hospital management system with four-role access control.</em></p>
@@ -726,46 +821,11 @@ order is fixed and set by the owner.</p>
     <dd>Four-role JWT authentication · appointment management with filtering · structured prescriptions · doctor &amp; patient portals · real-time availability toggle · billing &amp; invoicing · searchable medicine inventory</dd>
 
     <dt>Repository</dt>
-    <dd class="mono-cell">github.com/jhraihan/hospital-management-system-django-react</dd>
+    <dd class="mono-cell">github.com/jhraihan/Medi-Desk</dd>
+
+    <dt>Walkthrough</dt>
+    <dd class="mono-cell">youtu.be/PQhEbOxRwpY</dd>
   </dl>
-</div>
-
-<!-- ---- Project 5 ---- -->
-<div class="project">
-  <div class="project-head">
-    <h3>5. PromptCanvas</h3>
-    <span class="badge">AI Application</span>
-  </div>
-  <p><em>Text-to-image generation with stored results.</em></p>
-
-  <div class="flow">React (prompt input) → Django (server-side call) → PostgreSQL &nbsp;·&nbsp; branch: Hugging Face</div>
-
-  <dl class="kv">
-    <dt>Problem</dt>
-    <dd>Built to work through what it takes to put a generative model behind a real interface: handling a request that takes seconds rather than milliseconds, keeping the model call server-side, and storing what comes back.</dd>
-
-    <dt>Hardest problem</dt>
-    <dd>Latency breaks the usual assumptions — the interface must communicate that work is happening, and the backend holds a request open far longer than a typical API call. Keeping the model call server-side was the other constraint: the browser never contacts the inference API directly, so the credential stays on the server.</dd>
-
-    <dt>Lesson</dt>
-    <dd>What it takes to put an external model behind an interface rather than call it from a script. Storing generated images rather than discarding them turned a one-shot tool into something with history.</dd>
-
-    <dt>Features (3)</dt>
-    <dd>Text-to-image generation via Hugging Face · image storage and retrieval · authentication required</dd>
-
-    <dt>Repository</dt>
-    <dd class="mono-cell">github.com/jhraihan/tech-store-platform-django-react</dd>
-  </dl>
-
-  <div class="callout" style="margin-top:10px">
-    <span class="label">Known issue</span>
-    <p>
-      The repository URL reads <code>tech-store-platform-django-react</code>,
-      which does not match an image-generation project. Likely a renamed
-      repository or a transcription error. <strong>Must be verified before
-      launch.</strong>
-    </p>
-  </div>
 </div>
 
 <!-- ============================ 06 ============================ -->
@@ -778,6 +838,10 @@ order is fixed and set by the owner.</p>
   adopted, its content architecture deliberately was not — that site leads with
   client counts and testimonials, none of which exist here.
 </p>
+<p>
+  The red accent was replaced with cyan in the 17 September redesign, when the
+  owner asked for a brighter colour and a more technical feel (D9).
+</p>
 
 <h3>6.2 Colour</h3>
 <p>
@@ -787,26 +851,28 @@ order is fixed and set by the owner.</p>
 </p>
 <table>
   <tr><th style="width:22%">Token</th><th style="width:20%">Dark (default)</th><th style="width:20%">Light</th><th>Role</th></tr>
-  <tr><td class="mono-cell">--canvas</td><td class="mono-cell">8 8 10</td><td class="mono-cell">251 251 252</td><td>Page background</td></tr>
-  <tr><td class="mono-cell">--surface</td><td class="mono-cell">15 16 19</td><td class="mono-cell">255 255 255</td><td>Cards, raised areas</td></tr>
-  <tr><td class="mono-cell">--elevated</td><td class="mono-cell">23 24 28</td><td class="mono-cell">244 245 247</td><td>Inputs, tags, nested surfaces</td></tr>
-  <tr><td class="mono-cell">--line</td><td class="mono-cell">38 39 45</td><td class="mono-cell">226 227 232</td><td>Default border</td></tr>
-  <tr><td class="mono-cell">--line-strong</td><td class="mono-cell">56 57 65</td><td class="mono-cell">203 205 213</td><td>Hover / emphasis border</td></tr>
-  <tr><td class="mono-cell">--ink</td><td class="mono-cell">250 250 251</td><td class="mono-cell">13 14 18</td><td>Primary text</td></tr>
-  <tr><td class="mono-cell">--ink-muted</td><td class="mono-cell">158 160 170</td><td class="mono-cell">82 84 94</td><td>Body text</td></tr>
-  <tr><td class="mono-cell">--ink-faint</td><td class="mono-cell">108 110 121</td><td class="mono-cell">124 127 138</td><td>Metadata, labels</td></tr>
-  <tr><td class="mono-cell">--accent</td><td class="mono-cell">226 58 50</td><td class="mono-cell">194 40 33</td><td>Single accent, used sparingly</td></tr>
+  <tr><td class="mono-cell">--canvas</td><td class="mono-cell">8 10 14</td><td class="mono-cell">250 251 253</td><td>Page background</td></tr>
+  <tr><td class="mono-cell">--surface</td><td class="mono-cell">16 20 27</td><td class="mono-cell">255 255 255</td><td>Cards, raised areas</td></tr>
+  <tr><td class="mono-cell">--elevated</td><td class="mono-cell">24 30 40</td><td class="mono-cell">241 245 249</td><td>Inputs, tags, nested surfaces</td></tr>
+  <tr><td class="mono-cell">--line</td><td class="mono-cell">38 46 60</td><td class="mono-cell">222 229 238</td><td>Default border</td></tr>
+  <tr><td class="mono-cell">--line-strong</td><td class="mono-cell">58 70 90</td><td class="mono-cell">194 205 219</td><td>Hover / emphasis border</td></tr>
+  <tr><td class="mono-cell">--ink</td><td class="mono-cell">241 245 249</td><td class="mono-cell">12 17 26</td><td>Primary text</td></tr>
+  <tr><td class="mono-cell">--ink-muted</td><td class="mono-cell">154 166 184</td><td class="mono-cell">71 85 105</td><td>Body text</td></tr>
+  <tr><td class="mono-cell">--ink-faint</td><td class="mono-cell">106 118 138</td><td class="mono-cell">117 130 150</td><td>Metadata, labels</td></tr>
+  <tr><td class="mono-cell">--accent</td><td class="mono-cell">34 211 238</td><td class="mono-cell">14 116 144</td><td>Cyan accent — cyan-400 dark, cyan-700 light</td></tr>
+  <tr><td class="mono-cell">--on-accent</td><td class="mono-cell">8 10 14</td><td class="mono-cell">255 255 255</td><td>Text on accent fills</td></tr>
 </table>
 <p>
-  The accent is deliberately deeper than the reference's brighter red: it keeps
-  the energy while reading as more controlled, and passes AA contrast on dark
-  backgrounds where the brighter tone struggles at small sizes. Light mode
-  deepens it further for contrast on white.
+  On the dark canvas cyan-400 reaches <strong>10.96:1</strong>. Buttons carry dark
+  text on the accent rather than white, which would pass only at large sizes.
+  Light mode deepens the accent to cyan-700 (5.36:1 with white text), since
+  cyan-400 is unreadable on white. Surfaces carry a slight blue cast so the
+  accent reads as part of the palette rather than sitting on neutral grey.
 </p>
 <p>
-  Four secondary hues — cyan, amber, violet, green — exist solely for
-  syntax-style category tinting in skill groups and architecture diagram nodes.
-  They are never used for interface state.
+  Four secondary hues — violet, amber, green, pink — tint skill categories,
+  architecture diagram nodes and the hero's ambient glows. They never signal
+  interface state.
 </p>
 
 <h3>6.3 Typography</h3>
@@ -841,10 +907,14 @@ order is fixed and set by the owner.</p>
 <table>
   <tr><th style="width:26%">Effect</th><th>Behaviour</th></tr>
   <tr><td><strong>Scroll reveal</strong></td><td>Fade and 16px rise as elements enter the viewport</td></tr>
-  <tr><td><strong>Typewriter</strong></td><td>Hero line cycles five phrases with a blinking caret</td></tr>
+  <tr><td><strong>Hero entrance</strong></td><td>Each hero element rises 22px into place on load, staggered</td></tr>
+  <tr><td><strong>Typewriter</strong></td><td>Hero line cycles five phrases with a blinking caret; the typed text carries a slow gradient pan</td></tr>
   <tr><td><strong>Magnetic buttons</strong></td><td>Primary actions drift toward the cursor; transform applied directly to the node, costing no re-renders</td></tr>
   <tr><td><strong>Spotlight cards</strong></td><td>Radial glow follows the cursor; position written to CSS custom properties, not React state</td></tr>
-  <tr><td><strong>Ambient glows</strong></td><td>Two slow drifting blurs behind the hero</td></tr>
+  <tr><td><strong>Ambient glows</strong></td><td>Three slow drifting blurs behind the hero, in the accent, violet and green</td></tr>
+  <tr><td><strong>Portrait float</strong></td><td>The hero photograph drifts 8px vertically on a six-second cycle</td></tr>
+  <tr><td><strong>Availability pulse</strong></td><td>An expanding ring behind the availability dot</td></tr>
+  <tr><td><strong>Diagram flow</strong></td><td>Dashed connectors animate on IntelliChat's diagram, signifying streaming</td></tr>
   <tr><td><strong>Scroll progress</strong></td><td>Hairline accent bar under the header, appearing once scrolled</td></tr>
   <tr><td><strong>Skeletons</strong></td><td>Shimmer placeholders matching real content shape, preventing layout shift</td></tr>
 </table>
@@ -890,7 +960,9 @@ order is fixed and set by the owner.</p>
 │   │   ├── education/     <span class="c"># degrees</span>
 │   │   └── contact/       <span class="c"># inbound messages</span>
 │   ├── config/            <span class="c"># settings, urls, api_urls</span>
+│   ├── media/             <span class="c"># screenshots, photo, résumé — committed (§12)</span>
 │   ├── requirements/      <span class="c"># base / dev / prod</span>
+│   ├── build.sh           <span class="c"># Render build: migrate, sync, attach media</span>
 │   └── manage.py
 ├── frontend/
 │   └── src/
@@ -901,9 +973,12 @@ order is fixed and set by the owner.</p>
 │       ├── hooks/         <span class="c"># useApi, useTheme, useTypewriter, …</span>
 │       ├── services/      <span class="c"># api client</span>
 │       └── styles/        <span class="c"># theme tokens</span>
+├── docs/                  <span class="c"># this PRD and the owner profile, HTML + PDF</span>
 ├── images/                <span class="c"># original source images (git-ignored)</span>
+├── cv/                    <span class="c"># CV source (git-ignored)</span>
 ├── README.md
-└── DEPLOYMENT.md</pre>
+├── DEPLOYMENT.md          <span class="c"># Vercel + Railway alternative</span>
+└── DEPLOY_RENDER.md       <span class="c"># Render + Neon, the live setup</span></pre>
 
 <h3>7.3 Data model</h3>
 <table>
@@ -995,26 +1070,38 @@ it, and gives an interviewer something concrete to ask about.</p>
   change. The component also falls back to the placeholder if an image fails to
   load.
 </p>
+<p>
+  Project cards crop their cover from the left edge rather than the centre,
+  because screenshots carry their logo and headline on the left; a centred crop
+  sliced one headline mid-word.
+</p>
 
 <h3>8.5 Project filtering</h3>
 <p>
   The active filter lives in the URL query string, so a filtered view is
   shareable and survives refresh and back-navigation. Only nine
-  interview-relevant technologies are offered as filters — listing all 34 turns
-  the control into a wall of buttons nobody reads.
+  interview-relevant technologies are offered as filters — listing every
+  technology tagged on a project (19 today) turns the control into a wall of
+  buttons nobody reads.
 </p>
 
 <!-- ============================ 09 ============================ -->
 <h2 class="page-break"><span class="num">09</span>Content Management</h2>
 
 <p>
-  Everything visible on the site is editable through the Django admin at
-  <code>/admin/</code>. No content requires a code change.
+  Profile, skills, coursework and education are editable through the Django
+  admin at <code>/admin/</code>. <strong>Projects are the exception:</strong>
+  their text lives in <code>seed_portfolio.py</code>, and every deploy writes it
+  to the database through <code>sync_projects</code>. An admin edit to a project
+  is therefore overwritten on the next deploy — edit the seed and push instead.
+  The same holds for the profile's narrative copy (title, hero intro, about
+  text, availability, meta description), which <code>sync_profile_copy</code>
+  rewrites from the seed.
 </p>
 <table>
   <tr><th style="width:40%">To edit</th><th>Go to</th></tr>
   <tr><td>Name, title, hero copy, about text, links, photo, résumé</td><td>Profiles → Profile</td></tr>
-  <tr><td>Projects, case studies, features, screenshots</td><td>Projects → Projects</td></tr>
+  <tr><td>Projects, case studies, features, links</td><td><code>PROJECTS</code> in <code>seed_portfolio.py</code>, then push</td></tr>
   <tr><td>Technology tags</td><td>Projects → Technologies</td></tr>
   <tr><td>Skills and levels</td><td>Skills → Skill categories</td></tr>
   <tr><td>Coursework</td><td>Skills → Coursework subjects</td></tr>
@@ -1022,17 +1109,20 @@ it, and gives an interviewer something concrete to ask about.</p>
   <tr><td>Inbound messages</td><td>Contact → Contact messages</td></tr>
 </table>
 
-<h3>9.1 Adding the outstanding assets</h3>
+<h3>9.1 Changing media and links</h3>
+<p>
+  Render's filesystem is wiped on every redeploy, so a file uploaded through the
+  production admin disappears. Media therefore travels in the repository:
+</p>
 <table>
   <tr><th style="width:26%">Asset</th><th>Procedure</th></tr>
-  <tr><td><strong>Screenshots</strong></td><td>Open a project → <em>Project images</em> → upload, set order and alt text. The placeholder is replaced automatically.</td></tr>
-  <tr><td><strong>Video walkthrough</strong></td><td>Paste a YouTube URL into the project's <code>video_url</code>. An embedded player appears in the case study.</td></tr>
-  <tr><td><strong>Live demo</strong></td><td>Paste the URL into <code>live_url</code>. The button appears; while empty, no dead button is shown.</td></tr>
-  <tr><td><strong>Résumé</strong></td><td>Upload a PDF to Profile → <code>resume</code>. Download buttons appear in the hero and about page.</td></tr>
-  <tr><td><strong>Repository URL</strong></td><td>Edit <code>github_url</code> on the project.</td></tr>
+  <tr><td><strong>Screenshots</strong></td><td>Place the originals in <code>images/&lt;folder&gt;/</code> and run <code>import_media --project &lt;slug&gt;</code> locally; it optimises each image into <code>backend/media/</code>. Add the resulting filenames to <code>attach_media</code>, commit, and push. Every deploy runs <code>attach_media</code>, which also repairs any reference to a file that no longer exists.</td></tr>
+  <tr><td><strong>Photo or résumé</strong></td><td><code>update_profile_media --dry-run</code>, then without the flag. It optimises the new file, removes the old one, and updates the record. Commit and push.</td></tr>
+  <tr><td><strong>Video, live demo, repository</strong></td><td>Set <code>video_url</code>, <code>live_url</code> or <code>github_url</code> on the project in <code>PROJECTS</code>. An empty value hides its button or player, so no dead control is shown.</td></tr>
+  <tr><td><strong>Removing a project</strong></td><td>Delete it from <code>PROJECTS</code> <em>and</em> add its slug to <code>REMOVED_PROJECTS</code>, or it lingers in production.</td></tr>
 </table>
 <p>After adding or renaming a project, regenerate the sitemap:</p>
-<pre>python manage.py generate_sitemap --base-url https://yourdomain.com</pre>
+<pre>python manage.py generate_sitemap --base-url https://portfolio-web-asu3.onrender.com</pre>
 
 <!-- ============================ 10 ============================ -->
 <h2><span class="num">10</span>Quality Requirements</h2>
@@ -1058,9 +1148,10 @@ it, and gives an interviewer something concrete to ask about.</p>
 <h3>10.2 Performance</h3>
 <table>
   <tr><th style="width:34%">Measure</th><th>Result</th></tr>
-  <tr><td>Total bundle, gzipped</td><td class="mono-cell">≈124 KB</td></tr>
+  <tr><td>Total bundle, gzipped</td><td class="mono-cell">≈127 KB</td></tr>
   <tr><td>Vendor split</td><td>React, Framer Motion and app code in separate chunks</td></tr>
-  <tr><td>Profile photo</td><td>3.1 MB source → <strong>96 KB</strong> optimised (800×800, progressive JPEG)</td></tr>
+  <tr><td>Profile photo</td><td>600 KB source → <strong>82 KB</strong> optimised (800×800, progressive JPEG)</td></tr>
+  <tr><td>Screenshots</td><td>Downscaled and re-encoded on import; a 358 KB source became 57 KB</td></tr>
   <tr><td>Images</td><td>Lazy by default; hero and first cards eager</td></tr>
   <tr><td>Loading states</td><td>Shape-matched skeletons rather than spinners, preventing layout shift</td></tr>
   <tr><td>Fonts</td><td>Preconnected, <code>display=swap</code></td></tr>
@@ -1071,8 +1162,8 @@ it, and gives an interviewer something concrete to ask about.</p>
   <li>Per-page title and meta description, set on navigation</li>
   <li>Open Graph and Twitter Card tags</li>
   <li>JSON-LD <code>Person</code> schema with job title, location, institution and verified profile links</li>
-  <li>Generated <code>sitemap.xml</code> covering <strong>9 URLs</strong> — 4 static paths plus one per project — alongside <code>robots.txt</code>. The 404 route is correctly excluded.</li>
-  <li>Canonical URL — <strong>currently <code>example.com</code>; must be updated at launch</strong></li>
+  <li>Generated <code>sitemap.xml</code> covering <strong>10 URLs</strong> — 4 static paths plus one per project — alongside <code>robots.txt</code>. The 404 route is correctly excluded.</li>
+  <li>Canonical, Open Graph and Twitter URLs point at the live site</li>
 </ul>
 
 <h3>10.4 Security</h3>
@@ -1083,28 +1174,28 @@ it, and gives an interviewer something concrete to ask about.</p>
   <tr><td>Contact abuse</td><td>Honeypot, spam patterns, 5/hour throttle</td></tr>
   <tr><td>Private data</td><td>CGPA withheld unless explicitly published; message IP and user agent never serialised</td></tr>
   <tr><td>Production headers</td><td>HSTS, SSL redirect, secure cookies, nosniff, <code>X-Frame-Options: DENY</code> — all active when <code>DEBUG=False</code></td></tr>
-  <tr><td>Verification</td><td><code>manage.py check --deploy</code> passes clean</td></tr>
+  <tr><td>Verification</td><td><code>manage.py check --deploy</code> passes clean (re-run 1 Oct 2026)</td></tr>
 </table>
 
 <!-- ============================ 11 ============================ -->
 <h2 class="page-break"><span class="num">11</span>Testing</h2>
 
-<p><strong>55 automated tests, all passing</strong> — 35 backend, 20 frontend.
-Per-suite counts below were re-derived from the source files on 12 September
-2026 and sum to those totals.</p>
+<p><strong>62 automated tests, all passing</strong> — 40 backend, 22 frontend.
+Per-suite counts below were re-derived from the source files on 1 October 2026
+and sum to those totals.</p>
 <table>
   <tr><th style="width:30%">Suite</th><th style="width:12%">Tests</th><th>Covers</th></tr>
   <tr><td><strong>Backend — contact</strong></td><td class="mono-cell">11</td><td>Valid submission, email normalisation, every validation failure, honeypot, spam patterns, metadata capture, read-blocking, throttle firing on the sixth request</td></tr>
-  <tr><td><strong>Backend — projects</strong></td><td class="mono-cell">12</td><td>Slug generation, ordering, featured and technology filters, detail payload, 404, write-rejection, unused technologies excluded</td></tr>
+  <tr><td><strong>Backend — projects</strong></td><td class="mono-cell">17</td><td>Slug generation, ordering, featured and technology filters, detail payload, 404, write-rejection, unused technologies excluded; <code>sync_projects</code> creates every seed project, removes retired ones, leaves media untouched, and gives a live link to <strong>exactly the three deployed projects</strong>; <code>attach_media</code> repairs a reference to a deleted photo</td></tr>
   <tr><td><strong>Backend — education</strong></td><td class="mono-cell">4</td><td>CGPA withheld by default, returned once published, <strong>absent from the raw response body</strong>, ongoing date range</td></tr>
   <tr><td><strong>Backend — profiles</strong></td><td class="mono-cell">5</td><td>Singleton enforcement, updates still permitted, empty-state response, read-only</td></tr>
   <tr><td><strong>Backend — skills</strong></td><td class="mono-cell">3</td><td>Level ordering, human-readable display, <strong>no numeric proficiency exposed</strong></td></tr>
-  <tr><td><strong>Backend total</strong></td><td class="mono-cell"><strong>35</strong></td><td></td></tr>
+  <tr><td><strong>Backend total</strong></td><td class="mono-cell"><strong>40</strong></td><td></td></tr>
   <tr><td><strong>Frontend — ImageFrame</strong></td><td class="mono-cell">3</td><td>Image renders, placeholder substitutes, loading attribute</td></tr>
   <tr><td><strong>Frontend — ProjectCard</strong></td><td class="mono-cell">6</td><td>Content, case study link, GitHub link, <strong>live demo hidden without a URL</strong>, technology collapsing</td></tr>
-  <tr><td><strong>Frontend — ArchitectureDiagram</strong></td><td class="mono-cell">5</td><td>Known flows, external branch, branch omitted when absent, nothing for unknown slug</td></tr>
+  <tr><td><strong>Frontend — ArchitectureDiagram</strong></td><td class="mono-cell">7</td><td>Known flows, external branch, branch omitted when absent, nothing for unknown slug, a flow for every published project and none for removed ones, SellFlow BD's courier branch</td></tr>
   <tr><td><strong>Frontend — CommandPalette</strong></td><td class="mono-cell">6</td><td>Closed state, listing, filtering, empty result, Escape, links omitted when absent</td></tr>
-  <tr><td><strong>Frontend total</strong></td><td class="mono-cell"><strong>20</strong></td><td></td></tr>
+  <tr><td><strong>Frontend total</strong></td><td class="mono-cell"><strong>22</strong></td><td></td></tr>
 </table>
 <p>
   Several tests encode the authenticity rules directly — CGPA absence from the
@@ -1112,35 +1203,50 @@ Per-suite counts below were re-derived from the source files on 12 September
   change that breaks a promise made in §03 fails the suite rather than shipping.
 </p>
 <p>Manual verification also covered: every page in both themes with zero console
-errors — the five real routes, all five case studies, and the 404 state — plus
+errors — the five real routes, all six case studies, and the 404 state — plus
 mobile overflow on every page, reduced-motion behaviour, and the contact form
 end to end in a real browser.</p>
 
 <!-- ============================ 12 ============================ -->
 <h2><span class="num">12</span>Deployment</h2>
 
-<p><strong>Status: not yet deployed.</strong> Full procedure in
-<code>DEPLOYMENT.md</code>.</p>
+<p><strong>Status: live since 16 September 2026</strong>, on Render's free tier
+with PostgreSQL on Neon. Full procedure in <code>DEPLOY_RENDER.md</code>;
+<code>DEPLOYMENT.md</code> documents a Vercel + Railway alternative.</p>
 <table>
-  <tr><th style="width:22%">Component</th><th style="width:22%">Target</th><th>Notes</th></tr>
-  <tr><td>Frontend</td><td>Vercel</td><td>Free; needs <code>vercel.json</code> rewrite so client routes do not 404 on refresh</td></tr>
-  <tr><td>Backend + PostgreSQL</td><td>Railway</td><td>≈$5/month; no cold starts. A single <code>DATABASE_URL</code> configures the database.</td></tr>
-  <tr><td>Domain</td><td>Namecheap / Cloudflare</td><td>≈$12/year — reads far better than a platform subdomain</td></tr>
+  <tr><th style="width:22%">Component</th><th style="width:30%">Target</th><th>Notes</th></tr>
+  <tr><td>Frontend</td><td>Render static site<br><span class="mono-cell">portfolio-web-asu3.onrender.com</span></td><td>Never sleeps. A dashboard rewrite rule (<code>/*</code> → <code>/index.html</code>) stops client routes 404ing on refresh; Render ignores <code>_redirects</code>.</td></tr>
+  <tr><td>Backend</td><td>Render web service<br><span class="mono-cell">portfolio-api-9028.onrender.com</span></td><td>Gunicorn. WhiteNoise serves static files and, with <code>DEBUG=False</code>, the committed media.</td></tr>
+  <tr><td>Database</td><td>Neon PostgreSQL</td><td>Configured by one <code>DATABASE_URL</code>. Chosen over Render's own Postgres, which is deleted after 30 days on the free tier.</td></tr>
 </table>
-<p>
-  <strong>Render was explicitly rejected:</strong> its free tier sleeps after 15
-  minutes, producing a ~50 second cold start that reads as a broken site.
-</p>
+
+<h3>12.1 What every deploy runs</h3>
+<p><code>backend/build.sh</code> runs on every deploy, and every step is
+idempotent:</p>
+<table>
+  <tr><th style="width:6%">#</th><th style="width:30%">Step</th><th>Purpose</th></tr>
+  <tr><td class="mono-cell">1</td><td>Install, <code>collectstatic</code>, <code>migrate</code></td><td>Standard Django build</td></tr>
+  <tr><td class="mono-cell">2</td><td><code>seed_portfolio</code></td><td>Only when the database is empty</td></tr>
+  <tr><td class="mono-cell">3</td><td><code>sync_projects</code></td><td>Writes every project in the seed and deletes those in <code>REMOVED_PROJECTS</code>. Media fields are left alone.</td></tr>
+  <tr><td class="mono-cell">4</td><td><code>sync_profile_copy</code></td><td>Writes the profile's narrative copy from the seed</td></tr>
+  <tr><td class="mono-cell">5</td><td><code>attach_media</code></td><td>Points records at the committed files, and repairs references to files that no longer exist</td></tr>
+  <tr><td class="mono-cell">6</td><td>Admin account</td><td>Created from <code>ADMIN_*</code> variables only if absent</td></tr>
+</table>
 <div class="callout">
-  <span class="label">Known deployment constraint</span>
+  <span class="label">Known deployment constraints</span>
   <p>
-    Railway's filesystem is ephemeral, so uploaded screenshots are lost on
-    redeploy. Once images are added regularly, move media to object storage
-    (S3 or Cloudflare R2, which has a free tier) via <code>django-storages</code>.
+    <strong>Cold start.</strong> The free backend sleeps after 15 minutes idle,
+    and the next visitor waits about 50 seconds for project data. The page shell
+    loads instantly and shows skeletons meanwhile. $7/month removes the sleep.
+  </p>
+  <p style="margin-top:6px">
+    <strong>Ephemeral filesystem.</strong> Uploaded files are wiped on every
+    redeploy, which is why <code>backend/media/</code> is committed and must not
+    be git-ignored (D18).
   </p>
 </div>
 
-<h3>12.1 Launch checklist</h3>
+<h3>12.2 Launch checklist</h3>
 <div class="two-col">
 <ul>
   <li><code>.env</code> absent from git</li>
@@ -1150,40 +1256,42 @@ end to end in a real browser.</p>
   <li>CORS and CSRF origins set to the real frontend URL</li>
   <li>Admin password changed from the development default</li>
   <li><code>seed_portfolio</code> run</li>
-  <li>Canonical URL and OG tags updated from <code>example.com</code></li>
+  <li>Canonical URL and OG tags point at the live domain</li>
   <li>Sitemap regenerated with the real domain</li>
   <li>Contact form submits successfully in production</li>
   <li>Refreshing a case study URL does not 404</li>
-  <li>All five repository links verified</li>
+  <li>All six repository links verified</li>
 </ul>
 </div>
 
 <!-- ============================ 13 ============================ -->
 <h2 class="page-break"><span class="num">13</span>Outstanding Work</h2>
 
-<p>The site is complete and shippable. Every item below is wired to hide rather
-than break while absent, and all are content changes through the admin — none
-require code.</p>
+<p>The site is live and complete. Items O1–O7 from v1.2 are resolved and kept
+below for the record; the open items need nothing from the code.</p>
 
 <table>
-  <tr><th style="width:6%">#</th><th style="width:24%">Item</th><th style="width:12%">Owner</th><th>Notes</th></tr>
-  <tr><td class="mono-cell">O1</td><td><strong>Screenshots</strong> for all five projects</td><td>Subject</td><td>Designed placeholders in place. Highest visual impact of the remaining work.</td></tr>
-  <tr><td class="mono-cell">O2</td><td><strong>YouTube walkthroughs</strong></td><td>Subject</td><td>Chosen in place of deploying. Embed appears once a URL is set.</td></tr>
-  <tr><td class="mono-cell">O3</td><td><strong>Résumé PDF</strong></td><td>Subject</td><td>Download buttons hidden until uploaded.</td></tr>
-  <tr><td class="mono-cell">O4</td><td><strong>Verify repository URLs</strong></td><td>Subject</td><td>All five are being reorganised. <strong>PromptCanvas URL is a known mismatch.</strong></td></tr>
-  <tr><td class="mono-cell">O5</td><td><strong>Deployment</strong></td><td>Subject</td><td>Procedure documented; not yet executed.</td></tr>
-  <tr><td class="mono-cell">O6</td><td><strong>Canonical URL and OG tags</strong></td><td>Either</td><td>Still <code>example.com</code>. Must change at launch.</td></tr>
-  <tr><td class="mono-cell">O7</td><td><strong>Provision PostgreSQL</strong></td><td>Either</td><td>Currently SQLite locally. Set <code>USE_SQLITE=False</code> plus either <code>DATABASE_URL</code> or the <code>DB_*</code> values, then migrate and seed.</td></tr>
-  <tr><td class="mono-cell">O8</td><td><strong>OG preview image</strong></td><td>Either</td><td><code>/og-image.png</code> is referenced but does not exist. Link previews are currently imageless.</td></tr>
-  <tr><td class="mono-cell">O9</td><td><strong>Confirm the public email</strong></td><td>Subject</td><td>The site publishes <code>jahidhr05@gmail.com</code>. A second address, <code>hello.jahidhr@gmail.com</code>, is also in active use. Confirm which belongs on the site; if it changes, edit it in <em>Profile</em> and in <code>seed_portfolio.py</code> so a reseed does not revert it.</td></tr>
+  <tr><th style="width:6%">#</th><th style="width:24%">Item</th><th style="width:12%">Status</th><th>Notes</th></tr>
+  <tr><td class="mono-cell">O1</td><td><strong>Screenshots</strong></td><td>Resolved</td><td>A cover and gallery for all six projects, committed under <code>backend/media/</code>.</td></tr>
+  <tr><td class="mono-cell">O2</td><td><strong>YouTube walkthroughs</strong></td><td>Resolved</td><td>All six set in the seed (§05).</td></tr>
+  <tr><td class="mono-cell">O3</td><td><strong>Résumé PDF</strong></td><td>Resolved</td><td>Uploaded; download buttons visible.</td></tr>
+  <tr><td class="mono-cell">O4</td><td><strong>Verify repository URLs</strong></td><td>Resolved</td><td>Repositories renamed (<code>Edu-Flow</code>, <code>Intelli-Chat</code>, <code>Medi-Desk</code>); the PromptCanvas mismatch closed with the project's removal.</td></tr>
+  <tr><td class="mono-cell">O5</td><td><strong>Deployment</strong></td><td>Resolved</td><td>Live on Render + Neon since 16 Sep 2026 (§12).</td></tr>
+  <tr><td class="mono-cell">O6</td><td><strong>Canonical URL and OG tags</strong></td><td>Resolved</td><td>Point at <code>portfolio-web-asu3.onrender.com</code>.</td></tr>
+  <tr><td class="mono-cell">O7</td><td><strong>Provision PostgreSQL</strong></td><td>Resolved</td><td>Neon, via <code>DATABASE_URL</code>.</td></tr>
+  <tr><td class="mono-cell">O8</td><td><strong>OG preview image</strong></td><td>Open</td><td><code>/og-image.png</code> is referenced but does not exist. Link previews are currently imageless.</td></tr>
+  <tr><td class="mono-cell">O9</td><td><strong>Confirm the public email</strong></td><td>Open</td><td>The site publishes <code>jahidhr05@gmail.com</code>. A second address, <code>hello.jahidhr@gmail.com</code>, is also in active use. Confirm which belongs on the site; if it changes, edit it in <em>Profile</em> and in <code>seed_portfolio.py</code> so a reseed does not revert it.</td></tr>
+  <tr><td class="mono-cell">O10</td><td><strong>&ldquo;What I learned&rdquo; for SellFlow BD and ServoraBD</strong></td><td>Open</td><td>Not supplied, and not written on the owner's behalf. Both case studies render five sections until it is; add it to <code>lessons</code> in the seed.</td></tr>
+  <tr><td class="mono-cell">O11</td><td><strong>MicroMart live demo not responding</strong></td><td>Open</td><td>On 1 Oct 2026 the host resolved and completed TLS, but returned no response within 90 seconds — longer than a cold start. SellFlow BD and ServoraBD answered in under a second. Check the MicroMart service's Events and Logs on Render. The button stays, per the owner's instruction.</td></tr>
+  <tr><td class="mono-cell">O12</td><td><strong>Custom domain</strong></td><td>Optional</td><td>About $12/year; reads better than a platform subdomain. Requires regenerating the sitemap and updating the canonical URL.</td></tr>
 </table>
 
 <h3>13.1 Optional future enhancements</h3>
 <p>Considered and deliberately deferred, not rejected:</p>
 <ul>
   <li><strong>Email notifications</strong> — the code path exists; only SMTP variables are needed.</li>
-  <li><strong>Object storage for media</strong> — required once screenshots are added and the site is on Railway.</li>
-  <li><strong>Additional projects</strong> — the model and command palette pick them up automatically; only an architecture flow definition would need adding.</li>
+  <li><strong>Object storage for media</strong> — committing media works while it stays small; S3 or Cloudflare R2 via <code>django-storages</code> is the move if it grows.</li>
+  <li><strong>Always-on backend</strong> — $7/month removes the cold start (§12).</li>
 </ul>
 
 <!-- ============================ 14 ============================ -->
@@ -1194,12 +1302,12 @@ require code.</p>
   <tr><td class="mono-cell">D1</td><td>Named skill levels, not percentages</td><td>A bar implies precision that does not exist and invites unwinnable comparison. Enforced by a test.</td></tr>
   <tr><td class="mono-cell">D2</td><td>No Experience or Achievements section</td><td>Nothing genuine to show. An empty section is worse than an absent one; a padded one is disqualifying.</td></tr>
   <tr><td class="mono-cell">D3</td><td>No AI skills claimed</td><td>Owner is at the learning stage and asked for this explicitly, including removal of a drafted "currently learning" line.</td></tr>
-  <tr><td class="mono-cell">D4</td><td>Full case studies for all five projects</td><td>Five substantial case studies read stronger than three plus two thin cards.</td></tr>
+  <tr><td class="mono-cell">D4</td><td>Full case studies for all six projects</td><td>Six substantial case studies read stronger than a few plus several thin cards.</td></tr>
   <tr><td class="mono-cell">D5</td><td>Empty fields hide their section</td><td>The mechanism that lets the site ship before screenshots, demos and résumé exist without looking unfinished.</td></tr>
   <tr><td class="mono-cell">D6</td><td>Architecture diagrams as inline SVG</td><td>Shows systems thinking rather than claiming it. No network request; theme-aware; crisp at any zoom.</td></tr>
   <tr><td class="mono-cell">D7</td><td>Reference site's visuals adopted, its content architecture rejected</td><td>The reference is an agency selling services, leading with client counts and testimonials. None of those exist here, and inventing them was ruled out.</td></tr>
   <tr><td class="mono-cell">D8</td><td>Photo in the hero rather than only in About</td><td>Owner deferred the choice. The reference balanced its hero with a figure; a real photograph serves recruiters better than an illustration.</td></tr>
-  <tr><td class="mono-cell">D9</td><td>Accent deepened from the reference red</td><td>Retains the energy, reads more controlled, and passes AA contrast where the brighter tone fails at small sizes.</td></tr>
+  <tr><td class="mono-cell">D9</td><td>Cyan accent, replacing the red (17 Sep 2026)</td><td>The owner asked for a brighter colour. Cyan-400 reaches 10.96:1 on the dark canvas; buttons use dark text on it, and light mode deepens it to cyan-700. Supersedes the deepened red of v1.2.</td></tr>
   <tr><td class="mono-cell">D10</td><td>Command palette included</td><td>Small, genuinely useful, and an immediate technical signal to the intended audience.</td></tr>
   <tr><td class="mono-cell">D11</td><td>GitHub statistics excluded</td><td>Would surface repositories the owner is still reorganising.</td></tr>
   <tr><td class="mono-cell">D12</td><td>Blog excluded</td><td>Only worthwhile if maintained; a stale blog is worse than none.</td></tr>
@@ -1207,6 +1315,12 @@ require code.</p>
   <tr><td class="mono-cell">D14</td><td>SQLite default locally, PostgreSQL in production</td><td>Originally MySQL, switched on 12 Sep 2026: managed Postgres is cheaper and more widely available, <code>psycopg</code> installs without system build tools, and it is Django's best-tested path. SQLite still lets the project run before credentials exist.</td></tr>
   <tr><td class="mono-cell">D15</td><td><code>Reveal</code> force-reveals after 900ms</td><td>Fixes a real defect where case study sections rendered but stayed invisible. Content must never depend on an animation.</td></tr>
   <tr><td class="mono-cell">D16</td><td><code>DATABASE_URL</code> takes precedence over discrete settings</td><td>Every managed Postgres host issues one connection string. Supporting it means production needs a single database variable instead of five, and the same settings file serves local and hosted environments unchanged.</td></tr>
+  <tr><td class="mono-cell">D17</td><td>Render free tier, reversing its earlier rejection</td><td>v1.2 rejected Render for its cold start and recommended Railway at ≈$5/month. The owner chose a $0 deployment; the ~50 second cold start is accepted and documented, with a $7/month upgrade as the fix.</td></tr>
+  <tr><td class="mono-cell">D18</td><td>Media committed to the repository</td><td>Render wipes uploaded files on every redeploy. Committing the optimised files is simpler than object storage at this size. Originals in <code>images/</code> and <code>cv/</code> stay git-ignored.</td></tr>
+  <tr><td class="mono-cell">D19</td><td>The seed is the source of truth for projects</td><td><code>seed_portfolio</code> only runs on an empty database, so seed edits never reached production. <code>sync_projects</code> now writes them on every deploy. The trade-off: admin edits to projects are overwritten.</td></tr>
+  <tr><td class="mono-cell">D20</td><td>Hero statistics removed (17 Sep 2026)</td><td>At the owner's request, as part of the redesign. The counters were factual, so this was a presentation choice rather than a correction.</td></tr>
+  <tr><td class="mono-cell">D21</td><td>SellFlow BD and ServoraBD added; PromptCanvas removed (1 Oct 2026)</td><td>At the owner's direction. The two new projects lead the order; PromptCanvas is listed in <code>REMOVED_PROJECTS</code> so the deploy deletes it from production.</td></tr>
+  <tr><td class="mono-cell">D22</td><td>A screenshot withheld for a phone number</td><td>SellFlow BD's Settings screenshot shows a real number. It is excluded by name on import rather than edited, per the rule against exposing private numbers.</td></tr>
 </table>
 
 <!-- ============================ 15 ============================ -->
@@ -1220,6 +1334,7 @@ pip install -r requirements/dev.txt
 python manage.py migrate
 python manage.py seed_portfolio          <span class="c"># loads all real content, idempotent</span>
 python manage.py seed_portfolio --reset  <span class="c"># wipe and reload</span>
+python manage.py sync_projects           <span class="c"># write seed projects to an existing DB</span>
 python manage.py createsuperuser
 python manage.py runserver               <span class="c"># 127.0.0.1:8000, admin at /admin/</span>
 
@@ -1230,16 +1345,22 @@ npm run dev                              <span class="c"># localhost:5173, /api 
 npm run build
 
 <span class="c"># Tests</span>
-cd backend  &amp;&amp; python manage.py test      <span class="c"># 35</span>
-cd frontend &amp;&amp; npm test                   <span class="c"># 20</span>
+cd backend  &amp;&amp; python manage.py test      <span class="c"># 40</span>
+cd frontend &amp;&amp; npm test                   <span class="c"># 22</span>
+
+<span class="c"># Media</span>
+python manage.py import_media --project &lt;slug&gt;   <span class="c"># optimise screenshots into media/</span>
+python manage.py update_profile_media --dry-run  <span class="c"># replace the photo or CV</span>
 
 <span class="c"># Sitemap</span>
-python manage.py generate_sitemap --base-url https://yourdomain.com</pre>
+python manage.py generate_sitemap --base-url https://portfolio-web-asu3.onrender.com</pre>
 
 <h3>15.2 Key files</h3>
 <table>
   <tr><th style="width:52%">Path</th><th>Contains</th></tr>
-  <tr><td class="mono-cell">backend/apps/profiles/management/commands/seed_portfolio.py</td><td><strong>All site content.</strong> Single source of truth for the seed.</td></tr>
+  <tr><td class="mono-cell">backend/apps/profiles/management/commands/seed_portfolio.py</td><td><strong>All site content.</strong> Source of truth for projects, written on every deploy.</td></tr>
+  <tr><td class="mono-cell">backend/build.sh</td><td>Every step a deploy runs (§12.1)</td></tr>
+  <tr><td class="mono-cell">backend/apps/projects/management/commands/attach_media.py</td><td>Which committed file belongs to which project</td></tr>
   <tr><td class="mono-cell">frontend/src/styles/index.css</td><td>Theme tokens for both palettes</td></tr>
   <tr><td class="mono-cell">frontend/tailwind.config.js</td><td>Type scale, spacing, keyframes</td></tr>
   <tr><td class="mono-cell">frontend/src/components/ArchitectureDiagram.jsx</td><td>Per-project flow definitions</td></tr>
@@ -1250,10 +1371,12 @@ python manage.py generate_sitemap --base-url https://yourdomain.com</pre>
 
 <h3>15.3 Credentials policy</h3>
 <div class="callout">
-  <span class="label">Before any deployment</span>
+  <span class="label">Credentials</span>
   <p>
     The development superuser (<code>jahid</code>) uses a weak local password
-    that <strong>must be changed before deployment</strong>. Generate a fresh
+    that must never reach production. The production admin is created at build
+    time from <code>ADMIN_*</code> variables; remove <code>ADMIN_PASSWORD</code>
+    from Render once the account exists. Generate a fresh
     <code>SECRET_KEY</code> for production and never reuse the development one.
     <code>.env</code> is git-ignored and verified absent from the repository —
     keep it that way.
@@ -1317,10 +1440,30 @@ python manage.py generate_sitemap --base-url https://yourdomain.com</pre>
   rather than guessing which is correct.
 </p>
 
-<h3>16.3 Keeping this document current</h3>
+<h3>16.3 v1.3 — 1 October 2026</h3>
+<p>
+  Prompted by the addition of SellFlow BD and ServoraBD and the removal of
+  PromptCanvas. Re-verifying the whole document against the repository showed
+  that v1.2 had already gone stale: it predated the 16 September deployment and
+  the 17 September redesign, and still described the red palette, the hero
+  statistics, and Render as rejected. Corrections:
+</p>
+<table>
+  <tr><th style="width:6%">#</th><th style="width:32%">Previously stated</th><th>Verified reality</th></tr>
+  <tr><td class="mono-cell">R6</td><td>Five projects, PromptCanvas fifth</td><td><strong>Six</strong>: SellFlow BD and ServoraBD lead, PromptCanvas removed. §05 rewritten; every count of projects updated, and counts of other things left alone.</td></tr>
+  <tr><td class="mono-cell">R7</td><td>Status: not yet deployed; Render rejected</td><td>Live on Render + Neon since 16 Sep. §12 rewritten; D17 records the reversal.</td></tr>
+  <tr><td class="mono-cell">R8</td><td>Red accent and its token table</td><td>Cyan since 17 Sep. §6.2 tokens re-read from <code>index.css</code>; D9 superseded.</td></tr>
+  <tr><td class="mono-cell">R9</td><td>Hero carries three stat cards; typewriter ends &ldquo;decoupled React frontends&rdquo;</td><td>Stats removed (D20); phrases re-read from <code>Hero.jsx</code>. Motion table re-read from the Tailwind keyframes.</td></tr>
+  <tr><td class="mono-cell">R10</td><td>All content editable in the admin</td><td>Project text and profile copy are rewritten from the seed on every deploy (§09, D19).</td></tr>
+  <tr><td class="mono-cell">R11</td><td>55 tests (35 + 20)</td><td><strong>62</strong> (40 + 22), re-counted per file.</td></tr>
+  <tr><td class="mono-cell">R12</td><td>9 indexable URLs; canonical still <code>example.com</code></td><td><strong>10</strong> URLs; canonical points at the live site.</td></tr>
+  <tr><td class="mono-cell">R13</td><td>O1–O7 open</td><td>Resolved. O10 and O11 opened rather than papered over.</td></tr>
+</table>
+
+<h3>16.4 Keeping this document current</h3>
 <p>
   Re-verify and re-render whenever any of the following changes: the database or
-  hosting choice, the test counts, the routes, the five projects or their
+  hosting choice, the test counts, the routes, the six projects or their
   repository URLs, or any authenticity rule in §03. Sections <strong>03</strong>
   (authenticity), <strong>13</strong> (outstanding work) and <strong>14</strong>
   (decision log) go stale fastest. Counts in §11 should be re-derived from the
@@ -1329,7 +1472,7 @@ python manage.py generate_sitemap --base-url https://yourdomain.com</pre>
 
 <footer class="doc-end">
   <p>
-    <strong>Portfolio PRD v1.2</strong> — Md. Jahid Hasan Raihan · 12 September 2026.
+    <strong>Portfolio PRD v1.3</strong> — Md. Jahid Hasan Raihan · 1 October 2026.
     Every factual claim in this document originates from the subject's own
     statements or from project state verified against the repository on the date
     above. Where information was unavailable it is marked outstanding in §13

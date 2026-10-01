@@ -40,13 +40,14 @@ If content is missing and you need it, ask — do not fill the hole.
 ```bash
 # Backend (from backend/, venv activated)
 python manage.py runserver          # http://127.0.0.1:8000, admin at /admin/
-python manage.py test               # 35 tests
+python manage.py test               # 40 tests
 python manage.py migrate
 python manage.py seed_portfolio     # idempotent; loads all real content
+python manage.py sync_projects      # write seed projects to an existing DB
 
 # Frontend (from frontend/)
 npm run dev                         # http://localhost:5173
-npm test                            # vitest, 20 tests
+npm test                            # vitest, 22 tests
 npm run lint
 npm run build
 ```
@@ -117,6 +118,10 @@ not add write endpoints.
   personal details out of the public repo.
 - Replace the photo or CV with `python manage.py update_profile_media`
   (`--dry-run` first). See the README for the full three-step flow.
+- `seed_portfolio.py` is the source of truth for project text and profile
+  wording: `build.sh` runs `sync_projects` and `sync_profile_copy` on every
+  deploy, overwriting admin edits to them. To remove a project, delete it from
+  `PROJECTS` *and* add its slug to `REMOVED_PROJECTS`, or it stays live.
 - After adding or renaming a project, regenerate the sitemap:
   `python manage.py generate_sitemap --base-url https://yourdomain.com`.
 - Deployment is documented in `DEPLOYMENT.md` (Vercel + Railway) and

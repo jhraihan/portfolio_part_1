@@ -1,8 +1,10 @@
 # Portfolio — Md. Jahid Hasan Raihan
 
-A personal portfolio built with Django REST Framework and React. Content is
-managed entirely through the Django admin, so projects, skills, screenshots,
-and links can be updated without touching code.
+A personal portfolio built with Django REST Framework and React. Content
+lives in the database and is edited through the Django admin, with one
+exception in production: project text and profile wording come from
+`seed_portfolio.py`, which every deploy writes to the live database. Change
+those in the seed, not the admin, or the next deploy puts the old text back.
 
 ```
 backend/     Django 5 + DRF API, admin CMS
@@ -48,6 +50,9 @@ CORS configuration is needed in development.
 ## Editing content
 
 Everything visible on the site is editable at `http://127.0.0.1:8000/admin/`.
+Locally that is all there is to it. For the live site, project and profile
+text must also change in `seed_portfolio.py`, and screenshots must be
+committed under `backend/media/` — see `docs/DEPLOYMENT_GUIDE.pdf`.
 
 | Section | Where |
 |---|---|
@@ -78,6 +83,9 @@ appears in the hero and about page.
 
 **Changing a repository URL** — edit `github_url` on the project.
 
+To remove a project, delete it from `PROJECTS` in `seed_portfolio.py` and add
+its slug to `REMOVED_PROJECTS`; otherwise it stays live.
+
 After adding or renaming a project, regenerate the sitemap:
 
 ```bash
@@ -89,8 +97,8 @@ python manage.py generate_sitemap --base-url https://yourdomain.com
 ## Tests
 
 ```bash
-cd backend  && python manage.py test     # 35 tests
-cd frontend && npm test                  # 20 tests
+cd backend  && python manage.py test     # 40 tests
+cd frontend && npm test                  # 22 tests
 ```
 
 ---

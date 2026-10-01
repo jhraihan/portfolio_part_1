@@ -204,14 +204,15 @@
     <div><dt>Admin</dt><dd>portfolio-api-9028.onrender.com/admin/</dd></div>
     <div><dt>Database</dt><dd>PostgreSQL on Neon (Singapore)</dd></div>
     <div><dt>Hosting</dt><dd>Render free tier, Singapore</dd></div>
-    <div><dt>Revised</dt><dd>25 September 2026</dd></div>
+    <div><dt>Revised</dt><dd>1 October 2026</dd></div>
   </dl>
 
   <div class="note">
-    <strong>The one rule to remember:</strong> text lives in the database and is
-    edited in the admin. Files (photo, CV, screenshots) live in the
-    <em>repository</em> and reach the site only through <code>git push</code>.
-    Anything uploaded through the admin disappears.
+    <strong>The one rule to remember:</strong> project text and profile wording
+    live in <code>seed_portfolio.py</code>, and files (photo, CV, screenshots)
+    live in <code>backend/media/</code>. Both reach the site only through
+    <code>git push</code>. Skills, education, and the profile's links and email
+    are edited in the admin. Anything uploaded through the admin disappears.
   </div>
 </div>
 
@@ -277,16 +278,17 @@
   environment variable in the Render dashboard also triggers a redeploy of that service.</p>
 
   <h3>2.1 Backend — <code>backend/build.sh</code></h3>
-  <p>Every step is safe to repeat. Only step 6 can change content you edited in the admin (see 5.2).</p>
+  <p>Every step is safe to repeat. Steps 5 and 6 rewrite content from <code>seed_portfolio.py</code>, so
+  they overwrite admin edits to projects and to profile wording (see 5.2).</p>
   <table>
     <tr><th>#</th><th>Step</th><th>What it does</th></tr>
     <tr><td>1</td><td class="mono-cell">pip install -r requirements/prod.txt</td><td>Installs Django, DRF, gunicorn, WhiteNoise.</td></tr>
     <tr><td>2</td><td class="mono-cell">collectstatic</td><td>Gathers admin CSS/JS for WhiteNoise.</td></tr>
     <tr><td>3</td><td class="mono-cell">migrate</td><td>Applies any new database migrations to Neon.</td></tr>
     <tr><td>4</td><td class="mono-cell">seed_portfolio</td><td><strong>Only if the database has no projects.</strong> Loads all content on a brand-new database.</td></tr>
-    <tr><td>5</td><td class="mono-cell">attach_media</td><td>Runs when a project has no cover, or the profile's photo or CV is empty <em>or points at a file that no longer exists</em>. Links records to the committed files.</td></tr>
+    <tr><td>5</td><td class="mono-cell">sync_projects</td><td>Writes every project in <code>seed_portfolio.py</code> — text, features, technologies, GitHub, live and video links — creating new ones and updating existing ones. Deletes any project named in <code>REMOVED_PROJECTS</code>. Never touches covers or screenshots.</td></tr>
     <tr><td>6</td><td class="mono-cell">sync_profile_copy</td><td>Pushes profile <em>wording</em> from <code>seed_portfolio.py</code> to the live database. Never touches photo, CV or links.</td></tr>
-    <tr><td>7</td><td class="mono-cell">set_video_urls</td><td>Sets YouTube walkthrough links on projects that have none. Links edited in the admin are left alone.</td></tr>
+    <tr><td>7</td><td class="mono-cell">attach_media</td><td>Fills a cover, gallery, photo or CV that is empty <em>or points at a file that no longer exists</em>, linking it to the committed files. Anything intact is left alone.</td></tr>
     <tr><td>8</td><td>create admin</td><td>Creates the admin user from <code>ADMIN_USERNAME</code> / <code>ADMIN_PASSWORD</code> if that user does not exist yet.</td></tr>
   </table>
   <p>Then Render starts the server:</p>
@@ -403,15 +405,18 @@ git push</pre>
   <p>Then watch both services in Render and run the checklist in section 08.</p>
 
   <h3>5.2 Change text on the site</h3>
+  <p><strong>Projects and profile wording:</strong> edit <code>seed_portfolio.py</code> — the
+  <code>PROJECTS</code> list, or the narrative fields of <code>PROFILE</code> (title, tagline, hero intro,
+  about text, availability, meta description) — then commit and push. Every deploy writes them to the
+  live database through <code>sync_projects</code> and <code>sync_profile_copy</code>, so an admin edit to
+  any of these is <strong>put back on the next deploy</strong>.</p>
+  <p><strong>Everything else</strong> — skills, education, coursework, and the profile's links and email —
+  is edited in the admin and survives deploys:</p>
   <ol>
     <li>Open <code>https://portfolio-api-9028.onrender.com/admin/</code> and sign in.</li>
-    <li>Edit the Profile, a Project, a Skill or an Education entry. Save.</li>
+    <li>Edit the entry. Save.</li>
     <li>Reload the website. No deploy needed.</li>
   </ol>
-  <p>Admin edits are never overwritten by a deploy, with one exception: the profile's narrative fields
-  (tagline, hero intro, about text and similar) are re-synced from <code>seed_portfolio.py</code> on every
-  deploy by <code>sync_profile_copy</code>. <strong>If you edit profile wording in the admin, make the same edit
-  in <code>seed_portfolio.py</code></strong>, or the next deploy puts the old wording back.</p>
 
   <h3>5.3 Replace the profile photo or CV</h3>
   <pre><span class="c"># 1. Drop the new file into the git-ignored source folder</span>
@@ -441,8 +446,9 @@ git push</pre>
     <li>In <code>backend/apps/projects/management/commands/attach_media.py</code>, update
       <code>COVERS</code> and <code>GALLERIES</code> to the new output filenames.</li>
     <li>Commit <code>backend/media</code> and both command files, then push.</li>
-    <li>The live database still points at the old gallery. Re-link it with
-      <code>attach_media --force</code> against production (section 06).</li>
+    <li>If the old files were deleted, the next deploy notices the gallery points at missing files and
+      re-links it on its own. If they were kept, re-link it with <code>attach_media --force</code> against
+      production (section 06).</li>
   </ol>
   <div class="callout">
     <span class="label">Note</span>
@@ -450,13 +456,22 @@ git push</pre>
     <code>attach_media.py</code>. Keep captions edited in the admin in step with that file.</p>
   </div>
 
-  <h3>5.5 Add a new project</h3>
+  <h3>5.5 Add or remove a project</h3>
   <ol>
-    <li>Create the project and its text in the admin (or add it to <code>seed_portfolio.py</code>).</li>
-    <li>Add its screenshots as in 5.4, adding the new slug to the mappings in both commands.</li>
+    <li>Add the project to <code>PROJECTS</code> in <code>seed_portfolio.py</code>. A project created only in
+      the admin is not deleted by a deploy, but it is invisible to the seed and is lost if the database is
+      ever rebuilt.</li>
+    <li>Add its screenshots as in 5.4, adding the new slug to the mappings in both commands.
+      <code>import_media --project &lt;slug&gt;</code> imports just that project.</li>
+    <li>Add an architecture flow for the slug in
+      <code>frontend/src/components/ArchitectureDiagram.jsx</code>, or the case study shows no diagram.</li>
     <li>Regenerate the sitemap, then commit and push:
       <pre>python manage.py generate_sitemap --base-url https://portfolio-web-asu3.onrender.com</pre></li>
   </ol>
+  <p><strong>To remove a project,</strong> delete it from <code>PROJECTS</code> <em>and</em> add its slug to
+  <code>REMOVED_PROJECTS</code> in the same file. Deleting it from the list alone leaves it live, because
+  <code>sync_projects</code> only deletes what it is told to. Then remove its diagram flow, its entries in
+  both media commands and its files under <code>backend/media/</code>, and regenerate the sitemap.</p>
 
   <h3>5.6 Change a dependency or the database schema</h3>
   <ul>
@@ -496,6 +511,7 @@ Remove-Item Env:DATABASE_URL, Env:USE_SQLITE      <span class="c"># back to loca
     <tr><td class="mono-cell">attach_media</td><td>Repair a broken photo or CV link immediately, without waiting for a deploy.</td></tr>
     <tr><td class="mono-cell">attach_media --force</td><td>Re-link every cover, gallery, photo and CV to the committed files.</td></tr>
     <tr><td class="mono-cell">sync_profile_copy</td><td>Push profile wording from <code>seed_portfolio.py</code>.</td></tr>
+    <tr><td class="mono-cell">sync_projects</td><td>Push project text and links from <code>seed_portfolio.py</code> without waiting for a deploy.</td></tr>
   </table>
 
   <div class="callout rule-box">
@@ -591,7 +607,9 @@ curl -s -o /dev/null -w "%{http_code}\n" https://portfolio-web-asu3.onrender.com
     <tr><td>Build: <code>bad interpreter</code></td><td><code>build.sh</code> saved with Windows line endings</td><td><code>.gitattributes</code> forces LF; re-add the file</td></tr>
     <tr><td>Build: <code>npm ci</code> fails</td><td><code>package-lock.json</code> out of date</td><td>Run <code>npm install</code>, commit the lock file</td></tr>
     <tr><td>Build: module not found</td><td>Package missing from requirements</td><td>Add it to <code>requirements/</code></td></tr>
-    <tr><td>Profile wording reverted after deploy</td><td><code>sync_profile_copy</code> restored the seed text</td><td>Edit <code>seed_portfolio.py</code> too (5.2)</td></tr>
+    <tr><td>Profile wording reverted after deploy</td><td><code>sync_profile_copy</code> restored the seed text</td><td>Edit <code>seed_portfolio.py</code> instead (5.2)</td></tr>
+    <tr><td>Project edit reverted after deploy</td><td><code>sync_projects</code> restored the seed text</td><td>Edit <code>seed_portfolio.py</code> instead (5.2)</td></tr>
+    <tr><td>A removed project is still live</td><td>Deleted from <code>PROJECTS</code> but not listed in <code>REMOVED_PROJECTS</code></td><td>Add its slug there and push (5.5)</td></tr>
     <tr><td>Contact form: 429</td><td>Rate limit, 5 per hour per IP</td><td>Intended. Wait an hour</td></tr>
   </table>
   <p>For any other failure, read Render → service → <strong>Logs</strong>. The failing command and its
@@ -626,14 +644,19 @@ curl -s -o /dev/null -w "%{http_code}\n" https://portfolio-web-asu3.onrender.com
 
 <!-- ===================================================== 13 -->
 <section>
-  <h2><span class="num">13</span>Open item at time of writing</h2>
+  <h2><span class="num">13</span>Open items at time of writing</h2>
   <div class="callout">
-    <span class="label">Profile photo — fix written, not yet deployed</span>
+    <span class="label">Profile photo — resolved by the 1 October push</span>
     <p>On 25 September 2026 the live API pointed the profile photo at
-    <code>media/profile/raihan2.jpg</code>, an admin upload that returns 404.
-    <code>attach_media.py</code> and <code>build.sh</code> have been changed so a deploy repairs
-    references to missing files, but these changes are still uncommitted. Commit and push them
-    (with a new photo from 5.3 if wanted) to restore the photo.</p>
+    <code>media/profile/raihan2.jpg</code>, an admin upload that returned 404. That file is now
+    committed, and <code>attach_media</code> runs on every deploy to repair any reference to a missing
+    file. Confirm the photo loads after the deploy (section 08).</p>
+  </div>
+  <div class="callout">
+    <span class="label">MicroMart live demo — not responding</span>
+    <p>On 1 October 2026 <code>micromart-17ws.onrender.com</code> completed TLS but returned nothing within
+    90 seconds, far longer than a cold start; SellFlow BD and ServoraBD answered in under a second. This is
+    MicroMart's own Render service, not the portfolio. Check its Events and Logs.</p>
   </div>
 </section>
 

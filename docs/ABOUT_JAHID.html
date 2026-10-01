@@ -202,8 +202,8 @@
   <p class="sub">Software Engineer — Dhaka, Bangladesh</p>
 
   <dl class="meta">
-    <div><dt>Document version</dt><dd>1.0</dd></div>
-    <div><dt>Date</dt><dd>12 September 2026</dd></div>
+    <div><dt>Document version</dt><dd>1.1</dd></div>
+    <div><dt>Date</dt><dd>1 October 2026</dd></div>
     <div><dt>Status</dt><dd>Final year · Graduating December 2026</dd></div>
     <div><dt>Seeking</dt><dd>Junior / backend / full-stack roles &amp; internships</dd></div>
     <div><dt>Core stack</dt><dd>Python · Django · DRF · React · SQL</dd></div>
@@ -247,8 +247,8 @@
 <div class="callout">
   <span class="label">The one-line version</span>
   <p>
-    A final-year CSE student in Dhaka who has built <strong>five complete,
-    production-shaped web applications</strong> — each with authentication,
+    A final-year CSE student in Dhaka who has built <strong>six complete,
+    production-shaped web applications</strong>, three of them live — each with authentication,
     role-based access control, a relational schema, and a decoupled React
     frontend talking to a Django REST API. Backend-leaning, self-taught beyond
     coursework, and deliberately honest about what he does and does not yet
@@ -258,16 +258,16 @@
 
 <h3>1.1 What makes the profile unusual</h3>
 <p>
-  The five projects are not five tutorials. They are five instances of the same
+  The six projects are not six tutorials. They are six instances of the same
   hard thing: a multi-actor system where different users see different views of
-  the same data with different rights over it. E-commerce (three roles),
-  learning management (three roles), hospital management (four roles), plus two
-  applications built around external model APIs with the latency and
-  credential-handling problems that brings.
+  the same data with different rights over it. Multi-tenant order management
+  (five roles), a two-sided service marketplace, e-commerce (three roles),
+  learning management (three roles), hospital management (four roles), plus a
+  streaming chat application built around an external model API.
 </p>
 <p>
   <strong>The repetition is the point.</strong> One such project could be luck
-  or a followed guide; five is a demonstrated competency. That is the single
+  or a followed guide; six is a demonstrated competency. That is the single
   strongest claim available from this background, and it is entirely supportable
   in an interview.
 </p>
@@ -342,29 +342,30 @@
   </p>
   <p>
     This is normal for a final-year student and is presented without apology.
-    The portfolio carries its weight through five complete systems instead. No
+    The portfolio carries its weight through six complete systems instead. No
     Experience or Achievements section exists on the site, because an empty
     section reads worse than an absent one and a padded one is disqualifying.
   </p>
 </div>
 
 <!-- ============ 03 ============ -->
-<h2 class="page-break"><span class="num">03</span>The Five Projects</h2>
+<h2 class="page-break"><span class="num">03</span>The Six Projects</h2>
 
 <p>
-  All five are solo builds, all complete, all with public repositories. They are
-  the substance of the profile. Full case studies — problem, approach,
+  All six are solo builds, all with public repositories and recorded
+  walkthroughs, and three are live. They are the substance of the profile. Full case studies — problem, approach,
   architecture, hardest problem, lessons — are in §05 of the PRD; this is the
   condensed view.
 </p>
 
 <table>
   <tr><th style="width:5%">#</th><th style="width:18%">Project</th><th style="width:20%">Domain</th><th style="width:9%">Roles</th><th>Defining technical challenge</th></tr>
-  <tr><td class="mono-cell">1</td><td><strong>MicroMart</strong></td><td>E-commerce</td><td class="mono-cell">3</td><td>Order/payment/inventory state consistency across gateway callbacks</td></tr>
-  <tr><td class="mono-cell">2</td><td><strong>EduFlow</strong></td><td>Learning management</td><td class="mono-cell">3</td><td>One authoritative permission layer — object-level, not just action-level</td></tr>
-  <tr><td class="mono-cell">3</td><td><strong>IntelliChat</strong></td><td>Streaming AI chat</td><td class="mono-cell">—</td><td>Server-Sent Events with an explicit stream-termination protocol</td></tr>
-  <tr><td class="mono-cell">4</td><td><strong>MediDesk</strong></td><td>Hospital management</td><td class="mono-cell">4</td><td>Modelling prescriptions as real relations; per-module access rules</td></tr>
-  <tr><td class="mono-cell">5</td><td><strong>PromptCanvas</strong></td><td>Text-to-image</td><td class="mono-cell">—</td><td>Long-latency requests with the model credential kept server-side</td></tr>
+  <tr><td class="mono-cell">1</td><td><strong>SellFlow BD</strong></td><td>Multi-tenant order management</td><td class="mono-cell">5</td><td>Reconciling cash on delivery against courier statements without silently losing money</td></tr>
+  <tr><td class="mono-cell">2</td><td><strong>ServoraBD</strong></td><td>Service marketplace</td><td class="mono-cell">2 + admin</td><td>A trust score that low-volume or unreliable providers cannot game</td></tr>
+  <tr><td class="mono-cell">3</td><td><strong>MicroMart</strong></td><td>E-commerce</td><td class="mono-cell">3</td><td>Order/payment/inventory state consistency across gateway callbacks</td></tr>
+  <tr><td class="mono-cell">4</td><td><strong>EduFlow</strong></td><td>Learning management</td><td class="mono-cell">3</td><td>One authoritative permission layer — object-level, not just action-level</td></tr>
+  <tr><td class="mono-cell">5</td><td><strong>IntelliChat</strong></td><td>Streaming AI chat</td><td class="mono-cell">—</td><td>Server-Sent Events with an explicit stream-termination protocol</td></tr>
+  <tr><td class="mono-cell">6</td><td><strong>MediDesk</strong></td><td>Hospital management</td><td class="mono-cell">4</td><td>Modelling prescriptions as real relations; per-module access rules</td></tr>
 </table>
 
 <h3>3.1 The four strongest interview answers</h3>
@@ -430,6 +431,38 @@
   </dl>
 </div>
 
+<h3>3.2 Two more, from the newest projects</h3>
+<p>
+  SellFlow BD and ServoraBD were added on 1 October 2026. Their hardest
+  problems are documented in his own READMEs and carry the same weight as the
+  four above. His own conclusions from them have <strong>not yet been
+  supplied</strong>, so none are written here.
+</p>
+
+<div class="project">
+  <div class="project-head"><h3>Cash on delivery is where money goes missing</h3><span class="badge">SellFlow BD</span></div>
+  <p>
+    A courier pays out in bulk and sends a spreadsheet; the seller must work out
+    which parcels it covers and whether the amounts are right. He made it safe
+    rather than clever: an uploaded statement is a draft, every row lands in one
+    of four buckets — matched, amount mismatch, unmatched, already settled — and
+    only matched rows settle unless the seller explicitly opts a mismatch in,
+    when the shortfall is recorded rather than lost.
+  </p>
+</div>
+
+<div class="project">
+  <div class="project-head"><h3>Every simple scoring rule invites an exploit</h3><span class="badge">ServoraBD</span></div>
+  <p>
+    A star rating lets one glowing review beat two hundred jobs. Each part of
+    the trust score answers a specific exploit: Bayesian smoothing so a thin
+    history regresses toward the mean, cancellations weighted by how late they
+    come and faded over a 180-day half-life, logarithmic job volume so farming
+    trivial jobs stops paying, and dispute penalties applied after the weighted
+    sum so they cannot be diluted.
+  </p>
+</div>
+
 <!-- ============ 04 ============ -->
 <h2 class="page-break"><span class="num">04</span>Technical Skills</h2>
 
@@ -480,10 +513,9 @@
 <div class="callout rule-box">
   <span class="label">An important distinction</span>
   <p>
-    Two projects (IntelliChat, PromptCanvas) integrate external model APIs —
-    Google Gemini and Hugging Face. That is <strong>software engineering work
-    against an HTTP API</strong>: streaming, latency, credential handling,
-    persistence.
+    One project (IntelliChat) integrates an external model API — Google
+    Gemini. That is <strong>software engineering work against an HTTP
+    API</strong>: streaming, credential handling, persistence.
   </p>
   <p>
     It is <strong>not</strong> a claim of AI/ML expertise, and Jahid asked
@@ -509,7 +541,7 @@
   <tr><th style="width:22%">Priority</th><th>Visible in the work as</th></tr>
   <tr><td><strong>1. Clean code</strong></td><td>Explicit state machines replacing scattered conditionals; permission logic held in one place rather than repeated per view.</td></tr>
   <tr><td><strong>2. Performance</strong></td><td>Querysets scoped at the API layer; interest in query optimisation; streaming rather than blocking responses.</td></tr>
-  <tr><td><strong>3. Correct architecture</strong></td><td>The decoupled React/DRF pattern applied consistently across all five projects, with the schema treated as the decision that constrains everything after it.</td></tr>
+  <tr><td><strong>3. Correct architecture</strong></td><td>The decoupled React/DRF pattern applied consistently across all six projects, with the schema treated as the decision that constrains everything after it.</td></tr>
 </table>
 
 <h3>5.2 A consistent instinct</h3>
@@ -534,7 +566,8 @@
 <p>
   He is consistently drawn to the <strong>failure cases</strong> rather than the
   happy path — abandoned payments, duplicate callbacks, streams that die
-  mid-generation, ids changed in the URL, reloads that lose state. That is
+  mid-generation, ids changed in the URL, reloads that lose state, courier
+  statements that do not match, ratings gamed by thin histories. That is
   unusual at this level and is the most senior-reading instinct in the profile.
 </p>
 
@@ -569,9 +602,11 @@
 </p>
 <p>
   He is weakest, by his own accounting, on production operations: deployment,
-  CI/CD and cloud infrastructure sit at working or familiar, and nothing of his
-  is deployed yet. A team with existing infrastructure and code review is a
-  better first environment than one where he would own the platform alone.
+  CI/CD and cloud infrastructure sit at working or familiar. Three of his
+  projects and this portfolio now run on Render's free tier, and both newest
+  projects run CI on GitHub Actions — but these are solo, free-tier
+  deployments. A team with existing infrastructure and code review is a better
+  first environment than one where he would own the platform alone.
 </p>
 
 <h3>6.2 How he wants to come across</h3>
@@ -613,30 +648,34 @@
 <h3>7.1 Genuine strengths</h3>
 <table>
   <tr><th style="width:30%">Strength</th><th>Evidence</th></tr>
-  <tr><td><strong>Complete systems, repeatedly</strong></td><td>Five full applications, not five features. The consistency is the argument.</td></tr>
-  <tr><td><strong>Authorisation modelling</strong></td><td>Three-, three- and four-role systems with object-level scoping enforced at the API. Better understood than is typical pre-graduation.</td></tr>
+  <tr><td><strong>Complete systems, repeatedly</strong></td><td>Six full applications, not six features. The consistency is the argument.</td></tr>
+  <tr><td><strong>Authorisation modelling</strong></td><td>Five-, four-, three- and three-role systems with object-level scoping enforced at the API, and per-store tenant isolation in SellFlow BD. Better understood than is typical pre-graduation.</td></tr>
   <tr><td><strong>Relational schema design</strong></td><td>The MediDesk prescription decision is a real design judgement, correctly made and correctly explained.</td></tr>
-  <tr><td><strong>Failure-case thinking</strong></td><td>Gateway callbacks, stream termination, abandoned payments. The most senior-reading instinct he has.</td></tr>
+  <tr><td><strong>Failure-case thinking</strong></td><td>Gateway callbacks, stream termination, abandoned payments, COD reconciliation, a score built to resist gaming. The most senior-reading instinct he has.</td></tr>
   <tr><td><strong>Calibrated self-assessment</strong></td><td>Rare and undervalued. Everything claimed survives questioning.</td></tr>
 </table>
 
 <h3>7.2 Real gaps — stated, not hidden</h3>
 <table>
   <tr><th style="width:30%">Gap</th><th>Current position</th></tr>
-  <tr><td><strong>No production deployment</strong></td><td>Nothing of his is live. The highest-value gap to close, and the cheapest — deploying one project would materially strengthen the profile.</td></tr>
+  <tr><td><strong>Deployment at small scale only</strong></td><td>Closed in part since v1.0: SellFlow BD, ServoraBD and MicroMart are live, as is this portfolio. All are solo-run on free tiers, so there is no evidence yet of operating a service under real load. MicroMart's demo was not responding on 1 Oct 2026.</td></tr>
   <tr><td><strong>No professional experience</strong></td><td>No jobs or internships. Only time and a first role fix this; the projects are the substitute.</td></tr>
-  <tr><td><strong>No team collaboration</strong></td><td>All five projects are solo. No pull request review, no shared codebase, no merge conflicts. Worth naming honestly if asked.</td></tr>
-  <tr><td><strong>Ops and CI/CD</strong></td><td>Working-to-familiar. Nginx, GitHub Actions and AWS are familiar-level, and untested in production.</td></tr>
+  <tr><td><strong>No team collaboration</strong></td><td>All six projects are solo. No pull request review, no shared codebase, no merge conflicts. Worth naming honestly if asked.</td></tr>
+  <tr><td><strong>Ops and CI/CD</strong></td><td>Working-to-familiar. GitHub Actions is now in real use — CI in both newest projects, plus SellFlow BD's scheduled sync job. Nginx and AWS remain familiar-level and untested in production.</td></tr>
   <tr><td><strong>Frontend depth</strong></td><td>React is Strong, not Core. Deliberate — he is a backend engineer who can build a competent frontend, and presents himself that way.</td></tr>
-  <tr><td><strong>Testing on the five projects</strong></td><td>The portfolio site itself has 55 tests. Whether the five showcased projects have comparable coverage was never established — likely to be asked.</td></tr>
+  <tr><td><strong>Testing on the earlier projects</strong></td><td>Answered strongly for the newest two: ServoraBD reports 587 backend and 47 frontend tests with Playwright and axe-core checks, and SellFlow BD carries 21 backend test modules, including concurrency. Whether the four earlier projects have comparable coverage is still unestablished. The portfolio site has 62 tests.</td></tr>
 </table>
 
 <h3>7.3 The highest-leverage next steps</h3>
+<p>
+  Four of the five steps recommended in v1.0 are done: three projects are
+  deployed, all six have walkthrough videos and screenshots, and the
+  repositories are renamed and verified. What remains:
+</p>
 <ol>
-  <li><strong>Deploy one project — ideally MicroMart.</strong> A live URL alongside the case study converts the strongest narrative into something a reviewer can click. Single biggest return available.</li>
-  <li><strong>Record the walkthrough videos.</strong> Already the chosen plan. A recruiter who watches two minutes of a real system is past the credential question entirely.</li>
-  <li><strong>Finish the repository cleanup.</strong> The five repos are being reorganised and one URL is a known mismatch. Repos are checked more than portfolios are read.</li>
-  <li><strong>Add screenshots.</strong> Placeholders are designed rather than broken, but five real interfaces would do a great deal of work.</li>
+  <li><strong>Get MicroMart's demo responding.</strong> It is the strongest of the earlier narratives, and a live button that times out costs more than no button.</li>
+  <li><strong>Write &ldquo;What I learned&rdquo; for SellFlow BD and ServoraBD.</strong> The two strongest projects currently have the shortest case studies.</li>
+  <li><strong>Establish testing on the earlier projects.</strong> The newest two show he can; the question will be asked of all six.</li>
   <li><strong>Consider one collaborative contribution.</strong> Even a modest merged open-source PR would answer the only structural gap the projects cannot address alone.</li>
 </ol>
 
@@ -644,10 +683,12 @@
 <ul class="tight">
   <li><em>"Walk me through what happens when a payment callback arrives twice."</em> — He can answer this well. It is his best question.</li>
   <li><em>"How do you stop one teacher reading another teacher's course?"</em> — Also strong; he has the object-level answer ready.</li>
-  <li><em>"Is any of this deployed?"</em> — Currently no. Worth answering directly, with the walkthrough videos offered.</li>
+  <li><em>"Is any of this deployed?"</em> — Yes: three projects are live, and all six have walkthrough videos. Worth warning about the free-tier cold start before the interviewer meets it.</li>
+  <li><em>"What happens when a courier statement doesn't match?"</em> — Strong. The four-bucket draft-then-commit design is a ready answer.</li>
+  <li><em>"How does your trust score resist gaming?"</em> — Strong, and specific: each mechanism answers a named exploit.</li>
   <li><em>"Have you worked in a team?"</em> — No. Best answered plainly rather than stretched.</li>
   <li><em>"How much AI/ML do you actually know?"</em> — He should give the §4.2 answer verbatim: integration work, not model expertise. It is a credibility win, not a weakness.</li>
-  <li><em>"Do these projects have tests?"</em> — Unestablished. Worth checking before interviewing.</li>
+  <li><em>"Do these projects have tests?"</em> — Yes for SellFlow BD and ServoraBD, extensively. For the four earlier projects, still unestablished; worth checking before interviewing.</li>
 </ul>
 
 <!-- ============ 08 ============ -->
@@ -683,32 +724,38 @@
   <tr><td>Title stays "Software Engineer"</td><td>Never "student", never "aspiring".</td></tr>
 </table>
 
-<h3>8.1 Two facts that look like errors but are not</h3>
+<h3>8.1 Facts that look like errors but are not</h3>
 <table>
   <tr><th style="width:32%">Looks wrong</th><th>Actually correct</th></tr>
   <tr><td>MySQL is a featured skill, but the portfolio site runs PostgreSQL</td><td>Both are true. MySQL is his strongest database and MicroMart's; PostgreSQL is the portfolio <em>site's</em> own database, switched for hosting economics. Do not "fix" either into the other.</td></tr>
-  <tr><td>PromptCanvas's repo URL reads <span class="mono">tech-store-platform-django-react</span></td><td>A genuine known issue — a renamed repo or transcription error. Flagged as outstanding, awaiting his verification. Do not guess a replacement URL.</td></tr>
+  <tr><td>EduFlow, IntelliChat and MediDesk each have two repositories on his GitHub</td><td>He renamed them to <span class="mono">Edu-Flow</span>, <span class="mono">Intelli-Chat</span> and <span class="mono">Medi-Desk</span>, and the site links to those. Do not point the links back at the older names.</td></tr>
+  <tr><td>SellFlow BD's gallery has three screenshots, but its folder holds four</td><td>Deliberate. The Settings screenshot shows a real phone number and is excluded by name on import. Do not re-add it.</td></tr>
+  <tr><td>PromptCanvas no longer appears anywhere</td><td>Removed at his direction on 1 October 2026, when SellFlow BD and ServoraBD were added. Do not restore it.</td></tr>
 </table>
 
 <h3>8.2 Still outstanding from him</h3>
+<p>
+  Screenshots, walkthrough links, the résumé, verified repository URLs and
+  deployment — everything v1.0 listed here — have all arrived. Three items
+  remain:
+</p>
 <ol class="tight">
-  <li>Screenshots for all five projects</li>
-  <li>YouTube walkthrough links</li>
-  <li>Résumé PDF</li>
-  <li>Verified repository URLs (PromptCanvas especially)</li>
-  <li>Deployment</li>
+  <li>&ldquo;What I learned&rdquo; for SellFlow BD and ServoraBD</li>
+  <li>A check of MicroMart's Render service, whose demo was not responding on 1 October 2026</li>
   <li>Confirmation of which email address is the public one</li>
 </ol>
 <p>
-  Every one of these is wired to <strong>hide rather than break</strong> while
-  absent, and all are content changes through the Django admin — none require
-  code. The site is shippable now and improves as each arrives.
+  None blocks the site: a missing lesson hides its section rather than leaving
+  a gap. Lessons go into <span class="mono">seed_portfolio.py</span>, not the
+  admin — project text is rewritten from the seed on every deploy, so an admin
+  edit to a project does not survive.
 </p>
 
 <footer class="doc-end">
   <p>
-    <strong>Personal &amp; Professional Brief v1.0</strong> — Md. Jahid Hasan
-    Raihan · 12 September 2026. Every statement originates from Jahid's own
+    <strong>Personal &amp; Professional Brief v1.1</strong> — Md. Jahid Hasan
+    Raihan · 1 October 2026. v1.1 adds SellFlow BD and ServoraBD, removes
+    PromptCanvas, and re-states the gaps that closed with deployment. Every statement originates from Jahid's own
     account during discovery, or from project state verified in the repository.
     Assessments in §07 are interpretations of that evidence and are labelled as
     such. Companion document: <span class="mono">docs/PORTFOLIO_PRD.pdf</span>.

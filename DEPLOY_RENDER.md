@@ -177,7 +177,7 @@ API call.
 Open `https://portfolio-web.onrender.com` and check:
 
 - [ ] Hero shows your name and photo
-- [ ] All five project cards show screenshots
+- [ ] All six project cards show screenshots
 - [ ] A case study opens, with its architecture diagram and gallery
 - [ ] Refreshing a case study URL does **not** 404
 - [ ] The résumé downloads
